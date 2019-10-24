@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="doorinDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastname" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="phonenumber" Type="nchar" MaxLength="25" />
+          <Property Name="email" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="password" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="position" Type="nchar" MaxLength="25" />
+          <Property Name="company" Type="nchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="customer_freelancer">
+          <Key>
+            <PropertyRef Name="freelancer_id" />
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="freelancer_id" Type="int" Nullable="false" />
+          <Property Name="customer_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="freelancer">
+          <Key>
+            <PropertyRef Name="freelancer_id" />
+          </Key>
+          <Property Name="freelancer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastname" Type="nchar" MaxLength="50" />
+          <Property Name="address" Type="nchar" MaxLength="50" />
+          <Property Name="city" Type="nchar" MaxLength="25" />
+          <Property Name="zipcode" Type="nchar" MaxLength="25" />
+          <Property Name="phonenumber" Type="nchar" MaxLength="25" />
+          <Property Name="email" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="birthdate" Type="date" />
+          <Property Name="birthcity" Type="nchar" MaxLength="25" />
+          <Property Name="nationality" Type="nchar" MaxLength="25" />
+          <Property Name="username" Type="nchar" MaxLength="25" Nullable="false" />
+          <Property Name="password" Type="nchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Customer_customer_id">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="customer_freelancer" Type="Self.customer_freelancer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="customer_freelancer">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Freelancer_freelancer_id">
+          <End Role="freelancer" Type="Self.freelancer" Multiplicity="1" />
+          <End Role="customer_freelancer" Type="Self.customer_freelancer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="freelancer">
+              <PropertyRef Name="freelancer_id" />
+            </Principal>
+            <Dependent Role="customer_freelancer">
+              <PropertyRef Name="freelancer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="doorinDBModelStoreContainer">
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer_freelancer" EntityType="Self.customer_freelancer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="freelancer" EntityType="Self.freelancer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customer_customer_id" Association="Self.FK_Customer_customer_id">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="customer_freelancer" EntitySet="customer_freelancer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Freelancer_freelancer_id" Association="Self.FK_Freelancer_freelancer_id">
+            <End Role="freelancer" EntitySet="freelancer" />
+            <End Role="customer_freelancer" EntitySet="customer_freelancer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="doorinDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="phonenumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="company" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="freelancer" Relationship="Self.customer_freelancer" FromRole="customer" ToRole="freelancer" />
+        </EntityType>
+        <EntityType Name="freelancer">
+          <Key>
+            <PropertyRef Name="freelancer_id" />
+          </Key>
+          <Property Name="freelancer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="zipcode" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="phonenumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
+          <Property Name="birthcity" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="nationality" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="username" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="customer" Relationship="Self.customer_freelancer" FromRole="freelancer" ToRole="customer" />
+        </EntityType>
+        <Association Name="customer_freelancer">
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <End Role="freelancer" Type="Self.freelancer" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="doorinDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="customer" EntityType="Self.customer" />
+          <EntitySet Name="freelancer" EntityType="Self.freelancer" />
+          <AssociationSet Name="customer_freelancer" Association="Self.customer_freelancer">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="freelancer" EntitySet="freelancer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="doorinDBModelStoreContainer" CdmEntityContainer="doorinDBEntities">
+          <EntitySetMapping Name="customer">
+            <EntityTypeMapping TypeName="doorinDBModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="company" ColumnName="company" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="freelancer">
+            <EntityTypeMapping TypeName="doorinDBModel.freelancer">
+              <MappingFragment StoreEntitySet="freelancer">
+                <ScalarProperty Name="freelancer_id" ColumnName="freelancer_id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
+                <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="birthcity" ColumnName="birthcity" />
+                <ScalarProperty Name="nationality" ColumnName="nationality" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="customer_freelancer" TypeName="doorinDBModel.customer_freelancer" StoreEntitySet="customer_freelancer">
+            <EndProperty Name="customer">
+              <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+            </EndProperty>
+            <EndProperty Name="freelancer">
+              <ScalarProperty Name="freelancer_id" ColumnName="freelancer_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
