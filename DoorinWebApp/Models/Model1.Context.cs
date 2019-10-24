@@ -27,5 +27,10 @@ namespace DoorinWebApp.Models
     
         public virtual DbSet<customer> customer { get; set; }
         public virtual DbSet<freelancer> freelancer { get; set; }
+        public virtual DbSet<competence> competence { get; set; }
+        public virtual DbSet<education> education { get; set; }
+        public virtual DbSet<resume> resume { get; set; }
+        public virtual DbSet<technology> technology { get; set; }
+        public virtual DbSet<workhistory> workhistory { get; set; }
     }
 }

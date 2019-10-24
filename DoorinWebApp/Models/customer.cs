@@ -11,8 +11,7 @@ namespace DoorinWebApp.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,17 +21,13 @@ namespace DoorinWebApp.Models
         }
     
         public int customer_id { get; set; }
-        [Required(ErrorMessage = "Förnamn är obligatoriskt")]
         public string firstname { get; set; }
-        [Required(ErrorMessage = "Efternamn är obligatoriskt")]
         public string lastname { get; set; }
         public string phonenumber { get; set; }
-        [Required(ErrorMessage = "Email är obligatoriskt")]
         public string email { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string position { get; set; }
-        [Required(ErrorMessage = "Företag är obligatoriskt")]
         public string company { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

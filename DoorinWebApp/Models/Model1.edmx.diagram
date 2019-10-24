@@ -5,9 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a3953075531744f8bba07353a45f903e" Name="Diagram1">
-        <EntityTypeShape EntityType="doorinDBModel.customer" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="doorinDBModel.freelancer" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="doorinDBModel.customer_freelancer" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="doorinDBModel.customer" Width="1.5" PointX="8.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="doorinDBModel.freelancer" Width="1.5" PointX="12.875" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="doorinDBModel.customer_freelancer" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="doorinDBModel.competence" Width="1.5" PointX="5.25" PointY="5.5" />
+        <EntityTypeShape EntityType="doorinDBModel.education" Width="1.5" PointX="10.875" PointY="9.125" />
+        <EntityTypeShape EntityType="doorinDBModel.resume" Width="1.5" PointX="8.875" PointY="5.375" />
+        <EntityTypeShape EntityType="doorinDBModel.technology" Width="1.5" PointX="1.75" PointY="5.625" />
+        <EntityTypeShape EntityType="doorinDBModel.workhistory" Width="1.5" PointX="7.5" PointY="9.375" />
+        <AssociationConnector Association="doorinDBModel.FK_technology_competence" />
+        <AssociationConnector Association="doorinDBModel.FK_education_resume_id" />
+        <AssociationConnector Association="doorinDBModel.FK_resume_Freelancer" />
+        <AssociationConnector Association="doorinDBModel.FK_workhistory_resume_id" />
+        <AssociationConnector Association="doorinDBModel.competence_resume" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

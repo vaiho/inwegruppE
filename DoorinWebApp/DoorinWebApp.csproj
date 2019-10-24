@@ -128,13 +128,24 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\competencesController.cs" />
     <Compile Include="Controllers\customersController.cs" />
+    <Compile Include="Controllers\educationsController.cs" />
     <Compile Include="Controllers\freelancersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\resumesController.cs" />
+    <Compile Include="Controllers\technologiesController.cs" />
+    <Compile Include="Controllers\workhistoriesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\competence.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\customer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\education.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\freelancer.cs">
@@ -154,6 +165,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\resume.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\technology.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\workhistory.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -224,6 +244,31 @@
     <Content Include="Views\freelancers\Details.cshtml" />
     <Content Include="Views\freelancers\Edit.cshtml" />
     <Content Include="Views\freelancers\Index.cshtml" />
+    <Content Include="Views\competences\Create.cshtml" />
+    <Content Include="Views\competences\Delete.cshtml" />
+    <Content Include="Views\competences\Details.cshtml" />
+    <Content Include="Views\competences\Edit.cshtml" />
+    <Content Include="Views\competences\Index.cshtml" />
+    <Content Include="Views\educations\Create.cshtml" />
+    <Content Include="Views\educations\Delete.cshtml" />
+    <Content Include="Views\educations\Details.cshtml" />
+    <Content Include="Views\educations\Edit.cshtml" />
+    <Content Include="Views\educations\Index.cshtml" />
+    <Content Include="Views\resumes\Create.cshtml" />
+    <Content Include="Views\resumes\Delete.cshtml" />
+    <Content Include="Views\resumes\Details.cshtml" />
+    <Content Include="Views\resumes\Edit.cshtml" />
+    <Content Include="Views\resumes\Index.cshtml" />
+    <Content Include="Views\technologies\Create.cshtml" />
+    <Content Include="Views\technologies\Delete.cshtml" />
+    <Content Include="Views\technologies\Details.cshtml" />
+    <Content Include="Views\technologies\Edit.cshtml" />
+    <Content Include="Views\technologies\Index.cshtml" />
+    <Content Include="Views\workhistories\Create.cshtml" />
+    <Content Include="Views\workhistories\Delete.cshtml" />
+    <Content Include="Views\workhistories\Details.cshtml" />
+    <Content Include="Views\workhistories\Edit.cshtml" />
+    <Content Include="Views\workhistories\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

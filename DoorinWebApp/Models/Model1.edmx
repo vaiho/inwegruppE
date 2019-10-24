@@ -4,7 +4,23 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="doorinDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="doorinDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="competence">
+          <Key>
+            <PropertyRef Name="competence_id" />
+          </Key>
+          <Property Name="competence_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="core" Type="bit" />
+        </EntityType>
+        <EntityType Name="competence_resume">
+          <Key>
+            <PropertyRef Name="competence_id" />
+            <PropertyRef Name="resume_id" />
+          </Key>
+          <Property Name="competence_id" Type="int" Nullable="false" />
+          <Property Name="resume_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="customer">
           <Key>
             <PropertyRef Name="customer_id" />
@@ -27,6 +43,16 @@
           <Property Name="freelancer_id" Type="int" Nullable="false" />
           <Property Name="customer_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="education">
+          <Key>
+            <PropertyRef Name="education_id" />
+          </Key>
+          <Property Name="education_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="resume_id" Type="int" Nullable="false" />
+          <Property Name="title" Type="nchar" MaxLength="50" />
+          <Property Name="description" Type="nchar" MaxLength="255" />
+          <Property Name="date" Type="nchar" MaxLength="25" />
+        </EntityType>
         <EntityType Name="freelancer">
           <Key>
             <PropertyRef Name="freelancer_id" />
@@ -45,6 +71,60 @@
           <Property Name="username" Type="nchar" MaxLength="25" Nullable="false" />
           <Property Name="password" Type="nchar" MaxLength="25" Nullable="false" />
         </EntityType>
+        <EntityType Name="resume">
+          <Key>
+            <PropertyRef Name="resume_id" />
+          </Key>
+          <Property Name="resume_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="freelancer_id" Type="int" Nullable="false" />
+          <Property Name="driving_license" Type="nchar" MaxLength="10" />
+          <Property Name="profile" Type="nchar" MaxLength="2550" />
+        </EntityType>
+        <EntityType Name="technology">
+          <Key>
+            <PropertyRef Name="technology_id" />
+          </Key>
+          <Property Name="technology_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="competence_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="rank" Type="int" Nullable="false" />
+          <Property Name="core" Type="bit" />
+        </EntityType>
+        <EntityType Name="workhistory">
+          <Key>
+            <PropertyRef Name="workhistory_id" />
+          </Key>
+          <Property Name="workhistory_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="resume_id" Type="int" Nullable="false" />
+          <Property Name="employer" Type="nchar" MaxLength="50" />
+          <Property Name="position" Type="nchar" MaxLength="25" />
+          <Property Name="description" Type="nchar" MaxLength="255" />
+          <Property Name="date" Type="nchar" MaxLength="25" />
+        </EntityType>
+        <Association Name="FK_competence_resume_competence">
+          <End Role="competence" Type="Self.competence" Multiplicity="1" />
+          <End Role="competence_resume" Type="Self.competence_resume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competence">
+              <PropertyRef Name="competence_id" />
+            </Principal>
+            <Dependent Role="competence_resume">
+              <PropertyRef Name="competence_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_competence_resume_resume">
+          <End Role="resume" Type="Self.resume" Multiplicity="1" />
+          <End Role="competence_resume" Type="Self.competence_resume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume">
+              <PropertyRef Name="resume_id" />
+            </Principal>
+            <Dependent Role="competence_resume">
+              <PropertyRef Name="resume_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Customer_customer_id">
           <End Role="customer" Type="Self.customer" Multiplicity="1" />
           <End Role="customer_freelancer" Type="Self.customer_freelancer" Multiplicity="*" />
@@ -54,6 +134,18 @@
             </Principal>
             <Dependent Role="customer_freelancer">
               <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_education_resume_id">
+          <End Role="resume" Type="Self.resume" Multiplicity="1" />
+          <End Role="education" Type="Self.education" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume">
+              <PropertyRef Name="resume_id" />
+            </Principal>
+            <Dependent Role="education">
+              <PropertyRef Name="resume_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -69,21 +161,86 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_resume_Freelancer">
+          <End Role="freelancer" Type="Self.freelancer" Multiplicity="1" />
+          <End Role="resume" Type="Self.resume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="freelancer">
+              <PropertyRef Name="freelancer_id" />
+            </Principal>
+            <Dependent Role="resume">
+              <PropertyRef Name="freelancer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_technology_competence">
+          <End Role="competence" Type="Self.competence" Multiplicity="1" />
+          <End Role="technology" Type="Self.technology" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competence">
+              <PropertyRef Name="competence_id" />
+            </Principal>
+            <Dependent Role="technology">
+              <PropertyRef Name="competence_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_workhistory_resume_id">
+          <End Role="resume" Type="Self.resume" Multiplicity="1" />
+          <End Role="workhistory" Type="Self.workhistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume">
+              <PropertyRef Name="resume_id" />
+            </Principal>
+            <Dependent Role="workhistory">
+              <PropertyRef Name="resume_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="doorinDBModelStoreContainer">
+          <EntitySet Name="competence" EntityType="Self.competence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="competence_resume" EntityType="Self.competence_resume" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="customer_freelancer" EntityType="Self.customer_freelancer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="education" EntityType="Self.education" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="freelancer" EntityType="Self.freelancer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="resume" EntityType="Self.resume" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="technology" EntityType="Self.technology" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="workhistory" EntityType="Self.workhistory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_competence_resume_competence" Association="Self.FK_competence_resume_competence">
+            <End Role="competence" EntitySet="competence" />
+            <End Role="competence_resume" EntitySet="competence_resume" />
+          </AssociationSet>
+          <AssociationSet Name="FK_competence_resume_resume" Association="Self.FK_competence_resume_resume">
+            <End Role="resume" EntitySet="resume" />
+            <End Role="competence_resume" EntitySet="competence_resume" />
+          </AssociationSet>
           <AssociationSet Name="FK_Customer_customer_id" Association="Self.FK_Customer_customer_id">
             <End Role="customer" EntitySet="customer" />
             <End Role="customer_freelancer" EntitySet="customer_freelancer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_education_resume_id" Association="Self.FK_education_resume_id">
+            <End Role="resume" EntitySet="resume" />
+            <End Role="education" EntitySet="education" />
           </AssociationSet>
           <AssociationSet Name="FK_Freelancer_freelancer_id" Association="Self.FK_Freelancer_freelancer_id">
             <End Role="freelancer" EntitySet="freelancer" />
             <End Role="customer_freelancer" EntitySet="customer_freelancer" />
           </AssociationSet>
+          <AssociationSet Name="FK_resume_Freelancer" Association="Self.FK_resume_Freelancer">
+            <End Role="freelancer" EntitySet="freelancer" />
+            <End Role="resume" EntitySet="resume" />
+          </AssociationSet>
+          <AssociationSet Name="FK_technology_competence" Association="Self.FK_technology_competence">
+            <End Role="competence" EntitySet="competence" />
+            <End Role="technology" EntitySet="technology" />
+          </AssociationSet>
+          <AssociationSet Name="FK_workhistory_resume_id" Association="Self.FK_workhistory_resume_id">
+            <End Role="resume" EntitySet="resume" />
+            <End Role="workhistory" EntitySet="workhistory" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="doorinDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -120,6 +277,7 @@
           <Property Name="username" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="25" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="customer" Relationship="Self.customer_freelancer" FromRole="freelancer" ToRole="customer" />
+          <NavigationProperty Name="resume" Relationship="doorinDBModel.FK_resume_Freelancer" FromRole="freelancer" ToRole="resume" />
         </EntityType>
         <Association Name="customer_freelancer">
           <End Role="customer" Type="Self.customer" Multiplicity="*" />
@@ -132,7 +290,141 @@
             <End Role="customer" EntitySet="customer" />
             <End Role="freelancer" EntitySet="freelancer" />
           </AssociationSet>
+          <EntitySet Name="competence" EntityType="doorinDBModel.competence" />
+          <EntitySet Name="education" EntityType="doorinDBModel.education" />
+          <EntitySet Name="resume" EntityType="doorinDBModel.resume" />
+          <EntitySet Name="technology" EntityType="doorinDBModel.technology" />
+          <EntitySet Name="workhistory" EntityType="doorinDBModel.workhistory" />
+          <AssociationSet Name="FK_technology_competence" Association="doorinDBModel.FK_technology_competence">
+            <End Role="competence" EntitySet="competence" />
+            <End Role="technology" EntitySet="technology" />
+          </AssociationSet>
+          <AssociationSet Name="FK_education_resume_id" Association="doorinDBModel.FK_education_resume_id">
+            <End Role="resume" EntitySet="resume" />
+            <End Role="education" EntitySet="education" />
+          </AssociationSet>
+          <AssociationSet Name="FK_resume_Freelancer" Association="doorinDBModel.FK_resume_Freelancer">
+            <End Role="freelancer" EntitySet="freelancer" />
+            <End Role="resume" EntitySet="resume" />
+          </AssociationSet>
+          <AssociationSet Name="FK_workhistory_resume_id" Association="doorinDBModel.FK_workhistory_resume_id">
+            <End Role="resume" EntitySet="resume" />
+            <End Role="workhistory" EntitySet="workhistory" />
+          </AssociationSet>
+          <AssociationSet Name="competence_resume" Association="doorinDBModel.competence_resume">
+            <End Role="competence" EntitySet="competence" />
+            <End Role="resume" EntitySet="resume" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="competence">
+          <Key>
+            <PropertyRef Name="competence_id" />
+          </Key>
+          <Property Name="competence_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="core" Type="Boolean" />
+          <NavigationProperty Name="technology" Relationship="doorinDBModel.FK_technology_competence" FromRole="competence" ToRole="technology" />
+          <NavigationProperty Name="resume" Relationship="doorinDBModel.competence_resume" FromRole="competence" ToRole="resume" />
+        </EntityType>
+        <EntityType Name="education">
+          <Key>
+            <PropertyRef Name="education_id" />
+          </Key>
+          <Property Name="education_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="resume_id" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="date" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="resume" Relationship="doorinDBModel.FK_education_resume_id" FromRole="education" ToRole="resume" />
+        </EntityType>
+        <EntityType Name="resume">
+          <Key>
+            <PropertyRef Name="resume_id" />
+          </Key>
+          <Property Name="resume_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="freelancer_id" Type="Int32" Nullable="false" />
+          <Property Name="driving_license" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="profile" Type="String" MaxLength="2550" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="education" Relationship="doorinDBModel.FK_education_resume_id" FromRole="resume" ToRole="education" />
+          <NavigationProperty Name="freelancer" Relationship="doorinDBModel.FK_resume_Freelancer" FromRole="resume" ToRole="freelancer" />
+          <NavigationProperty Name="workhistory" Relationship="doorinDBModel.FK_workhistory_resume_id" FromRole="resume" ToRole="workhistory" />
+          <NavigationProperty Name="competence" Relationship="doorinDBModel.competence_resume" FromRole="resume" ToRole="competence" />
+        </EntityType>
+        <EntityType Name="technology">
+          <Key>
+            <PropertyRef Name="technology_id" />
+          </Key>
+          <Property Name="technology_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="competence_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <Property Name="core" Type="Boolean" />
+          <NavigationProperty Name="competence" Relationship="doorinDBModel.FK_technology_competence" FromRole="technology" ToRole="competence" />
+        </EntityType>
+        <EntityType Name="workhistory">
+          <Key>
+            <PropertyRef Name="workhistory_id" />
+          </Key>
+          <Property Name="workhistory_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="resume_id" Type="Int32" Nullable="false" />
+          <Property Name="employer" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="position" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="true" Unicode="true" />
+          <Property Name="date" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="resume" Relationship="doorinDBModel.FK_workhistory_resume_id" FromRole="workhistory" ToRole="resume" />
+        </EntityType>
+        <Association Name="FK_technology_competence">
+          <End Type="doorinDBModel.competence" Role="competence" Multiplicity="1" />
+          <End Type="doorinDBModel.technology" Role="technology" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="competence">
+              <PropertyRef Name="competence_id" />
+            </Principal>
+            <Dependent Role="technology">
+              <PropertyRef Name="competence_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_education_resume_id">
+          <End Type="doorinDBModel.resume" Role="resume" Multiplicity="1" />
+          <End Type="doorinDBModel.education" Role="education" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume">
+              <PropertyRef Name="resume_id" />
+            </Principal>
+            <Dependent Role="education">
+              <PropertyRef Name="resume_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_resume_Freelancer">
+          <End Type="doorinDBModel.freelancer" Role="freelancer" Multiplicity="1" />
+          <End Type="doorinDBModel.resume" Role="resume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="freelancer">
+              <PropertyRef Name="freelancer_id" />
+            </Principal>
+            <Dependent Role="resume">
+              <PropertyRef Name="freelancer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_workhistory_resume_id">
+          <End Type="doorinDBModel.resume" Role="resume" Multiplicity="1" />
+          <End Type="doorinDBModel.workhistory" Role="workhistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume">
+              <PropertyRef Name="resume_id" />
+            </Principal>
+            <Dependent Role="workhistory">
+              <PropertyRef Name="resume_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="competence_resume">
+          <End Type="doorinDBModel.competence" Role="competence" Multiplicity="*" />
+          <End Type="doorinDBModel.resume" Role="resume" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -179,6 +471,67 @@
             </EndProperty>
             <EndProperty Name="freelancer">
               <ScalarProperty Name="freelancer_id" ColumnName="freelancer_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="competence">
+            <EntityTypeMapping TypeName="doorinDBModel.competence">
+              <MappingFragment StoreEntitySet="competence">
+                <ScalarProperty Name="core" ColumnName="core" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="competence_id" ColumnName="competence_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="education">
+            <EntityTypeMapping TypeName="doorinDBModel.education">
+              <MappingFragment StoreEntitySet="education">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="resume_id" ColumnName="resume_id" />
+                <ScalarProperty Name="education_id" ColumnName="education_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="resume">
+            <EntityTypeMapping TypeName="doorinDBModel.resume">
+              <MappingFragment StoreEntitySet="resume">
+                <ScalarProperty Name="profile" ColumnName="profile" />
+                <ScalarProperty Name="driving_license" ColumnName="driving_license" />
+                <ScalarProperty Name="freelancer_id" ColumnName="freelancer_id" />
+                <ScalarProperty Name="resume_id" ColumnName="resume_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="technology">
+            <EntityTypeMapping TypeName="doorinDBModel.technology">
+              <MappingFragment StoreEntitySet="technology">
+                <ScalarProperty Name="core" ColumnName="core" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="competence_id" ColumnName="competence_id" />
+                <ScalarProperty Name="technology_id" ColumnName="technology_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="workhistory">
+            <EntityTypeMapping TypeName="doorinDBModel.workhistory">
+              <MappingFragment StoreEntitySet="workhistory">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="employer" ColumnName="employer" />
+                <ScalarProperty Name="resume_id" ColumnName="resume_id" />
+                <ScalarProperty Name="workhistory_id" ColumnName="workhistory_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="competence_resume" TypeName="doorinDBModel.competence_resume" StoreEntitySet="competence_resume">
+            <EndProperty Name="resume">
+              <ScalarProperty Name="resume_id" ColumnName="resume_id" />
+            </EndProperty>
+            <EndProperty Name="competence">
+              <ScalarProperty Name="competence_id" ColumnName="competence_id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

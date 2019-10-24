@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DoorinWebApp.Models.resume>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.driving_license)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.profile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.freelancer.firstname)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.driving_license)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.profile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.freelancer.firstname)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.resume_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.resume_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.resume_id })
+        </td>
+    </tr>
+}
+
+</table>
