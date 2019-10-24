@@ -9,31 +9,32 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div id="page-container">
+        <div id="content-wrap">
+
+            <header class="header">
+                <img id="logo" src="~/Content/images/doorin.png" />
+
+                <div class="header-links">
+                    <h3>Join Now</h3>
+                    <h3 class="around"><a href="signin.html">Sign in</a></h3>
+                </div>
+            </header>
+
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        <div id="footer">
+            <p class="footertext">
+                <img id="footerlogo" src="~/Content/images/doorin.png" />
+                &copy; 2019 &nbsp;&nbsp;&nbsp;&nbsp;
+                Contact &nbsp;&nbsp;&nbsp;&nbsp;
+            </p>
+        </div>
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")
