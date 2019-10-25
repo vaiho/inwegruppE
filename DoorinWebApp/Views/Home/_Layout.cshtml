@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - DoorIn</title>
+    <link href="~/Content/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="page-container">
+        <div id="content-wrap">
+
+                @RenderBody()
+
+        </div>
+        <div id="footer">
+            <p class="footertext">
+                <img id="footerlogo" src="~/Content/images/doorin.png" />
+                &copy; 2019 &nbsp;&nbsp;&nbsp;&nbsp;
+                Contact &nbsp;&nbsp;&nbsp;&nbsp;
+            </p>
+        </div>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
