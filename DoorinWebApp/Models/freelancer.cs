@@ -58,7 +58,7 @@ namespace DoorinWebApp.Models
         [Required]
         [StringLength(25)]
         public string password { get; set; }
-        public IEnumerable<SelectListItem> country { get; set; } //För att hålla en lista över tillgänliga länder
+        public IEnumerable<SelectListItem> country { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<resume> resume { get; set; }
