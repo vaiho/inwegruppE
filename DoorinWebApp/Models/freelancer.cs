@@ -5,7 +5,6 @@ namespace DoorinWebApp.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using System.Web.Mvc;
 
     [Table("freelancer")]
     public partial class freelancer
@@ -58,7 +57,6 @@ namespace DoorinWebApp.Models
         [Required]
         [StringLength(25)]
         public string password { get; set; }
-        public IEnumerable<SelectListItem> country { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<resume> resume { get; set; }
