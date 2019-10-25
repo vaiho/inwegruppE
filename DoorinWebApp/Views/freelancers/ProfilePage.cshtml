@@ -1,0 +1,54 @@
+﻿@*@model DoorinWebApp.Models.freelancer
+
+    @{
+        ViewBag.Title = "Details";
+    }
+
+    <h2> @Model.firstname @Model.lastname</h2>*@
+@model IEnumerable<DoorinWebApp.Viewmodel.FreelancerProfileVM>
+
+@{
+    ViewBag.Title = "Profilsida";
+}
+
+
+<h4>Den här sidan är baserad på en ViewModel</h4>
+<p>Där data från två tabeller har kombinerats</p>
+<br />
+
+<div class="col-md-4">
+    @foreach (var item in Model)
+    {
+        <h4>@Html.DisplayNameFor(model => model.Firstname)</h4>
+        <p>@Html.DisplayFor(modelItem => item.Firstname)</p>
+        <h4> @Html.DisplayNameFor(model => model.Lastname)</h4>
+        <p>@Html.DisplayFor(modelItem => item.Lastname)</p>
+        <h4>@Html.DisplayNameFor(model => model.Email)</h4>
+        <p>@Html.DisplayFor(modelItem => item.Email)</p>
+
+        <h4>@Html.DisplayNameFor(model => model.Nationality)</h4>
+        <p> @Html.DisplayFor(modelItem => item.Nationality)</p>
+        <h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
+        <p>@Html.DisplayFor(modelItem => item.Resume_id)</p>
+        <h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
+        <p>@Html.DisplayFor(modelItem => item.ProfileText)</p>
+    }
+</div>
+<div class="col-md-4">
+    <h2>Om mig</h2>
+
+    @foreach (var item in Model)
+    {
+        <p>@Html.DisplayFor(modelItem => item.ProfileText)</p>
+        <h4>Kompetenser:</h4>
+        <h4>Teknologier:</h4>
+    }
+    <p><a class="btn btn-default" href="#">Kontakta mig &raquo;</a></p>
+</div>
+
+<div class="col-md-4">
+    <h2>Profilbild</h2>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV0I6VDKQ3vmT9y2QFvx7UZ4aTK_HZUbbHyIvmr_sgoa3sIBB6cg&s">
+</div>
+
+

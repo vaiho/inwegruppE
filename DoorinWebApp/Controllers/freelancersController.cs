@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoorinWebApp.Models;
+using DoorinWebApp.Models.Operations;
 
 namespace DoorinWebApp.Controllers
 {
@@ -34,6 +35,20 @@ namespace DoorinWebApp.Controllers
             }
             return View(freelancer);
         }
+
+        public ActionResult ProfilePage(int? id) //Vill egentligen inte att denna ska ligga här, utan i "FreelancerProfilesController"
+        {
+            
+            //freelancer freelancer = db.freelancer.Find(id);
+            //return View(freelancer);
+            //int id = 3;
+            freelancer freelancer = db.freelancer.Find(id);
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+
+            //return View(fpop.GetProfileDetails());
+            return View(fpop.GetProfile(id));
+        }
+
 
         // GET: freelancers/Create
         public ActionResult Create()
@@ -159,7 +174,6 @@ namespace DoorinWebApp.Controllers
                     Text = element
                 });
             }
-
             return selectList;
         }
     }

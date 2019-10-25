@@ -131,6 +131,7 @@
     <Compile Include="Controllers\competencesController.cs" />
     <Compile Include="Controllers\customersController.cs" />
     <Compile Include="Controllers\educationsController.cs" />
+    <Compile Include="Controllers\FreelancerProfilesController.cs" />
     <Compile Include="Controllers\freelancersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\resumesController.cs" />
@@ -166,6 +167,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Operations\FreelancerProfileOperations.cs" />
     <Compile Include="Models\resume.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -176,6 +178,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Viewmodel\FreelancerProfileVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -189,6 +192,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -268,8 +272,8 @@
     <Content Include="Views\workhistories\Details.cshtml" />
     <Content Include="Views\workhistories\Edit.cshtml" />
     <Content Include="Views\workhistories\Index.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\_Layout.cshtml" />
+    <Content Include="Views\FreelancerProfiles\Index.cshtml" />
+    <Content Include="Views\freelancers\ProfilePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
