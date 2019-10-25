@@ -55,8 +55,8 @@ namespace DoorinWebApp.Models
         [DisplayName("Lösenord")]
         [Required(ErrorMessage = "Vänligen fyll i ett lösenord")]
         public string password { get; set; }
-        
-        public IEnumerable<SelectListItem> country { get; set; } //Johan testar
+        [DisplayName("Nationalitet")]
+        public IEnumerable<SelectListItem> country { get; set; } //För att skapa en lista av valbara nationalitet
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customer> customer { get; set; }
