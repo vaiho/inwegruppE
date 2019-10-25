@@ -38,8 +38,14 @@ namespace DoorinWebApp.Controllers
         // GET: freelancers/Create
         public ActionResult Create()
         {
-            return View();
+            // Johan testar
+            var country = GetAllStates();
+            var f = new freelancer();
+            f.country = GetSelectListItems(country);
+
+            return View(f);
         }
+
 
         // POST: freelancers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -48,6 +54,10 @@ namespace DoorinWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "freelancer_id,firstname,lastname,address,city,zipcode,phonenumber,email,birthdate,birthcity,nationality,username,password")] freelancer freelancer)
         {
+            //Johans test
+            var states = GetAllStates();
+            freelancer.country = GetSelectListItems(states);
+
             if (ModelState.IsValid)
             {
                 db.freelancer.Add(freelancer);
@@ -122,6 +132,35 @@ namespace DoorinWebApp.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private IEnumerable<string> GetAllStates()
+        {
+            return new List<string>
+            {
+                "SWE",
+                "NOR",
+                "FIN",
+                "DEN",
+                "RUS",
+                "USA",
+            };
+        }
+
+        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
+        {
+            // Johans test
+            var selectList = new List<SelectListItem>();
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element,
+                    Text = element
+                });
+            }
+
+            return selectList;
         }
     }
 }
