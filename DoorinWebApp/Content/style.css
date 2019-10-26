@@ -170,6 +170,7 @@ header {
 
 
 @media screen and (min-width: 740px) {
+    
     #logo {
         padding: 0px 10px 10px 10px;
         float: left;
@@ -194,7 +195,7 @@ header {
 
 
 input[type=text], input[type=email], input[type=number], select, textarea {
-    width: 94%;
+    width: 100%;
     font-size: 16px;
     padding: 12px;
     border-radius: 3px;
