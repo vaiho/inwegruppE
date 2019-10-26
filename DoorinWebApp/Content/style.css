@@ -29,7 +29,7 @@ h5 {
 }
 
 p {
-    color: #BBB;
+    color: #555;
     font-family: Helvetica;
     font-size: calc(12px + 0.5vh);
 }
@@ -39,14 +39,13 @@ a {
     color: #09964f;
 }
 
-    a:hover {
+a:hover {
         color: #2c473d;
         text-decoration: underline;
-    }
+}
 
 header {
     background: #FFF;
-    height: 80px;
     overflow: hidden;
     margin-top: auto;
     margin-bottom: auto;
@@ -103,6 +102,10 @@ header {
 
 .paddingtop10 {
     padding-top: 10px;
+}
+
+.paddingleftright10 {
+padding: 0 10px 0;
 }
 
 .marginleft10 {
@@ -172,7 +175,7 @@ header {
 @media screen and (min-width: 740px) {
     
     #logo {
-        padding: 0px 10px 10px 10px;
+        padding: 5px 10px 10px 10px;
         float: left;
         max-width: 150px;
     }
