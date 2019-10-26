@@ -273,6 +273,7 @@
     <Content Include="Views\workhistories\Index.cshtml" />
     <Content Include="Views\FreelancerProfiles\Index.cshtml" />
     <Content Include="Views\freelancers\ProfilePage.cshtml" />
+    <Content Include="Views\Shared\_justFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
