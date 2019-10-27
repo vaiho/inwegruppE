@@ -20,6 +20,8 @@ namespace DoorinWebApp.Models
             this.education = new HashSet<education>();
             this.workhistory = new HashSet<workhistory>();
             this.competence = new HashSet<competence>();
+            this.links = new HashSet<links>();
+            this.technology_resume = new HashSet<technology_resume>();
         }
     
         public int resume_id { get; set; }
@@ -34,5 +36,9 @@ namespace DoorinWebApp.Models
         public virtual ICollection<workhistory> workhistory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<competence> competence { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<links> links { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<technology_resume> technology_resume { get; set; }
     }
 }

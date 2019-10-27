@@ -11,7 +11,6 @@
           </Key>
           <Property Name="competence_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="core" Type="bit" />
         </EntityType>
         <EntityType Name="competence_resume">
           <Key>
@@ -71,6 +70,15 @@
           <Property Name="username" Type="nchar" MaxLength="25" Nullable="false" />
           <Property Name="password" Type="nchar" MaxLength="25" Nullable="false" />
         </EntityType>
+        <EntityType Name="links">
+          <Key>
+            <PropertyRef Name="link_id" />
+          </Key>
+          <Property Name="link_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="resume_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="link" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
         <EntityType Name="resume">
           <Key>
             <PropertyRef Name="resume_id" />
@@ -87,8 +95,16 @@
           <Property Name="technology_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="competence_id" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="rank" Type="int" Nullable="false" />
-          <Property Name="core" Type="bit" />
+        </EntityType>
+        <EntityType Name="technology_resume">
+          <Key>
+            <PropertyRef Name="technology_id" />
+            <PropertyRef Name="resume_id" />
+          </Key>
+          <Property Name="technology_id" Type="int" Nullable="false" />
+          <Property Name="resume_id" Type="int" Nullable="false" />
+          <Property Name="core_technology" Type="bit" />
+          <Property Name="rank" Type="int" />
         </EntityType>
         <EntityType Name="workhistory">
           <Key>
@@ -161,6 +177,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_links_resume">
+          <End Role="resume" Type="Self.resume" Multiplicity="1" />
+          <End Role="links" Type="Self.links" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume">
+              <PropertyRef Name="resume_id" />
+            </Principal>
+            <Dependent Role="links">
+              <PropertyRef Name="resume_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_resume_Freelancer">
           <End Role="freelancer" Type="Self.freelancer" Multiplicity="1" />
           <End Role="resume" Type="Self.resume" Multiplicity="*" />
@@ -185,6 +213,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_technology_resume_resume">
+          <End Role="resume" Type="Self.resume" Multiplicity="1" />
+          <End Role="technology_resume" Type="Self.technology_resume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume">
+              <PropertyRef Name="resume_id" />
+            </Principal>
+            <Dependent Role="technology_resume">
+              <PropertyRef Name="resume_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_technology_resume_technology">
+          <End Role="technology" Type="Self.technology" Multiplicity="1" />
+          <End Role="technology_resume" Type="Self.technology_resume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="technology">
+              <PropertyRef Name="technology_id" />
+            </Principal>
+            <Dependent Role="technology_resume">
+              <PropertyRef Name="technology_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_workhistory_resume_id">
           <End Role="resume" Type="Self.resume" Multiplicity="1" />
           <End Role="workhistory" Type="Self.workhistory" Multiplicity="*" />
@@ -204,8 +256,10 @@
           <EntitySet Name="customer_freelancer" EntityType="Self.customer_freelancer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="education" EntityType="Self.education" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="freelancer" EntityType="Self.freelancer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="links" EntityType="Self.links" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="resume" EntityType="Self.resume" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="technology" EntityType="Self.technology" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="technology_resume" EntityType="Self.technology_resume" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="workhistory" EntityType="Self.workhistory" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_competence_resume_competence" Association="Self.FK_competence_resume_competence">
             <End Role="competence" EntitySet="competence" />
@@ -227,6 +281,10 @@
             <End Role="freelancer" EntitySet="freelancer" />
             <End Role="customer_freelancer" EntitySet="customer_freelancer" />
           </AssociationSet>
+          <AssociationSet Name="FK_links_resume" Association="Self.FK_links_resume">
+            <End Role="resume" EntitySet="resume" />
+            <End Role="links" EntitySet="links" />
+          </AssociationSet>
           <AssociationSet Name="FK_resume_Freelancer" Association="Self.FK_resume_Freelancer">
             <End Role="freelancer" EntitySet="freelancer" />
             <End Role="resume" EntitySet="resume" />
@@ -234,6 +292,14 @@
           <AssociationSet Name="FK_technology_competence" Association="Self.FK_technology_competence">
             <End Role="competence" EntitySet="competence" />
             <End Role="technology" EntitySet="technology" />
+          </AssociationSet>
+          <AssociationSet Name="FK_technology_resume_resume" Association="Self.FK_technology_resume_resume">
+            <End Role="resume" EntitySet="resume" />
+            <End Role="technology_resume" EntitySet="technology_resume" />
+          </AssociationSet>
+          <AssociationSet Name="FK_technology_resume_technology" Association="Self.FK_technology_resume_technology">
+            <End Role="technology" EntitySet="technology" />
+            <End Role="technology_resume" EntitySet="technology_resume" />
           </AssociationSet>
           <AssociationSet Name="FK_workhistory_resume_id" Association="Self.FK_workhistory_resume_id">
             <End Role="resume" EntitySet="resume" />
@@ -315,6 +381,20 @@
             <End Role="competence" EntitySet="competence" />
             <End Role="resume" EntitySet="resume" />
           </AssociationSet>
+          <EntitySet Name="links" EntityType="doorinDBModel.links" />
+          <EntitySet Name="technology_resume" EntityType="doorinDBModel.technology_resume" />
+          <AssociationSet Name="FK_links_resume" Association="doorinDBModel.FK_links_resume">
+            <End Role="resume" EntitySet="resume" />
+            <End Role="links" EntitySet="links" />
+          </AssociationSet>
+          <AssociationSet Name="FK_technology_resume_resume" Association="doorinDBModel.FK_technology_resume_resume">
+            <End Role="resume" EntitySet="resume" />
+            <End Role="technology_resume" EntitySet="technology_resume" />
+          </AssociationSet>
+          <AssociationSet Name="FK_technology_resume_technology" Association="doorinDBModel.FK_technology_resume_technology">
+            <End Role="technology" EntitySet="technology" />
+            <End Role="technology_resume" EntitySet="technology_resume" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="competence">
           <Key>
@@ -322,7 +402,6 @@
           </Key>
           <Property Name="competence_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="core" Type="Boolean" />
           <NavigationProperty Name="technology" Relationship="doorinDBModel.FK_technology_competence" FromRole="competence" ToRole="technology" />
           <NavigationProperty Name="resume" Relationship="doorinDBModel.competence_resume" FromRole="competence" ToRole="resume" />
         </EntityType>
@@ -349,6 +428,8 @@
           <NavigationProperty Name="freelancer" Relationship="doorinDBModel.FK_resume_Freelancer" FromRole="resume" ToRole="freelancer" />
           <NavigationProperty Name="workhistory" Relationship="doorinDBModel.FK_workhistory_resume_id" FromRole="resume" ToRole="workhistory" />
           <NavigationProperty Name="competence" Relationship="doorinDBModel.competence_resume" FromRole="resume" ToRole="competence" />
+          <NavigationProperty Name="links" Relationship="doorinDBModel.FK_links_resume" FromRole="resume" ToRole="links" />
+          <NavigationProperty Name="technology_resume" Relationship="doorinDBModel.FK_technology_resume_resume" FromRole="resume" ToRole="technology_resume" />
         </EntityType>
         <EntityType Name="technology">
           <Key>
@@ -357,9 +438,8 @@
           <Property Name="technology_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="competence_id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="rank" Type="Int32" Nullable="false" />
-          <Property Name="core" Type="Boolean" />
           <NavigationProperty Name="competence" Relationship="doorinDBModel.FK_technology_competence" FromRole="technology" ToRole="competence" />
+          <NavigationProperty Name="technology_resume" Relationship="doorinDBModel.FK_technology_resume_technology" FromRole="technology" ToRole="technology_resume" />
         </EntityType>
         <EntityType Name="workhistory">
           <Key>
@@ -425,6 +505,64 @@
           <End Type="doorinDBModel.competence" Role="competence" Multiplicity="*" />
           <End Type="doorinDBModel.resume" Role="resume" Multiplicity="*" />
         </Association>
+        <EntityType Name="links">
+          <Key>
+            <PropertyRef Name="link_id" />
+          </Key>
+          <Property Name="link_id" Type="Int32" Nullable="false" />
+          <Property Name="resume_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="link" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="resume" Relationship="doorinDBModel.FK_links_resume" FromRole="links" ToRole="resume" />
+        </EntityType>
+        <EntityType Name="technology_resume">
+          <Key>
+            <PropertyRef Name="technology_id" />
+            <PropertyRef Name="resume_id" />
+          </Key>
+          <Property Name="technology_id" Type="Int32" Nullable="false" />
+          <Property Name="resume_id" Type="Int32" Nullable="false" />
+          <Property Name="core_technology" Type="Boolean" />
+          <Property Name="rank" Type="Int32" />
+          <NavigationProperty Name="resume" Relationship="doorinDBModel.FK_technology_resume_resume" FromRole="technology_resume" ToRole="resume" />
+          <NavigationProperty Name="technology" Relationship="doorinDBModel.FK_technology_resume_technology" FromRole="technology_resume" ToRole="technology" />
+        </EntityType>
+        <Association Name="FK_links_resume">
+          <End Type="doorinDBModel.resume" Role="resume" Multiplicity="1" />
+          <End Type="doorinDBModel.links" Role="links" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume">
+              <PropertyRef Name="resume_id" />
+            </Principal>
+            <Dependent Role="links">
+              <PropertyRef Name="resume_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_technology_resume_resume">
+          <End Type="doorinDBModel.resume" Role="resume" Multiplicity="1" />
+          <End Type="doorinDBModel.technology_resume" Role="technology_resume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="resume">
+              <PropertyRef Name="resume_id" />
+            </Principal>
+            <Dependent Role="technology_resume">
+              <PropertyRef Name="resume_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_technology_resume_technology">
+          <End Type="doorinDBModel.technology" Role="technology" Multiplicity="1" />
+          <End Type="doorinDBModel.technology_resume" Role="technology_resume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="technology">
+              <PropertyRef Name="technology_id" />
+            </Principal>
+            <Dependent Role="technology_resume">
+              <PropertyRef Name="technology_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -476,7 +614,6 @@
           <EntitySetMapping Name="competence">
             <EntityTypeMapping TypeName="doorinDBModel.competence">
               <MappingFragment StoreEntitySet="competence">
-                <ScalarProperty Name="core" ColumnName="core" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="competence_id" ColumnName="competence_id" />
               </MappingFragment>
@@ -506,8 +643,6 @@
           <EntitySetMapping Name="technology">
             <EntityTypeMapping TypeName="doorinDBModel.technology">
               <MappingFragment StoreEntitySet="technology">
-                <ScalarProperty Name="core" ColumnName="core" />
-                <ScalarProperty Name="rank" ColumnName="rank" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="competence_id" ColumnName="competence_id" />
                 <ScalarProperty Name="technology_id" ColumnName="technology_id" />
@@ -534,6 +669,26 @@
               <ScalarProperty Name="competence_id" ColumnName="competence_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="links">
+            <EntityTypeMapping TypeName="doorinDBModel.links">
+              <MappingFragment StoreEntitySet="links">
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="resume_id" ColumnName="resume_id" />
+                <ScalarProperty Name="link_id" ColumnName="link_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="technology_resume">
+            <EntityTypeMapping TypeName="doorinDBModel.technology_resume">
+              <MappingFragment StoreEntitySet="technology_resume">
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="core_technology" ColumnName="core_technology" />
+                <ScalarProperty Name="resume_id" ColumnName="resume_id" />
+                <ScalarProperty Name="technology_id" ColumnName="technology_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

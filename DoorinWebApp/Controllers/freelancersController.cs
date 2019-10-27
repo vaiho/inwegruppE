@@ -56,7 +56,7 @@ namespace DoorinWebApp.Controllers
             // Johan testar
             var country = GetAllStates();
             var f = new freelancer();
-            f.country = GetSelectListItems(country);
+            // f.country = GetSelectListItems(country); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
 
             return View(f);
         }
@@ -71,7 +71,7 @@ namespace DoorinWebApp.Controllers
         {
             //Johans test
             var states = GetAllStates();
-            freelancer.country = GetSelectListItems(states);
+            // freelancer.nationality = GetSelectListItems(states); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
 
             if (ModelState.IsValid)
             {

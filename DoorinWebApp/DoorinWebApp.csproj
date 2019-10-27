@@ -134,6 +134,7 @@
     <Compile Include="Controllers\FreelancerProfilesController.cs" />
     <Compile Include="Controllers\freelancersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\linksController.cs" />
     <Compile Include="Controllers\resumesController.cs" />
     <Compile Include="Controllers\technologiesController.cs" />
     <Compile Include="Controllers\workhistoriesController.cs" />
@@ -150,6 +151,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\freelancer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\links.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model1.Context.cs">
@@ -172,6 +176,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\technology.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\technology_resume.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\workhistory.cs">
@@ -276,6 +283,11 @@
     <Content Include="Views\Shared\_justFooter.cshtml" />
     <Content Include="Views\Home\Join.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\links\Create.cshtml" />
+    <Content Include="Views\links\Delete.cshtml" />
+    <Content Include="Views\links\Details.cshtml" />
+    <Content Include="Views\links\Edit.cshtml" />
+    <Content Include="Views\links\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
