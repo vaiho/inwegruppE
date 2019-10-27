@@ -4,11 +4,13 @@
 }
 
 <header class="header">
-    <img id="logo" src="~/Content/images/doorin.png" />
+    <a href="@Url.Action("Index", "Home")">
+        <img id="logo" alt="Logo" src="~/Content/images/doorin.png">
+    </a>
 
     <div class="header-links">
-        <h3>Join Now</h3>
-        <h3 class="around">@Html.ActionLink("Log in", "Login", "Home")</h3>
+        <h3>@Html.ActionLink("Join Now", "Join", "Home")</h3>
+        @Html.ActionLink("Log in", "Login", "Home", null, new { @class = "btn" })
     </div>
 </header>
 

@@ -19,9 +19,11 @@
         </div>
         <div id="footer">
             <p class="footertext">
-                <img id="footerlogo" src="~/Content/images/doorin.png" />
+                <a href="@Url.Action("Index", "Home")">
+                    <img id="footerlogo" alt="Logo" src="~/Content/images/doorin.png">
+                </a>
                 &copy; 2019 &nbsp;&nbsp;&nbsp;&nbsp;
-                Contact &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Contact", "Contact", "Home")
             </p>
         </div>
 

@@ -31,5 +31,10 @@ namespace DoorinWebApp.Controllers
         {
             return View();
         }
+
+        public ActionResult Join()
+        {
+            return View();
+        }
     }
 }
