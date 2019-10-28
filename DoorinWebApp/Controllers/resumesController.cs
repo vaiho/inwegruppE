@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoorinWebApp.Models;
+using DoorinWebApp.Models.Operations;
+using DoorinWebApp.Viewmodel;
 
 namespace DoorinWebApp.Controllers
 {
@@ -74,8 +76,15 @@ namespace DoorinWebApp.Controllers
                 return HttpNotFound();
             }
             ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
-            return View(resume);
+
+
+            freelancer freelancer = db.freelancer.Find(id);
+
+            FullResumeOperations resumeOperations = new FullResumeOperations();
+
+            return View(resumeOperations.GetFullResumeById(id));
         }
+
 
         // POST: resumes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

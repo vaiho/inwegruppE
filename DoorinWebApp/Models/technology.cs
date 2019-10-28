@@ -23,7 +23,7 @@ namespace DoorinWebApp.Models
         public int technology_id { get; set; }
         public int competence_id { get; set; }
         public string name { get; set; }
-
+    
         public virtual competence competence { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<technology_resume> technology_resume { get; set; }
