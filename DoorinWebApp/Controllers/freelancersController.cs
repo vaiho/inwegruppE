@@ -101,6 +101,7 @@ namespace DoorinWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "freelancer_id,firstname,lastname,address,city,zipcode,phonenumber,email,birthdate,birthcity,nationality,username,password")] freelancer freelancer)
         {
+
             if (ModelState.IsValid)
             {
                 db.Entry(freelancer).State = EntityState.Modified;

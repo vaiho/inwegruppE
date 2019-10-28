@@ -104,7 +104,7 @@ namespace DoorinWebApp.Models.Operations
             }
         }
 
-        private SqlConnectionStringBuilder GetBuilder()
+        private SqlConnectionStringBuilder GetBuilder() //Anropa vid användning för connection mot databasen
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "doorin.database.windows.net";
