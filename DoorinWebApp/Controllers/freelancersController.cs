@@ -42,11 +42,12 @@ namespace DoorinWebApp.Controllers
             //freelancer freelancer = db.freelancer.Find(id);
             //return View(freelancer);
             //int id = 3;
-            freelancer freelancer = db.freelancer.Find(id);
+            //freelancer freelancer = db.freelancer.Find(id);
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
 
-            //return View(fpop.GetProfileDetails());
-            return View(fpop.GetProfile(id));
+            //return View(fpop.GetProfileDetails()); //Test
+            //return View(fpop.GetProfile(id)); //Test
+            return View(fpop.GetFreelancer(id));
         }
 
 
@@ -71,7 +72,9 @@ namespace DoorinWebApp.Controllers
         {
             //Johans test
             var states = GetAllStates();
-            // freelancer.nationality = GetSelectListItems(states); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
+            freelancer fr = new freelancer();
+            freelancer.nationality = GetSelectListItems(states); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
+            
 
             if (ModelState.IsValid)
             {

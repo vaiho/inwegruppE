@@ -21,7 +21,8 @@ namespace DoorinWebApp.Controllers
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
 
             //return View(fpop.GetProfileDetails());
-            return View(fpop.GetProfile(id));
+            //return View(fpop.GetProfile(id));
+            return View(fpop.GetFreelancer(id));
         }
 
     }

@@ -5,7 +5,8 @@
     }
 
     <h2> @Model.firstname @Model.lastname</h2>*@
-@model IEnumerable<DoorinWebApp.Viewmodel.FreelancerProfileVM>
+@*@model IEnumerable<DoorinWebApp.Viewmodel.FreelancerProfileVM>*@
+@model DoorinWebApp.Viewmodel.FreelancerProfileVM
 
 @{
     ViewBag.Title = "Profilsida";
@@ -17,7 +18,8 @@
 <br />
 
 <div class="col-md-4">
-    @foreach (var item in Model)
+    <p>@Model.Firstname</p>
+    @*@foreach (var item in Model)
     {
         <h4>@Html.DisplayNameFor(model => model.Firstname)</h4>
         <p>@Html.DisplayFor(modelItem => item.Firstname)</p>
@@ -32,17 +34,20 @@
         <p>@Html.DisplayFor(modelItem => item.Resume_id)</p>
         <h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
         <p>@Html.DisplayFor(modelItem => item.ProfileText)</p>
-    }
+    }*@
 </div>
 <div class="col-md-4">
     <h2>Om mig</h2>
 
-    @foreach (var item in Model)
+    @*@foreach (var item in Model)
     {
         <p>@Html.DisplayFor(modelItem => item.ProfileText)</p>
         <h4>Kompetenser:</h4>
         <h4>Teknologier:</h4>
-    }
+    }*@
+
+    <p>@Model.Resume_id</p>
+    <p>@Model.ProfileText</p>
     <p><a class="btn btn-default" href="#">Kontakta mig &raquo;</a></p>
 </div>
 
