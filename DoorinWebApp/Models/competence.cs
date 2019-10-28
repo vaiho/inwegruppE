@@ -23,7 +23,6 @@ namespace DoorinWebApp.Models
     
         public int competence_id { get; set; }
         public string name { get; set; }
-        public Nullable<bool> core { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<technology> technology { get; set; }

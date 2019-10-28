@@ -14,12 +14,18 @@ namespace DoorinWebApp.Models
     
     public partial class technology
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public technology()
+        {
+            this.technology_resume = new HashSet<technology_resume>();
+        }
+    
         public int technology_id { get; set; }
         public int competence_id { get; set; }
         public string name { get; set; }
-        public int rank { get; set; }
-        public Nullable<bool> core { get; set; }
     
         public virtual competence competence { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<technology_resume> technology_resume { get; set; }
     }
 }

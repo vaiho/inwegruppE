@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoorinWebApp.Models;
+using DoorinWebApp.Models.Operations;
 
 namespace DoorinWebApp.Controllers
 {
@@ -35,11 +36,19 @@ namespace DoorinWebApp.Controllers
             return View(freelancer);
         }
 
+        public ActionResult ProfilePage(int? id) //Vill egentligen inte att denna ska ligga här, utan i "FreelancerProfilesController"
+        {
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+
+            return View(fpop.GetFreelancerProfileById(id));
+        }
+
+
         // GET: freelancers/Create
         public ActionResult Create()
         {
             // Johan testar
-            var country = GetAllStates();
+            var country = GetCountries();
             var f = new freelancer();
             f.country = GetSelectListItems(country);
 
@@ -55,8 +64,10 @@ namespace DoorinWebApp.Controllers
         public ActionResult Create([Bind(Include = "freelancer_id,firstname,lastname,address,city,zipcode,phonenumber,email,birthdate,birthcity,nationality,username,password")] freelancer freelancer)
         {
             //Johans test
-            var states = GetAllStates();
-            freelancer.country = GetSelectListItems(states);
+            var countries = GetCountries();
+            freelancer fr = new freelancer();
+            freelancer.country = GetSelectListItems(countries); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
+            
 
             if (ModelState.IsValid)
             {
@@ -134,7 +145,7 @@ namespace DoorinWebApp.Controllers
             base.Dispose(disposing);
         }
 
-        private IEnumerable<string> GetAllStates()
+        private IEnumerable<string> GetCountries()
         {
             return new List<string>
             {
@@ -159,7 +170,6 @@ namespace DoorinWebApp.Controllers
                     Text = element
                 });
             }
-
             return selectList;
         }
     }

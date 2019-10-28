@@ -26,5 +26,15 @@ namespace DoorinWebApp.Controllers
 
             return View();
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult Join()
+        {
+            return View();
+        }
     }
 }

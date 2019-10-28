@@ -1,0 +1,43 @@
+﻿@model DoorinWebApp.Viewmodel.FreelancerProfileVM
+
+@{
+    ViewBag.Title = "Profilsida";
+}
+
+
+<h4>Den här sidan är baserad på en ViewModel</h4>
+<p>Där data från två tabeller har kombinerats</p>
+<br />
+
+<div class="col-md-4">
+    <h2>Om mig</h2>
+    <h4>@Html.DisplayNameFor(model => model.Firstname)</h4>
+    <p>@Html.DisplayFor(modelItem => Model.Firstname)</p>
+    <h4> @Html.DisplayNameFor(model => model.Lastname)</h4>
+    <p>@Html.DisplayFor(modelItem => Model.Lastname)</p>
+    <h4>@Html.DisplayNameFor(model => model.Email)</h4>
+    <p>@Html.DisplayFor(modelItem => Model.Email)</p>
+
+    <h4>@Html.DisplayNameFor(model => model.Nationality)</h4>
+    <p> @Html.DisplayFor(modelItem => Model.Nationality)</p>
+    <h4>@Html.DisplayNameFor(model => model.City)</h4>
+    <p> @Html.DisplayFor(modelItem => Model.City)</p>
+    <h4>@Html.DisplayNameFor(model => model.Age)</h4>
+    <p> @Html.DisplayFor(modelItem => Model.Age) år</p>
+</div>
+<div class="col-md-4">
+    <h2>CV</h2>
+
+    <h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
+    <p>@Model.Resume_id</p>
+    <h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
+    <p>@Model.ProfileText</p>
+    <p><a class="btn btn-default" href="#">Kontakta mig &raquo;</a></p>
+</div>
+
+<div class="col-md-4">
+    <h2>Profilbild</h2>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV0I6VDKQ3vmT9y2QFvx7UZ4aTK_HZUbbHyIvmr_sgoa3sIBB6cg&s">
+</div>
+
+

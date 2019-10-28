@@ -1,0 +1,30 @@
+﻿@model IEnumerable<DoorinWebApp.Viewmodel.FreelancerProfileVM>
+
+
+@{
+    ViewBag.Title = "Profilsida";
+}
+
+<h3>Den här sidan är baserad på en ViewModel</h3>
+<p>Där data från två tabeller har kombinerats</p>
+<br />
+<br />
+
+@foreach (var item in Model)
+{
+    <h4>@Html.DisplayNameFor(model => model.Firstname)</h4>
+    <p>@Html.DisplayFor(modelItem => item.Firstname)</p>
+    <h4> @Html.DisplayNameFor(model => model.Lastname)</h4>
+    <p>@Html.DisplayFor(modelItem => item.Lastname)</p>
+    <h4>@Html.DisplayNameFor(model => model.Email)</h4>
+    <p>@Html.DisplayFor(modelItem => item.Email)</p>
+
+    <h4>@Html.DisplayNameFor(model => model.Nationality)</h4>
+    <p> @Html.DisplayFor(modelItem => item.Nationality)</p>
+    <h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
+    <p>@Html.DisplayFor(modelItem => item.Resume_id)</p>
+    <h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
+    <p>@Html.DisplayFor(modelItem => item.ProfileText)</p>
+
+}
+

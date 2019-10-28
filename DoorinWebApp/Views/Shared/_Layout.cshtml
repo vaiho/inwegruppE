@@ -12,25 +12,42 @@
     <div id="page-container">
         <div id="content-wrap">
 
-            <header class="header">
-                <img id="logo" src="~/Content/images/doorin.png" />
+            
 
-                <div class="header-links">
-                    <h3>Join Now</h3>
-                    <h3 class="around"><a href="signin.html">Sign in</a></h3>
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </div>
                 </div>
-            </header>
+            </div>
 
-            
+
+
+            <div class="container">
                 @RenderBody()
-            
+            </div>
 
         </div>
         <div id="footer">
             <p class="footertext">
-                <img id="footerlogo" src="~/Content/images/doorin.png" />
+                <a href="@Url.Action("Index", "Home")">
+                    <img id="footerlogo" alt="Logo" src="~/Content/images/doorin.png">
+                </a>
                 &copy; 2019 &nbsp;&nbsp;&nbsp;&nbsp;
-                Contact &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Contact", "Contact", "Home")
             </p>
         </div>
 

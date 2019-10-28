@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_justFooter.cshtml";
+}
+
+    <div id="topborder"></div>
+    <h4 class="paddingtop10 marginleft10">@Html.ActionLink("Go back", "Index", "Home")</h4>
+
+            <div class="content-middle">
+                <img class="imgcenter" src="~/Content/images/doorin.png" style="max-width:100px;">
+                <h2 class="center paddingtop10">Welcome back</h2>
+                <h5 class="center ">Please login using your username and password that you created when joining.</h5>
+
+                <form id="commentForm" onsubmit="whenSubmitted()" class="paddingtop20">
+                    <input type="text" id="fname" name="firstname" Value="Username" required>
+                    <input type="text" id="lname" name="lastname" Value="Password" required>
+                    <div class="center paddingtop20">
+                        <input type="submit" value="Sign in as freelancer" style="margin-right:10px;">
+                        <input type="submit" value="Sign in as recruiter" style="margin-top:10px;">
+                    </div>
+                </form>
+                <h4 class="center paddingtop20"><a href="">Forgot password?</a></h4>
+
+            </div>
+

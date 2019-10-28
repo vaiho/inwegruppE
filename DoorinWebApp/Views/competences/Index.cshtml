@@ -13,10 +13,7 @@
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.core)
-        </th>
+        </th>      
         <th></th>
     </tr>
 
@@ -24,10 +21,7 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.core)
-        </td>
+        </td>      
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.competence_id }) |
             @Html.ActionLink("Details", "Details", new { id=item.competence_id }) |

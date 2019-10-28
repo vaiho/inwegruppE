@@ -29,7 +29,7 @@ h5 {
 }
 
 p {
-    color: #BBB;
+    color: #555;
     font-family: Helvetica;
     font-size: calc(12px + 0.5vh);
 }
@@ -37,16 +37,17 @@ p {
 a {
     text-decoration: none;
     color: #09964f;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
 }
 
-    a:hover {
-        color: #2c473d;
-        text-decoration: underline;
-    }
+a:hover {
+    color: #2c473d;
+    text-decoration: underline;
+}
 
 header {
     background: #FFF;
-    height: 80px;
     overflow: hidden;
     margin-top: auto;
     margin-bottom: auto;
@@ -105,6 +106,10 @@ header {
     padding-top: 10px;
 }
 
+.paddingleftright10 {
+padding: 0 10px 0;
+}
+
 .marginleft10 {
     margin-left: 10px;
 }
@@ -150,6 +155,10 @@ header {
     color: #333;
 }
 
+.footertext a:hover {
+text-decoration: none;
+}
+
 #footerlogo {
     max-width: 80px;
     vertical-align: bottom;
@@ -164,14 +173,15 @@ header {
 }
 
 #content-wrap {
-    padding-bottom: 50px;
+    padding-bottom: 45px;
 }
 
 
 
 @media screen and (min-width: 740px) {
+    
     #logo {
-        padding: 0px 10px 10px 10px;
+        padding: 5px 10px 10px 10px;
         float: left;
         max-width: 150px;
     }
@@ -194,7 +204,7 @@ header {
 
 
 input[type=text], input[type=email], input[type=number], select, textarea {
-    width: 94%;
+    width: 100%;
     font-size: 16px;
     padding: 12px;
     border-radius: 3px;
@@ -204,15 +214,52 @@ input[type=text], input[type=email], input[type=number], select, textarea {
     resize: vertical;
 }
 
-input[type=submit] {
+input[type=submit], .btn {
     border-radius: 5px;
     background-color: #09964f;
-    color: white;
+    color: #FFFFFF;
     padding: 12px 20px;
     cursor: pointer;
     font-size: 16px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
 }
 
-    input[type=submit]:hover {
-        background-color: #2c473d;
+input[type=submit]:hover, .btn:hover {
+    background-color: #2c473d;
+    color: #FFFFFF;
+}
+
+button a:visited, button a:link {
+    text-decoration:none;
+    color: #FFFFFF;
+}
+
+
+
+
+
+/*#region Overwrites boostrap theme*/
+
+.navbar-fixed-top {
+position: relative;
+}
+
+@media (min-width: 768px) {
+    .navbar-nav {
+        float: right;
     }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width:1024px;
+    }
+}
+
+.navbar-inverse {
+    background-color: #2c473d;
+    border-color: #FFF;
+}
+
+/*#endregion*/

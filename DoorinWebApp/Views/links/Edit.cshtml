@@ -1,4 +1,4 @@
-﻿@model DoorinWebApp.Models.technology
+﻿@model DoorinWebApp.Models.links
 
 @{
     ViewBag.Title = "Edit";
@@ -12,16 +12,16 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>technology</h4>
+        <h4>links</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.technology_id)
+        @Html.HiddenFor(model => model.link_id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.competence_id, "competence_id", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.resume_id, "resume_id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("competence_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.competence_id, "", new { @class = "text-danger" })
+                @Html.DropDownList("resume_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.resume_id, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -31,7 +31,15 @@
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
             </div>
-        </div>       
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.link, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.link, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.link, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
