@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DoorinWebApp.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +28,16 @@ namespace DoorinWebApp.Viewmodel
         public string City { get; set; }
         [DisplayName("Födelsedatum")]
         public Nullable<System.DateTime> Birthdate { get; set; }
+        
+
+        public List<competence> CompetencesList{ get; set; }
+        public List<FullTechnology> TechnologysList { get; set; }
+
+        public FreelancerProfileVM()
+        {
+            CompetencesList = new List<competence>();
+            TechnologysList = new List<FullTechnology>();
+        }
         [DisplayName("Ålder")]
         public int Age //För att räkna ut en ålder
         {
@@ -46,6 +57,5 @@ namespace DoorinWebApp.Viewmodel
 
             return age;
         }
-
     }
 }

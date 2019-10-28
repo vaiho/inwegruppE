@@ -10,12 +10,15 @@ namespace DoorinWebApp.Models.Operations
 {
     public class FreelancerProfileOperations
     {
-       
+        doorinDBEntities db = new doorinDBEntities();
         public FreelancerProfileVM GetFreelancerProfileById(int? id)
         {
             FreelancerProfileVM fp = new FreelancerProfileVM();
 
+            List<competence> list = new List<competence>();
+
             string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id WHERE freelancer.freelancer_id = @freelancer_id";
+
             //string sql = "SELECT * FROM freelancer WHERE freelancer_id = @freelancer_id";
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -25,10 +28,10 @@ namespace DoorinWebApp.Models.Operations
             builder.InitialCatalog = "doorinDB";
 
 
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (SqlConnection conn = new SqlConnection(builder.ConnectionString))
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(sql, conn))
                 {
                     command.Parameters.AddWithValue("freelancer_id", id);
 
@@ -48,10 +51,70 @@ namespace DoorinWebApp.Models.Operations
                         }
                     }
                 }
-                return fp;
+            }
+
+            GetCompetences(fp, builder);
+            GetTechnology(fp, builder);
+
+            return fp;
+        }
+
+        private void GetCompetences(FreelancerProfileVM fp, SqlConnectionStringBuilder builder)
+        {
+            competence c;
+            string sql2 = "SELECT competence.competence_id, name from competence_resume INNER JOIN competence on competence_resume.competence_id = competence.competence_id WHERE resume_id = @resume_id";
+
+            using (SqlConnection conn2 = new SqlConnection(builder.ConnectionString))
+            {
+                conn2.Open();
+                using (SqlCommand command = new SqlCommand(sql2, conn2))
+                {
+                    command.Parameters.AddWithValue("resume_id", fp.Resume_id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            c = new competence()
+                            {
+                                competence_id = (reader.GetInt32(0)),
+                                name = (reader.GetString(1))
+                            };
+                            fp.CompetencesList.Add(c);
+                        }
+                    }
+                }
             }
         }
-    }
 
-    
+        private void GetTechnology(FreelancerProfileVM fp, SqlConnectionStringBuilder builder)
+        {
+            string sql3 = "SELECT technology.technology_id, technology.name, technology_resume.rank, technology_resume.core_technology, technology.competence_id from technology_resume INNER JOIN technology on technology_resume.technology_id = technology.technology_id WHERE resume_id = @resume_id";
+            FullTechnology t;
+
+            using (SqlConnection conn3 = new SqlConnection(builder.ConnectionString))
+            {
+                conn3.Open();
+                using (SqlCommand command = new SqlCommand(sql3, conn3))
+                {
+                    command.Parameters.AddWithValue("resume_id", fp.Resume_id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            t = new FullTechnology()
+                            {
+                                technology_id = (reader.GetInt32(0)),
+                                name = (reader.GetString(1)),
+                                rank = (reader.GetInt32(2)),
+                                core_technology = (reader.GetBoolean(3)),
+                                competence_id = (reader.GetInt32(4)),
+                            };
+                            fp.TechnologysList.Add(t);
+                        }
+                    }
+                }
+            }
+        }
+
+    }    
 }
