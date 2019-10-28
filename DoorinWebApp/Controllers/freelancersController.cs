@@ -55,9 +55,9 @@ namespace DoorinWebApp.Controllers
         public ActionResult Create()
         {
             // Johan testar
-            var country = GetAllStates();
+            var country = GetCountries();
             var f = new freelancer();
-            // f.country = GetSelectListItems(country); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
+            f.country = GetSelectListItems(country);
 
             return View(f);
         }
@@ -71,9 +71,9 @@ namespace DoorinWebApp.Controllers
         public ActionResult Create([Bind(Include = "freelancer_id,firstname,lastname,address,city,zipcode,phonenumber,email,birthdate,birthcity,nationality,username,password")] freelancer freelancer)
         {
             //Johans test
-            var states = GetAllStates();
+            var countries = GetCountries();
             freelancer fr = new freelancer();
-            freelancer.nationality = GetSelectListItems(states); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
+            freelancer.country = GetSelectListItems(countries); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
             
 
             if (ModelState.IsValid)
@@ -152,7 +152,7 @@ namespace DoorinWebApp.Controllers
             base.Dispose(disposing);
         }
 
-        private IEnumerable<string> GetAllStates()
+        private IEnumerable<string> GetCountries()
         {
             return new List<string>
             {
