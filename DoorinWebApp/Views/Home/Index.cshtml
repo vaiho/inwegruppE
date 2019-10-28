@@ -3,32 +3,44 @@
     Layout = "~/Views/Shared/_justFooter.cshtml";
 }
 
-<header class="header">
-    <a href="@Url.Action("Index", "Home")">
-        <img id="logo" alt="Logo" src="~/Content/images/doorin.png">
-    </a>
 
-    <div class="header-links">
-        <h3>@Html.ActionLink("Join Now", "Join", "Home")</h3>
-        @Html.ActionLink("Log in", "Login", "Home", null, new { @class = "btn" })
+    <header class="header">
+        <div class="container">
+            <a href="@Url.Action("Index", "Home")">
+                <img id="logo" alt="Logo" src="~/Content/images/doorin.png">
+            </a>
+
+            <div class="header-links">
+                <h3>@Html.ActionLink("Join Now", "Join", "Home")</h3>
+                @Html.ActionLink("Log in", "Login", "Home", null, new { @class = "btn" })
+            </div>
+        </div>
+    </header>
+
+
+
+    <div class="textandimage">
+        <img class="imagesfullwidth fourthyvh" src="~/Content/images/computer.jpg">
+        <p class="whitebgtext bgtext">Find job as a freelancer. <br/> Find freelancer to work with.</p>
     </div>
-</header>
 
-<div class="textandimage">
-    <img class="imagesfullwidth fourthyvh" src="~/Content/images/computer.jpg">
-    <p class="whitebgtext bgtextleft">Find job as a freelancer.</p>
-    <p class="whitebgtext bgtextright">Find freelancer to work with.</p>
-</div>
+    <div class="paddingleftright10 container paddingtop20">
+        <h4>
+            Put simply, LinkedIn is a social network for professionals. It's like Facebook for your career.
+        </h4>
+        <p>
+            Whether you're a marketing executive at a major company, a business owner who runs a small 
+            local shop or even a first year college student looking for their first job after graduating, 
+            DoorIn is for anybody and everybody who's interested in taking their professional life more 
+            seriously by looking for new opportunities to grow their careers and to connect with other professionals.
+        </p><br />
+    </div>
 
-<div class="paddingleftright10">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis commodo odio aenean sed. Arcu ac tortor dignissim convallis. Lacus viverra vitae congue eu consequat. Id consectetur purus ut faucibus pulvinar. Non enim praesent elementum facilisis. Eget nunc scelerisque viverra mauris in. Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis. In tellus integer feugiat scelerisque varius morbi enim nunc. Nec feugiat in fermentum posuere urna nec tincidunt praesent. Nibh praesent tristique magna sit amet purus gravida quis. Sit amet luctus venenatis lectus magna fringilla urna porttitor. Pharetra vel turpis nunc eget lorem dolor sed viverra. Diam vel quam elementum pulvinar etiam non quam lacus. Tellus pellentesque eu tincidunt tortor aliquam nulla facilisi cras. Consectetur libero id faucibus nisl tincidunt eget nullam non. Quis risus sed vulputate odio ut enim blandit volutpat maecenas. Quisque sagittis purus sit amet volutpat consequat mauris. Dui ut ornare lectus sit amet est.</p><br /> <br />
-</div>
-
-<div>
-    <h4>Genvägar</h4>
-    @Html.ActionLink("Frilansare", "Index", "freelancers", null, new { @class = "btn" })
-    @Html.ActionLink("Kunder", "Index", "customers", null, new { @class = "btn" })
-    <br />
-    <br />
-    <br />
-</div>
+    <div  class="container">
+        <h4>Genvägar</h4>
+        @Html.ActionLink("Frilansare", "Index", "freelancers", null, new { @class = "btn" })
+        @Html.ActionLink("Kunder", "Index", "customers", null, new { @class = "btn" })
+        <br />
+        <br />
+        <br />
+    </div>
