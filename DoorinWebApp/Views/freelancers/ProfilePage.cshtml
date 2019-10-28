@@ -6,7 +6,7 @@
 
 
 <h2>Profilsida för @Html.DisplayFor(modelItem => Model.Firstname) @Html.DisplayFor(modelItem => Model.Lastname) </h2>
-<p>Data är nu hämtat från 6 tabeller</p>
+<p>Sara, du är mer än välkommen att flytta om och snygga till innehållet på denna sida!</p>
 <br />
 
 <div class="col-md-4">
@@ -32,7 +32,7 @@
     <p>@Model.Resume_id</p>
     <h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
     <p>@Model.ProfileText</p>
-    
+
 </div>
 
 <div class="col-md-4">
@@ -53,21 +53,33 @@
     <h2>Teknologier</h2>
     @foreach (var item in Model.TechnologysList)
     {
-    <p>@Html.DisplayFor(modelItem => item.name) Ranking: @Html.DisplayFor(modelItem => item.rank)</p>
-    <p></p>
+        <p>@Html.DisplayFor(modelItem => item.name) Ranking: @Html.DisplayFor(modelItem => item.rank)</p>
+        <p></p>
     }
 </div>
+<div class="col-lg-12">
+    <br />
+    <br />
+    <br />
+    <br />
 
-<div class="row">
-    <div class="col-md-10">
+</div>
+
+
+<div class="col-lg-12">
+    <div class="col-md-8">
         <p>
             @Html.ActionLink("Tillbaka", "Index")
         </p>
     </div>
-    <div class="ml-auto col-md-2">
-        <p><a class="btn btn-default" href=#> Kontakta mig &raquo; </a></p>
+    <div class="ml-auto col-md-4">
+        <p class="btn">Spara </p>
+        <p class="btn">Kontakta mig &raquo; </p>
     </div>
-
+    <br />
+    <br />
+    <br />
+    <br />
 </div>
 
 

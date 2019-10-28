@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<DoorinWebApp.Models.freelancer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Alla frilansare";
 }
 
-<h2>Freelancers</h2>
+<h2>Alla Frilansare</h2>
 
 <h4>Sortera på kompetenser:</h4>
 <p class="btn">Programmer</p> <p class="btn">Designer</p>
@@ -104,10 +104,10 @@
                     @Html.DisplayFor(modelItem => item.password)
                 </td>*@
             <td>
-                @Html.ActionLink("Ändra", "Edit", new { id = item.freelancer_id }) |
+                @*@Html.ActionLink("Ändra", "Edit", new { id = item.freelancer_id }) |
                 @Html.ActionLink("Detaljer", "Details", new { id = item.freelancer_id }) |
-                @Html.ActionLink("Radera", "Delete", new { id = item.freelancer_id }) |
-                @Html.ActionLink("Profil", "ProfilePage", new { id = item.freelancer_id }) |
+                @Html.ActionLink("Radera", "Delete", new { id = item.freelancer_id }) |*@
+                @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.freelancer_id })
                 @*@Html.ActionLink("Profil", "Index", "FreelancerProfilesController", null, new { id = item.freelancer_id })*@
             </td>
         </tr>
