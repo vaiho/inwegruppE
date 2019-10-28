@@ -55,6 +55,11 @@ header {
     border-bottom: 0.5px solid #ccc;
 }
 
+#headerlogo {
+max-height: 40px;
+margin-top:5px;
+}
+
 .active {
     background-color: rgba(34,34,34,0.8);
 }
@@ -178,7 +183,10 @@ text-decoration: none;
 
 
 
-@media screen and (min-width: 740px) {
+
+/*#region Saker som ska ändras om skärmen är större än 768px*/
+
+@media screen and (min-width: 768px) {
     
     #logo {
         padding: 5px 10px 10px 10px;
@@ -196,6 +204,9 @@ text-decoration: none;
         margin-top: 10vh;
     }
 }
+
+
+/*#endregion*/
 
 
 
@@ -263,6 +274,16 @@ position: relative;
 }
 
 .navbar-inverse .navbar-nav > li > a {
+    color: #FFFFFF;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
 }
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    text-decoration: underline;
+    color: #eee; 
+}
+
+
 
 /*#endregion*/

@@ -196,6 +196,7 @@
     <Content Include="Content\images\computer.jpg" />
     <Content Include="Content\images\doorin.png" />
     <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\in.png" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
