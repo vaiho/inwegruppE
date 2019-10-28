@@ -14,6 +14,8 @@ img {
     height: auto;
 }
 
+/*#region Style h2, h3, h5, p, a, a:hover, centrera text*/
+
 h2 {
     font-size: calc(12px + 1.8vh);
 }
@@ -46,6 +48,114 @@ a:hover {
     text-decoration: underline;
 }
 
+.center {
+    text-align: center;
+}
+
+/*#endregion*/
+
+
+
+/*#region padding och margins*/
+
+.paddingtop20 {
+    padding-top: 20px;
+}
+
+.paddingtop10 {
+    padding-top: 10px;
+}
+
+.paddingleftright10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.marginleft10 {
+    margin-left: 10px;
+}
+
+/*#endregion*/
+
+
+
+.around {
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+.active {
+    background-color: rgba(34,34,34,0.8);
+}
+
+.content-middle {
+    padding: 20px;
+    max-width: 500px;
+    display: block;
+    margin: auto;
+}
+
+.imgcenter {
+    display: block;
+    margin: auto;
+}
+
+.imagesfullwidth {
+    width: 100%;
+    object-fit: cover;
+}
+
+
+/*#region Sök och filtrera styles*/
+
+#searchbtn {
+    max-width:49px;
+    background-color: #09964f;
+    padding: 3px 3px;
+    cursor: pointer;
+    margin-left:-5px;
+    margin-top:-4px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+#searchbtn:hover {
+    background-color: #2c473d;
+}
+
+#filterbtn img {
+    max-width:45px;
+}
+
+#filterbtn {
+    width:125px;
+    color: #2c473d;
+    padding: 0px 3px;
+    border: 2px solid #2c473d;
+    border-radius: 5px;
+    margin-top: 6px;
+    font-size: 20px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+#filterbtn:hover {
+    background-color: #09964f; 
+    color: #FFF;
+    border: 2px solid #ddd;
+}
+
+#search {
+border-radius:0px;
+width: 70%;
+}
+
+/*#endregion*/
+
+
+
+/*#region Header saker*/
 header {
     background: #FFF;
     overflow: hidden;
@@ -56,12 +166,8 @@ header {
 }
 
 #headerlogo {
-max-height: 40px;
-margin-top:5px;
-}
-
-.active {
-    background-color: rgba(34,34,34,0.8);
+    max-height: 40px;
+    margin-top: 5px;
 }
 
 .header-links h3 {
@@ -82,48 +188,11 @@ margin-top:5px;
     border: 6px solid #2c473d;
 }
 
-.around {
-    border-radius: 5px;
-    border: 1px solid #333;
-}
+/*#endregion*/
 
-.content-middle {
-    padding: 20px;
-    max-width: 500px;
-    display: block;
-    margin: auto;
-}
 
-.imgcenter {
-    display: block;
-    margin: auto;
-}
 
-.center {
-    text-align: center;
-}
-
-.paddingtop20 {
-    padding-top: 20px;
-}
-
-.paddingtop10 {
-    padding-top: 10px;
-}
-
-.paddingleftright10 {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.marginleft10 {
-    margin-left: 10px;
-}
-
-.imagesfullwidth {
-    width: 100%;
-    object-fit: cover;
-}
+/*#region Saker på startsidan*/
 
 .fourthyvh {
     height: 40vh;
@@ -149,6 +218,12 @@ margin-top:5px;
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+/*#endregion*/
+
+
+
+/*#region Footer style och så att den alltid stannar längst ner*/
 
 #footer {
     position: absolute;
@@ -188,6 +263,7 @@ text-decoration: none;
     padding-bottom: 45px;
 }
 
+/*#endregion*/
 
 
 
@@ -210,16 +286,24 @@ text-decoration: none;
     .content-middle {
         margin-top: 10vh;
     }
-}
 
+    .box {
+        border: 1px solid #ddd;
+        padding: 15px 15px;
+        box-shadow: 0px 0px 5px 1px #ddd;
+    }
+
+    #filterbtn {
+        float: right;
+    }
+
+}
 
 /*#endregion*/
 
 
 
-
-
-
+/*#region Style för input från inloggningen*/
 
 input[type=text], input[type=email], input[type=number], select, textarea {
     width: 100%;
@@ -253,7 +337,7 @@ button a:visited, button a:link {
     color: #FFFFFF;
 }
 
-
+/*#endregion*/
 
 
 
