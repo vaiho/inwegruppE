@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using DoorinWebApp.Models;
@@ -9,105 +10,44 @@ namespace DoorinWebApp.Models.Operations
 {
     public class FreelancerProfileOperations
     {
-        public List<FreelancerProfileVM> GetProfileDetails()
+       
+        public FreelancerProfileVM GetFreelancerProfileById(int? id)
         {
-            doorinDBEntities db = new doorinDBEntities();
-            List<FreelancerProfileVM> list = new List<FreelancerProfileVM>();
-            var studentlist = (from fr in db.freelancer
-                               join res in db.resume on fr.freelancer_id equals 
-                               res.freelancer_id select new
-                               {
-                                fr.freelancer_id,
-                                 fr.firstname,
-                                 fr.lastname,
-                                 fr.email,
-                                 fr.nationality,
-                                 res.resume_id,
-                                 res.profile }).ToList();
-            foreach (var item in studentlist)
-            {
-                FreelancerProfileVM fp = new FreelancerProfileVM();
-                fp.Freelancer_id = item.freelancer_id;
-                fp.Firstname = item.firstname;
-                fp.Lastname = item.lastname;
-                fp.Email = item.email;
-                fp.Nationality = item.nationality;
-                fp.Resume_id = item.resume_id;
-                fp.ProfileText = item.profile;
-                list.Add(fp);
-            }
-
-            return list;
-        }
-        public List<FreelancerProfileVM> GetProfile(int? id) //Returnerar en lista med en freelancer och dennes CV. Ska göras om så den returnerar ett objekt av personen istället
-        {
-            // För test
-            doorinDBEntities db = new doorinDBEntities();
-            List<FreelancerProfileVM> list = new List<FreelancerProfileVM>();
-            var studentlist = (from fr in db.freelancer
-                               join res in db.resume on fr.freelancer_id equals
-                               res.freelancer_id
-                               select new
-                               {
-                                   fr.freelancer_id,
-                                   fr.firstname,
-                                   fr.lastname,
-                                   fr.email,
-                                   fr.nationality,
-                                   res.resume_id,
-                                   res.profile
-                               }).ToList();
-            foreach (var item in studentlist)
-            {
-                FreelancerProfileVM fp = new FreelancerProfileVM();
-                if (item.freelancer_id == id)
-                {
-                    fp.Freelancer_id = item.freelancer_id;
-                    fp.Firstname = item.firstname;
-                    fp.Lastname = item.lastname;
-                    fp.Email = item.email;
-                    fp.Nationality = item.nationality;
-                    fp.Resume_id = item.resume_id;
-                    fp.ProfileText = item.profile;
-                    list.Add(fp);
-                }             
-            }
-            return list;
-        }
-        public FreelancerProfileVM GetFreelancer(int? id) //Returnerar ett objekt med en freelancer och dennes CV. Ska göras om
-        {
-            doorinDBEntities db = new doorinDBEntities();
             FreelancerProfileVM fp = new FreelancerProfileVM();
-            List<FreelancerProfileVM> list = new List<FreelancerProfileVM>();
-            var studentlist = (from fr in db.freelancer
-                               join res in db.resume on fr.freelancer_id equals
-                               res.freelancer_id
-                               select new
-                               {
-                                   fr.freelancer_id,
-                                   fr.firstname,
-                                   fr.lastname,
-                                   fr.email,
-                                   fr.nationality,
-                                   res.resume_id,
-                                   res.profile
-                               }).ToList();
-            foreach (var item in studentlist)
+
+            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id WHERE freelancer.freelancer_id = @freelancer_id";
+            //string sql = "SELECT * FROM freelancer WHERE freelancer_id = @freelancer_id";
+
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "doorin.database.windows.net";
+            builder.UserID = "doorinadmin";
+            builder.Password = "Secretpassword123!";
+            builder.InitialCatalog = "doorinDB";
+
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                
-                if (item.freelancer_id == id)
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    fp.Freelancer_id = item.freelancer_id;
-                    fp.Firstname = item.firstname;
-                    fp.Lastname = item.lastname;
-                    fp.Email = item.email;
-                    fp.Nationality = item.nationality;
-                    fp.Resume_id = item.resume_id;
-                    fp.ProfileText = item.profile;
-                    //list.Add(fp);
+                    command.Parameters.AddWithValue("freelancer_id", id);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            fp.Freelancer_id = reader.GetInt32(0);
+                            fp.Firstname = reader.GetString(1);
+                            fp.Lastname = reader.GetString(2);
+                            fp.Resume_id = reader.GetInt32(3);
+                            fp.ProfileText = reader.GetString(4);
+                        }
+                    }
                 }
+                return fp;
             }
-            return fp;
         }
     }
+
+    
 }

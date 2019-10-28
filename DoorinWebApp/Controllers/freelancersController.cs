@@ -38,16 +38,9 @@ namespace DoorinWebApp.Controllers
 
         public ActionResult ProfilePage(int? id) //Vill egentligen inte att denna ska ligga här, utan i "FreelancerProfilesController"
         {
-            
-            //freelancer freelancer = db.freelancer.Find(id);
-            //return View(freelancer);
-            //int id = 3;
-            //freelancer freelancer = db.freelancer.Find(id);
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
 
-            //return View(fpop.GetProfileDetails()); //Test
-            //return View(fpop.GetProfile(id)); //Test
-            return View(fpop.GetFreelancer(id));
+            return View(fpop.GetFreelancerProfileById(id));
         }
 
 
