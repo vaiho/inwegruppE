@@ -11,6 +11,8 @@ namespace DoorinWebApp.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
     public partial class freelancer
@@ -23,23 +25,59 @@ namespace DoorinWebApp.Models
         }
     
         public int freelancer_id { get; set; }
+        [DisplayName("Förnamn")]
+        [Required(ErrorMessage = "Vänligen fyll i ett förnamn")]
         public string firstname { get; set; }
+        [DisplayName("Efternamn")]
+        [Required(ErrorMessage = "Vänligen fyll i ett efternamn")]
         public string lastname { get; set; }
+        [DisplayName("Adress")]
         public string address { get; set; }
+        [DisplayName("Ort")]
         public string city { get; set; }
+        [DisplayName("Postkod")]
         public string zipcode { get; set; }
+        [DisplayName("Telefonnummer")]
         public string phonenumber { get; set; }
+        [DisplayName("Epostadress")]
+        [Required(ErrorMessage = "Vänligen fyll i en epostadress")]
         public string email { get; set; }
+        [DisplayName("Födelsedatum")]
         public Nullable<System.DateTime> birthdate { get; set; }
+        [DisplayName("Födelseort")]
         public string birthcity { get; set; }
+        [DisplayName("Nationalitet")]
+        [Required(ErrorMessage = "Vänligen ange nationalitet")]
         public string nationality { get; set; }
+        [DisplayName("Användarnamn")]
+        [Required(ErrorMessage = "Vänligen fyll i ett användarnamn")]
         public string username { get; set; }
+        [DisplayName("Lösenord")]
+        [Required(ErrorMessage = "Vänligen fyll i ett lösenord")]
         public string password { get; set; }
-        public IEnumerable<SelectListItem> country { get; set; }
+        [DisplayName("Nationalitet")]
+        public IEnumerable<SelectListItem> country { get; set; } //För att skapa en lista av valbara nationalitet
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customer> customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<resume> resume { get; set; }
+
+
+        //OLD
+        //public int freelancer_id { get; set; }
+        //public string firstname { get; set; }
+        //public string lastname { get; set; }
+        //public string address { get; set; }
+        //public string city { get; set; }
+        //public string zipcode { get; set; }
+        //public string phonenumber { get; set; }
+        //public string email { get; set; }
+        //public Nullable<System.DateTime> birthdate { get; set; }
+        //public string birthcity { get; set; }
+        //public string nationality { get; set; }
+        //public string username { get; set; }
+        //public string password { get; set; }
+        //public IEnumerable<SelectListItem> country { get; set; }
     }
 }

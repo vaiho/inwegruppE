@@ -41,6 +41,7 @@ namespace DoorinWebApp.Models.Operations
         }
         public List<FreelancerProfileVM> GetProfile(int? id) //Returnerar en lista med en freelancer och dennes CV. Ska göras om så den returnerar ett objekt av personen istället
         {
+            // För test
             doorinDBEntities db = new doorinDBEntities();
             List<FreelancerProfileVM> list = new List<FreelancerProfileVM>();
             var studentlist = (from fr in db.freelancer
@@ -73,7 +74,7 @@ namespace DoorinWebApp.Models.Operations
             }
             return list;
         }
-        public FreelancerProfileVM GetFreelancer(int? id) //Returnerar en lista med en freelancer och dennes CV. Ska göras om så den returnerar ett objekt av personen istället
+        public FreelancerProfileVM GetFreelancer(int? id) //Returnerar ett objekt med en freelancer och dennes CV. Ska göras om
         {
             doorinDBEntities db = new doorinDBEntities();
             FreelancerProfileVM fp = new FreelancerProfileVM();
