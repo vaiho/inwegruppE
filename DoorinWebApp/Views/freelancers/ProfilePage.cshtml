@@ -1,12 +1,4 @@
-﻿@*@model DoorinWebApp.Models.freelancer
-
-    @{
-        ViewBag.Title = "Details";
-    }
-
-    <h2> @Model.firstname @Model.lastname</h2>*@
-@*@model IEnumerable<DoorinWebApp.Viewmodel.FreelancerProfileVM>*@
-@model DoorinWebApp.Viewmodel.FreelancerProfileVM
+﻿@model DoorinWebApp.Viewmodel.FreelancerProfileVM
 
 @{
     ViewBag.Title = "Profilsida";
@@ -18,6 +10,7 @@
 <br />
 
 <div class="col-md-4">
+    <h2>Om mig</h2>
     <h4>@Html.DisplayNameFor(model => model.Firstname)</h4>
     <p>@Html.DisplayFor(modelItem => Model.Firstname)</p>
     <h4> @Html.DisplayNameFor(model => model.Lastname)</h4>
@@ -27,13 +20,13 @@
 
     <h4>@Html.DisplayNameFor(model => model.Nationality)</h4>
     <p> @Html.DisplayFor(modelItem => Model.Nationality)</p>
-    <h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
-    <p>@Html.DisplayFor(modelItem => Model.Resume_id)</p>
-    <h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
-    <p>@Html.DisplayFor(modelItem => Model.ProfileText)</p>
+    <h4>@Html.DisplayNameFor(model => model.City)</h4>
+    <p> @Html.DisplayFor(modelItem => Model.City)</p>
+    <h4>@Html.DisplayNameFor(model => model.Age)</h4>
+    <p> @Html.DisplayFor(modelItem => Model.Age) år</p>
 </div>
 <div class="col-md-4">
-    <h2>Om mig</h2>
+    <h2>CV</h2>
 
     <h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
     <p>@Model.Resume_id</p>

@@ -15,7 +15,7 @@ namespace DoorinWebApp.Models.Operations
         {
             FreelancerProfileVM fp = new FreelancerProfileVM();
 
-            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id WHERE freelancer.freelancer_id = @freelancer_id";
+            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id WHERE freelancer.freelancer_id = @freelancer_id";
             //string sql = "SELECT * FROM freelancer WHERE freelancer_id = @freelancer_id";
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -41,6 +41,10 @@ namespace DoorinWebApp.Models.Operations
                             fp.Lastname = reader.GetString(2);
                             fp.Resume_id = reader.GetInt32(3);
                             fp.ProfileText = reader.GetString(4);
+                            fp.Email = reader.GetString(5);
+                            fp.Nationality = reader.GetString(6);
+                            fp.City = reader.GetString(7);
+                            fp.Birthdate = reader.GetDateTime(8);
                         }
                     }
                 }

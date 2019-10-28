@@ -22,7 +22,7 @@ namespace DoorinWebApp.Controllers
 
             //return View(fpop.GetProfileDetails());
             //return View(fpop.GetProfile(id));
-            return View(fpop.GetFreelancer(id));
+            return View(fpop.GetFreelancerProfileById(id));
         }
 
     }
