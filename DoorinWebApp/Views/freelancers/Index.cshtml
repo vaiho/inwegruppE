@@ -4,7 +4,21 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Freelancers</h2>
+
+<h4>Sortera på kompetenser:</h4>
+<p class="btn">Programmer</p> <p class="btn">Designer</p>
+
+<br />
+<br />
+
+<h4>Sortera på teknologier:</h4>
+<p class="btn">C#</p> <p class="btn">Javascript</p> <p class="btn">Adobe Illustrator</p> <p class="btn">Word</p>
+
+<br />
+<br />
+<br />
+
 
 <p>
     @Html.ActionLink("Skapa ny", "Create")
@@ -33,8 +47,8 @@
             @Html.DisplayNameFor(model => model.email)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.birthdate)
-        </th>*@
+                @Html.DisplayNameFor(model => model.birthdate)
+            </th>*@
         @*<th>
                 @Html.DisplayNameFor(model => model.birthcity)
             </th>*@
@@ -75,8 +89,8 @@
                 @Html.DisplayFor(modelItem => item.email)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.birthdate)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.birthdate)
+                </td>*@
             @*<td>
                     @Html.DisplayFor(modelItem => item.birthcity)
                 </td>*@
@@ -97,7 +111,7 @@
                 @*@Html.ActionLink("Profil", "Index", "FreelancerProfilesController", null, new { id = item.freelancer_id })*@
             </td>
         </tr>
-        
+
     }
 
 </table>

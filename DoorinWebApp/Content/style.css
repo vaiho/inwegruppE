@@ -262,4 +262,7 @@ position: relative;
     border-color: #FFF;
 }
 
+.navbar-inverse .navbar-nav > li > a {
+}
+
 /*#endregion*/
