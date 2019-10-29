@@ -1,6 +1,7 @@
 ﻿using DoorinWebApp.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,7 @@ namespace DoorinWebApp.Viewmodel
     { 
         public int Resume_id { get; set; }
         public int Freelancer_id { get; set; }
+        [Key]
         public string Name { get; set; }
         public string Driving_license { get; set; }
         public string Profile { get; set; }
@@ -28,5 +30,14 @@ namespace DoorinWebApp.Viewmodel
         public string Birthcity { get; set; }
         public string Nationality { get; set; }
 
+        public FullResume()
+        {
+            Competences = new List<competence>();
+            MyCompetences = new List<competence>();
+            Technologies = new List<technology>();
+            MyTechnologies = new List<FullTechnology>();
+        }
+
     }
+
 }
