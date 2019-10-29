@@ -55,6 +55,8 @@ namespace DoorinWebApp.Models
         [DisplayName("Lösenord")]
         [Required(ErrorMessage = "Vänligen fyll i ett lösenord")]
         public string password { get; set; }
+        [DisplayName("Namn")]
+        public string fullname => $"{firstname} {lastname}";
         [DisplayName("Nationalitet")]
         public IEnumerable<SelectListItem> country { get; set; } //För att skapa en lista av valbara nationalitet
 

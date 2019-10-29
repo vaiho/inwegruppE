@@ -28,7 +28,11 @@ namespace DoorinWebApp.Viewmodel
         public string City { get; set; }
         [DisplayName("Födelsedatum")]
         public Nullable<System.DateTime> Birthdate { get; set; }
-        
+        public string Address { get; set; }
+        public string Zipcode { get; set; }
+        public string Username { get; set; }
+        public string Fullname => $"{Firstname} {Lastname}";
+
 
         public List<competence> CompetencesList{ get; set; }
         public List<FullTechnology> TechnologysList { get; set; }

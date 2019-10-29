@@ -5,7 +5,7 @@
 }
 
 <div class="box">
-    <input type="text" id="search" Value="Search">
+    <input type="text" id="search" placeholder="Sök här" >
     <img id="searchbtn" src="~/Content/images/search.png" />
     <div id="filterbtn">
         <img src="~/Content/images/filter.png" />
@@ -29,12 +29,12 @@
 <br />
 
 
-<p>
+@*<p>
     @Html.ActionLink("Skapa ny", "Create")
-</p>
+</p>*@
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.firstname)
         </th>
         <th>
@@ -43,83 +43,91 @@
         <th>
             @Html.DisplayNameFor(model => model.address)
         </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.city)
-        </th>
-        @*<th>
                 @Html.DisplayNameFor(model => model.zipcode)
-            </th>*@
+            </th>
         <th>
             @Html.DisplayNameFor(model => model.phonenumber)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.fullname)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.email)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
         @*<th>
-                @Html.DisplayNameFor(model => model.birthdate)
-            </th>*@
+            @Html.DisplayNameFor(model => model.birthdate)
+        </th>*@
         @*<th>
-                @Html.DisplayNameFor(model => model.birthcity)
-            </th>*@
+            @Html.DisplayNameFor(model => model.birthcity)
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.nationality)
         </th>
         @*<th>
-                @Html.DisplayNameFor(model => model.username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.password)
-            </th>*@
+            @Html.DisplayNameFor(model => model.username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.password)
+        </th>*@
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.lastname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.city)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.zipcode)
-                </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.phonenumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.birthdate)
-                </td>*@
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.birthcity)
-                </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.nationality)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.username)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.password)
-                </td>*@
-            <td>
-                @*@Html.ActionLink("Ändra", "Edit", new { id = item.freelancer_id }) |
-                @Html.ActionLink("Detaljer", "Details", new { id = item.freelancer_id }) |
-                @Html.ActionLink("Radera", "Delete", new { id = item.freelancer_id }) |*@
-                @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.freelancer_id })
-                @*@Html.ActionLink("Profil", "Index", "FreelancerProfilesController", null, new { id = item.freelancer_id })*@
-            </td>
-        </tr>
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lastname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.fullname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.city)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.zipcode)
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.phonenumber)
+        </td>*@
+
+        @*<td>
+            @Html.DisplayFor(modelItem => item.birthdate)
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.birthcity)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.nationality)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.password)
+        </td>*@
+        <td>
+            @*@Html.ActionLink("Ändra", "Edit", new { id = item.freelancer_id }) |
+            @Html.ActionLink("Detaljer", "Details", new { id = item.freelancer_id }) |
+            @Html.ActionLink("Radera", "Delete", new { id = item.freelancer_id }) |*@
+            @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.freelancer_id })
+            @*@Html.ActionLink("Profil", "Index", "FreelancerProfilesController", null, new { id = item.freelancer_id })*@
+        </td>
+    </tr>
 
     }
 
