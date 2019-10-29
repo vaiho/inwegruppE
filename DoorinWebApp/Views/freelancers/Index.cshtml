@@ -35,42 +35,10 @@
 </p>*@
 <table class="table">
     <tr>
-        @*<th>
-            @Html.DisplayNameFor(model => model.firstname)
-        </th>
         <th>
-            @Html.DisplayNameFor(model => model.lastname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.address)
-        </th>
-
-        <th>
-                @Html.DisplayNameFor(model => model.zipcode)
-            </th>
-        <th>
-            @Html.DisplayNameFor(model => model.phonenumber)
-        </th>*@
-        <th>
-            @*@Html.DisplayNameFor(model => model.Fullname)*@
             Namn
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.email)
-
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.city)
-            Stad
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.birthdate)
-        </th>*@
-        @*<th>
-            @Html.DisplayNameFor(model => model.birthcity)
-        </th>*@
         <th>
-            @*@Html.DisplayNameFor(model => model.nationality)*@
             Nationalitet
         </th>
         <th>
@@ -79,79 +47,33 @@
         <th>
             Teknologier
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.password)
-        </th>*@
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
     <tr>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.address)
-        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Fullname)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.zipcode)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.phonenumber)
-        </td>*@
-
-        @*<td>
-            @Html.DisplayFor(modelItem => item.birthdate)
-        </td>*@
-        @*<td>
-            @Html.DisplayFor(modelItem => item.birthcity)
-        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Nationality)
         </td>
         <td>
             @foreach (var x in item.CompetencesList)
             {
-                @Html.DisplayFor(modelItem => x.name)
-                <span> </span>
+            <span>@Html.DisplayFor(modelItem => x.name),</span>
             }
         </td>
         <td>
             @foreach (var x in item.TechnologysList)
             {
-                @Html.DisplayFor(modelItem => x.name) 
-                <span> </span>
+            <span>@Html.DisplayFor(modelItem => x.name), </span>
             }
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.username)
-        </td>
         <td>
-            @Html.DisplayFor(modelItem => item.password)
-        </td>*@
-        <td>
-            @*@Html.ActionLink("Ändra", "Edit", new { id = item.freelancer_id }) |
-        @Html.ActionLink("Detaljer", "Details", new { id = item.freelancer_id }) |
-        @Html.ActionLink("Radera", "Delete", new { id = item.freelancer_id }) |*@
-            @Html.ActionLink("Spara", "ProfilePage", new { id = item.Freelancer_id }) |
+            @Html.ActionLink("Spara |", "ProfilePage", new { id = item.Freelancer_id }) 
             @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
-            @*@Html.ActionLink("Profil", "Index", "FreelancerProfilesController", null, new { id = item.freelancer_id })*@
         </td>
     </tr>
 

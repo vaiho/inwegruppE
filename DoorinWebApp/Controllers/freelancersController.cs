@@ -68,7 +68,7 @@ namespace DoorinWebApp.Controllers
             //Johans test
             var countries = GetCountries();
             freelancer fr = new freelancer();
-            freelancer.country = GetSelectListItems(countries); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
+            freelancer.country = GetSelectListItems(countries); 
             
 
             if (ModelState.IsValid)
