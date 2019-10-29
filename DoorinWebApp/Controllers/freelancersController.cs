@@ -18,7 +18,9 @@ namespace DoorinWebApp.Controllers
         // GET: freelancers
         public ActionResult Index()
         {
-            return View(db.freelancer.ToList());
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            //return View(db.freelancer.ToList());
+            return View(fpop.GetFreelancersList());
         }
 
         // GET: freelancers/Details/5
@@ -36,7 +38,7 @@ namespace DoorinWebApp.Controllers
             return View(freelancer);
         }
 
-        public ActionResult ProfilePage(int? id) //Vill egentligen inte att denna ska ligga här, utan i "FreelancerProfilesController"
+        public ActionResult ProfilePage(int? id) 
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
 
@@ -50,7 +52,7 @@ namespace DoorinWebApp.Controllers
             // Johan testar
             var country = GetCountries();
             var f = new freelancer();
-            //f.country = GetSelectListItems(country);
+            f.country = GetSelectListItems(country);
 
             return View(f);
         }
@@ -66,7 +68,7 @@ namespace DoorinWebApp.Controllers
             //Johans test
             var countries = GetCountries();
             freelancer fr = new freelancer();
-           // freelancer.country = GetSelectListItems(countries); //TODO: Kommenterar bort så det går att bygga. Det har ändrats i databasen.
+            freelancer.country = GetSelectListItems(countries); 
             
 
             if (ModelState.IsValid)
@@ -156,6 +158,7 @@ namespace DoorinWebApp.Controllers
                 "DEN",
                 "RUS",
                 "USA",
+                "ENG"
             };
         }
 
