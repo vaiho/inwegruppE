@@ -40,7 +40,8 @@ namespace DoorinWebApp.Models
         [DisplayName("Telefonnummer")]
         public string phonenumber { get; set; }
         [DisplayName("Epostadress")]
-        [Required(ErrorMessage = "Vänligen fyll i en epostadress")]
+        [Required(ErrorMessage = "Vänligen fyll i en korrekt epostadress")]
+        [EmailAddress]
         public string email { get; set; }
         [DisplayName("Födelsedatum")]
         public Nullable<System.DateTime> birthdate { get; set; }

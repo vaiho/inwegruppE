@@ -18,7 +18,9 @@ namespace DoorinWebApp.Controllers
         // GET: freelancers
         public ActionResult Index()
         {
-            return View(db.freelancer.ToList());
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            //return View(db.freelancer.ToList());
+            return View(fpop.GetFreelancersList());
         }
 
         // GET: freelancers/Details/5
@@ -36,7 +38,7 @@ namespace DoorinWebApp.Controllers
             return View(freelancer);
         }
 
-        public ActionResult ProfilePage(int? id) //Vill egentligen inte att denna ska ligga här, utan i "FreelancerProfilesController"
+        public ActionResult ProfilePage(int? id) 
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
 

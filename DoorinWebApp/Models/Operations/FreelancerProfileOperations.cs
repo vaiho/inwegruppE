@@ -46,6 +46,7 @@ namespace DoorinWebApp.Models.Operations
             }
             GetCompetences(fp); //Hämtar och sparar kompetenser
             GetTechnology(fp); //Hämtar och sparar teknologier
+            GetFreelancersList();
 
             return fp;
         }
@@ -117,5 +118,48 @@ namespace DoorinWebApp.Models.Operations
 
             return builder;
         }
+
+        public List<FreelancerProfileVM> GetFreelancersList()
+        {
+            FreelancerProfileVM fp;
+            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate, address, zipcode, username from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id";
+            List<FreelancerProfileVM> list = new List<FreelancerProfileVM>();
+
+            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(sql, conn))
+                {
+                    //command.Parameters.AddWithValue("resume_id", fp.Resume_id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            fp = new FreelancerProfileVM()
+                            {
+                                Freelancer_id = reader.GetInt32(0),
+                                Firstname = reader.GetString(1),
+                                Lastname = reader.GetString(2),
+                                Resume_id = reader.GetInt32(3),
+                                ProfileText = reader.GetString(4),
+                                Email = reader.GetString(5),
+                                Nationality = reader.GetString(6),
+                                City = reader.GetString(7),
+                                Birthdate = reader.GetDateTime(8),
+                                Address = reader.GetString(9),
+                                Zipcode = reader.GetString(10),
+                                Username = reader.GetString(11),
+                            };
+                            GetCompetences(fp); //Hämtar och sparar kompetenser
+                            GetTechnology(fp); //Hämtar och sparar teknologier
+                            list.Add(fp);
+                        }
+                    }
+                }
+            }
+
+            return list;
+        }
+
     }    
 }
