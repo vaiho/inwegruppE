@@ -74,7 +74,12 @@ namespace DoorinWebApp.Controllers
             if (ModelState.IsValid)
             {
                 db.freelancer.Add(freelancer);
+                resume r = new resume();
+                r.profile = "";
+                r.freelancer_id = freelancer.freelancer_id;
+                db.resume.Add(r);
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
 
