@@ -13,37 +13,39 @@ namespace DoorinWebApp.Models.Operations
         doorinDBEntities db = new doorinDBEntities();
         public FullResume GetFullResumeById(int? id) //Metod för att hämta information om en freelancer
         {
-            FullResume fullResume = new FullResume();
-            /* string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, " +
-               "nationality, city, birthdate, resume.driving_license, resume.profile from freelancer" +
-               "INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id" +
-               "WHERE freelancer.freelancer_id = @freelancer_id";
+           FullResume fullResume = new FullResume();
+            /*string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, " +
+                "nationality, city, birthdate, resume.driving_license, resume.profile from freelancer" +
+                "INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id" +
+                "WHERE freelancer.freelancer_id = @freelancer_id";
 
-           using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
-           {
-               conn.Open();
-               using (SqlCommand command = new SqlCommand(sql, conn))
-               {
-                   command.Parameters.AddWithValue("freelancer_id", id);
-                   using (SqlDataReader reader = command.ExecuteReader())
-                   {
-                       while (reader.Read())
-                       {
-                           fullResume.Freelancer_id = reader.GetInt32(0);
-                           fullResume.Firstname = reader.GetString(1);
-                           fullResume.Lastname = reader.GetString(2);
-                           fullResume.Resume_id = reader.GetInt32(3);
-                           fullResume.Profile = reader.GetString(4);
-                           fullResume.Email = reader.GetString(5);
-                           fullResume.Nationality = reader.GetString(6);
-                           fullResume.City = reader.GetString(7);
-                           fullResume.Birthdate = reader.GetDateTime(8);
-                           fullResume.Driving_license = reader.GetString(9);
-                           fullResume.Profile = reader.GetString(10);
-                       }
-                   }
-               }
-           }*/
+            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(sql, conn))
+                {
+                    command.Parameters.AddWithValue("freelancer_id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            fullResume.Freelancer_id = reader.GetInt32(0);
+                            fullResume.Firstname = reader.GetString(1);
+                            fullResume.Lastname = reader.GetString(2);
+                            fullResume.Resume_id = reader.GetInt32(3);
+                            fullResume.Profile = reader.GetString(4);
+                            fullResume.Email = reader.GetString(5);
+                            fullResume.Nationality = reader.GetString(6);
+                            fullResume.City = reader.GetString(7);
+                            fullResume.Birthdate = reader.GetDateTime(8);
+                            fullResume.Driving_license = reader.GetString(9);
+                            fullResume.Profile = reader.GetString(10);
+                        }
+                    }
+                }
+            }*/
+            // ska inte stå med här, men eftersom det ovan är bortkommenterat så tilldelar jag reusme_id här
+            fullResume.Resume_id = 1;
             GetMyCompetences(fullResume); //Hämtar och sparar frilansarens kompetenser
             GetMyTechnology(fullResume); //Hämtar och sparar frilansarens teknologier
             GetCompetenceList(fullResume); //Hämtar den fördiga listan av kompetenser
@@ -73,7 +75,7 @@ namespace DoorinWebApp.Models.Operations
                                 competence_id = (reader.GetInt32(0)),
                                 name = (reader.GetString(1))
                             };
-                            fullResume.Competences.Add(c);
+                            fullResume.MyCompetences.Add(c);
                         }
                     }
                 }

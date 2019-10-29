@@ -11,87 +11,99 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>resume</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Resume_id)
+    <div class="form-horizontal">
+        <h4>resume</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(@Model => @Model.Resume_id)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Freelancer_id, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(@Model => @Model.Name, "Namn", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Name", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(@Model => @Model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(@Model => @Model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(@Model => @Model.Driving_license, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(@Model => @Model.Driving_license, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div>
+            <p><b>Lägg till kompetenser</b></p>
+
+            <select class="form-control" id="Competences" name="Competences">
+                @foreach (var item in Model.Competences)
+                {
+                    <option> @item.name </option>
+                }
+            </select>
+        </div>
+        <div id="AddMyCompetences">
+            <p><b>Mina kompetenser</b></p>
+
+            <select class="form-control">
+                @foreach (var item in Model.MyCompetences)
+                {
+                    <option> @item.name </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Driving_license, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Driving_license, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Profile, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Profile, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div>
-        <p><b>Lägg till kompetenser</b></p>
-
-        <select class="form-control" id="Competences" name="Competences">
-            @foreach (var item in Model.Competences)
-            {
-                <option name="option" Html.ActionLink("option", "AddMyCompetences" , "resumesController" , new { competence=@item , fullResume=@Model })> @item.name </option>
-            }
-        </select>
-    </div>
-    <div>
-        @foreach (var item in Model.MyCompetences)
-        {
-            <textarea>@item.name</textarea>
-        }
-    </div>
-
-
-    <div class="form-group">
-        <br />
-
-        <p><b>Lägg till länkar</b></p>
-
-        @*@Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-        </div>*@
-    </div>
-
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.link, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.link, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.link, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
-
-
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+$(document).ready(function()
+{
+    $("#Competences").on("change", function()
+    {
+        $.ajax(
+        {
+            url: '/resume/AddMyCompetences?Name=' + $(this).attr("value"),
+            type: 'GET',
+            data: "",
+            contentType: 'application/json; charset=utf-8',
+            success: function(data)
+            {
+                $("#partialDiv").html(data);
+            },
+            error: function()
+            {
+                alert("error");
+            }
+        });
+    });
+}); </script>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+    $(dokument).ready(function () {
+
+        $("#AddMyCompetences").change(function () {
+        })
+    })
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
