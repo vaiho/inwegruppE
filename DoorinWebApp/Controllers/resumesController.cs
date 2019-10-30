@@ -84,7 +84,8 @@ namespace DoorinWebApp.Controllers
 
             return View(resumeOperations.GetFullResumeById(id));
         }
-        public ActionResult AddMyCompetences (competence competence, FullResume fullResume)
+        [HttpPost]
+        public ActionResult YourActions (competence competence, FullResume fullResume)
         {
             if (fullResume.MyCompetences.Contains(competence))
             {

@@ -5,6 +5,9 @@
 }
 
 <h2>Edit</h2>
+<head>
+    @Styles.Render("~/Content/style.css")
+</head>
 
 
 @using (Html.BeginForm())
@@ -18,10 +21,10 @@
         @Html.HiddenFor(@Model => @Model.Resume_id)
 
         <div class="form-group">
-            @Html.LabelFor(@Model => @Model.Name, "Namn", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(@Model => @Model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Name", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(@Model => @Model.Name, "", new { @class = "text-danger" })
+                @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(@Model => @Model.Freelancer_id, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -40,21 +43,46 @@
                 @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div>
-            <p><b>Lägg till kompetenser</b></p>
+        @using (Html.BeginForm("YourAction"))
+        {
+            <div>
+                <p><b>Lägg till kompetenser</b></p>
+
+                <select class="form-control" id="CompetencesDropDown" name="CompetencesDropDown" onchange="this.form.onsubmit()">
+                    @foreach (var item in Model.Competences)
+                    {
+                        <option> @item.name </option>
+                    }
+                </select>
+            </div>
+        }
+        <div id="AddMyCompetences">
+            <p><b>Mina kompetenser</b></p>
 
             <select class="form-control" id="Competences" name="Competences">
-                @foreach (var item in Model.Competences)
+                @foreach (var item in Model.MyCompetences)
                 {
                     <option> @item.name </option>
                 }
             </select>
         </div>
-        <div id="AddMyCompetences">
-            <p><b>Mina kompetenser</b></p>
+
+        <div>
+            <p><b>Lägg till teknologier</b></p>
 
             <select class="form-control">
-                @foreach (var item in Model.MyCompetences)
+                @foreach (var item in Model.Technologies)
+                {
+                    <option> @item.name </option>
+                }
+            </select>
+        </div>
+
+        <div id="AddMyTechnologies">
+            <p><b>Mina teknologier</b></p>
+
+            <select class="form-control">
+                @foreach (var item in Model.MyTechnologies)
                 {
                     <option> @item.name </option>
                 }
@@ -67,34 +95,115 @@
             </div>
         </div>
     </div>
+
+
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script>
-$(document).ready(function()
-{
-    $("#Competences").on("change", function()
-    {
-        $.ajax(
-        {
-            url: '/resume/AddMyCompetences?Name=' + $(this).attr("value"),
-            type: 'GET',
-            data: "",
-            contentType: 'application/json; charset=utf-8',
-            success: function(data)
-            {
-                $("#partialDiv").html(data);
-            },
-            error: function()
-            {
-                alert("error");
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#CompetencesDropDown").change(function () {
+
+            alert("DropDown selected value is changed ");
+
+            var DropDownSelectedVal = $("#CompetencesDropDown :selected").val();
+
+            if (DropDownSelectedVal != null) {
+
+                $.ajax({
+
+                    url: "/resume/YourActions ",
+
+                    data: { "@Model": DropDownSelectedVal },
+
+                    success: function (response) {
+
+                        alert("If Alert Shown this means Ajax call is working properly");
+
+                    },
+
+                    error: function (xhr) {
+
+                        alert("Something went wrong, please try again");
+
+                    }
+
+                });
+
             }
+
         });
+
     });
-}); </script>
+
+</script>
+
+
+
+@*
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                $("CompetencesDropDown").change(function () {
+                    alert("#DropDown selected value is changed");
+                    var DropDownSelectedVal = $("#CompetencesDropDown :selected").val();
+
+                    if (DropDownSelectedVal != null) {
+
+                        $.ajax({
+                            url: "@(Url.Action("YourActions", "resume"))",
+
+                            type: 'POST',
+
+                            data: { "@Model": DropDownSelectedVal },
+
+                            success: function (response) {
+
+                            alert("If Alert Shown this means Ajax call is working properly");
+
+                    },
+
+                    error: function (xhr) {
+
+                        alert("Something went wrong, please try again");
+
+                    }
+
+                });
+
+            }
+
+                });
+
+            });
+
+    </script>
+*@
+<script>
+
+    $(document).ready(function () {
+        $("#Competences").on("change", function () {
+            $.ajax(
+                {
+                    url: '/resume/AddMyCompetences?Name=' + $(this).attr("value"),
+                    type: 'GET',
+                    data: "",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        $("#partialDiv").html(data);
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+        });
+    });</script>
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script>
