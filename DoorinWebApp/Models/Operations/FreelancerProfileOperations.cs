@@ -161,5 +161,27 @@ namespace DoorinWebApp.Models.Operations
             return list;
         }
 
-    }    
+        public List<FreelancerProfileVM> FilterByCompetence(int? id)
+        {
+            List<FreelancerProfileVM> allFreelancers = new List<FreelancerProfileVM>();
+            List<FreelancerProfileVM> filteredFreelancers = new List<FreelancerProfileVM>();
+            allFreelancers = GetFreelancersList();
+
+            //filteredFreelancers = allFreelancers.Where(f => f.CompetencesList[].competence_id == 1);
+
+            foreach (var freelancer in allFreelancers)
+            {
+                foreach (var competence in freelancer.CompetencesList)
+                {
+                    if (competence.competence_id == id)
+                        filteredFreelancers.Add(freelancer);
+
+                }
+            }
+            
+            return filteredFreelancers;
+        }
+
+
+    }
 }
