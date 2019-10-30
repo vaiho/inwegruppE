@@ -19,6 +19,7 @@ namespace DoorinWebApp.Viewmodel
         public List<competence> MyCompetences { get; set; }
         public List<technology> Technologies { get; set; }
         public List<FullTechnology> MyTechnologies { get; set; }
+        public List<links> Link { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Address { get; set; }
@@ -36,6 +37,7 @@ namespace DoorinWebApp.Viewmodel
             MyCompetences = new List<competence>();
             Technologies = new List<technology>();
             MyTechnologies = new List<FullTechnology>();
+            Link = new List<links>();
         }
 
     }
