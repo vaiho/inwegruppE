@@ -84,16 +84,20 @@ namespace DoorinWebApp.Controllers
 
             return View(resumeOperations.GetFullResumeById(id));
         }
+
         [HttpPost]
-        public ActionResult YourActions (competence competence, FullResume fullResume)
+        public ActionResult AddMyCompetences(FullResume fullResume)
         {
-            if (fullResume.MyCompetences.Contains(competence))
+            //FullResume fullResume = new FullResume();
+            int selectedId = fullResume.MyCompetences[0].competence_id;
+            competence selectedCompetence = fullResume.Competences[0];
+            if (fullResume.MyCompetences[0].competence_id == selectedId)
             {
                 // Visa meddelande "Du har redan lagt till den här kompetensen."
             }
             else
             {
-                fullResume.MyCompetences.Add(competence);
+                fullResume.MyCompetences.Add(selectedCompetence);
             }
          
             return View(fullResume);

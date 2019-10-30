@@ -1,16 +1,17 @@
 ﻿@model DoorinWebApp.Viewmodel.FullResume
 
+
 @{
     ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
 <head>
-    @Styles.Render("~/Content/style.css")
+    <script src="~/Controllers/resume"></script>
+    <script>AddMyCompetences(string) </script>
 </head>
 
-
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -43,51 +44,35 @@
                 @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
             </div>
         </div>
-        @using (Html.BeginForm("YourAction"))
-        {
-            <div>
-                <p><b>Lägg till kompetenser</b></p>
 
-                <select class="form-control" id="CompetencesDropDown" name="CompetencesDropDown" onchange="this.form.onsubmit()">
-                    @foreach (var item in Model.Competences)
-                    {
-                        <option> @item.name </option>
-                    }
-                </select>
-            </div>
-        }
+        <div>
+            <p><b>Lägg till kompetenser</b></p>
+            @Html.DropDownListFor(@Model => @Model.Competences, new SelectList(Model.Competences, "Competence_id", "Name"))
+            <input type="submit" value="submit" onsubmit="AddMyCompetences(@Model)" />
+
+        </div>
         <div id="AddMyCompetences">
             <p><b>Mina kompetenser</b></p>
-
-            <select class="form-control" id="Competences" name="Competences">
-                @foreach (var item in Model.MyCompetences)
-                {
-                    <option> @item.name </option>
-                }
-            </select>
+            @Html.DropDownListFor(@Model => @Model.MyCompetences, new SelectList(Model.MyCompetences, "Competence_id", "Name"))
         </div>
 
         <div>
             <p><b>Lägg till teknologier</b></p>
-
-            <select class="form-control">
-                @foreach (var item in Model.Technologies)
-                {
-                    <option> @item.name </option>
-                }
-            </select>
+            @Html.DropDownListFor(@Model => @Model.Technologies, new SelectList(Model.Technologies, "Competence_id", "Name"))
         </div>
 
         <div id="AddMyTechnologies">
             <p><b>Mina teknologier</b></p>
-
-            <select class="form-control">
-                @foreach (var item in Model.MyTechnologies)
-                {
-                    <option> @item.name </option>
-                }
-            </select>
+            @Html.DropDownListFor(@Model => @Model.MyTechnologies, new SelectList(@Model.MyTechnologies, "Competence_id", "Name"))
         </div>
+        <p><b>TEST DROPDOWNLIST</b></p>
+
+        <select class="form-control" id="CompetencesDropDown" name="CompetencesDropDown">
+            @foreach (var item in Model.Competences)
+            {
+                <option onchange="AddMyCompetences(@item)"> @item.name </option>
+            }
+        </select>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -106,51 +91,56 @@
         </select>
     </div>
 
+    <select name="dropdown" size=1>
+        <option value="1">option 1</option>
+        <option value="2">option 2</option>
+    </select>
+
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $("#CompetencesDropDown").change(function () {
+            $("#CompetencesDropDown").change(function () {
 
-            alert("DropDown selected value is changed ");
+                alert("DropDown selected value is changed ");
 
-            var DropDownSelectedVal = $("#CompetencesDropDown :selected").val();
+                var DropDownSelectedVal = $("#CompetencesDropDown :selected").val();
 
-            if (DropDownSelectedVal != null) {
+                if (DropDownSelectedVal != null) {
 
-                $.ajax({
+                    $.ajax({
 
-                    url: "/resume/YourActions ",
+                        url: "/resume/YourActions ",
 
-                    data: { "@Model": DropDownSelectedVal },
+                        data: { "@Model": DropDownSelectedVal },
 
-                    success: function (response) {
+                        success: function (response) {
 
-                        alert("If Alert Shown this means Ajax call is working properly");
+                            alert("If Alert Shown this means Ajax call is working properly");
 
-                    },
+                        },
 
-                    error: function (xhr) {
+                        error: function (xhr) {
 
-                        alert("Something went wrong, please try again");
+                            alert("Something went wrong, please try again");
 
-                    }
+                        }
 
-                });
+                    });
 
-            }
+                }
+
+            });
 
         });
 
-    });
-
-</script>
+    </script>*@
 
 
 
@@ -196,7 +186,9 @@
 *@
 <script>
 
-    $(document).ready(function () {
+
+
+   @* $(document).ready(function () {
         $("#Competences").on("change", function () {
             $.ajax(
                 {
@@ -220,9 +212,39 @@
 
         $("#AddMyCompetences").change(function () {
         })
-    })
+    })*@
 </script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+    $('select[name="dropdown"]').change(function () {
+
+        if ($(this).val() == "2") {
+            alert("call the do something function on option 2");
+        }
+    });
+
+    $('select[name="CompetencesDropDown"]').change(function () {
+
+        if ($(this).val() == "IT-arkitekt") {
+            alert("Du har valt programmerare");
+            AddMyCompetences($(this).val());
+
+           @*function AddMyCompetences(id)
+            {
+                $.ajax({
+                url: '@Url.Action("AddMyCompetences","resume")',
+                data: { $(this).val(): id },
+                success: function(data){
+                    },
+                  });
+}*@
+        }
+        else if ($(this).val() == "Testare") {
+            alert("Du har valt testare");
+        }
+    });
+    </script>
 }
