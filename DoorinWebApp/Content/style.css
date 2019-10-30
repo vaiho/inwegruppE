@@ -375,6 +375,16 @@ position: relative;
     color: #eee; 
 }
 
+/*#endregion*/
 
+/*#region Style för kompetenserna på CV*/
+.Competences {
+    width: 5%;
+    float: left;
+    margin: 2%;
+    text-align: center;
+    padding-top: 10px;
+    color: #008000;
+}
 
 /*#endregion*/
