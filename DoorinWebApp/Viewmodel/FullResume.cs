@@ -20,6 +20,8 @@ namespace DoorinWebApp.Viewmodel
         public List<technology> Technologies { get; set; }
         public List<FullTechnology> MyTechnologies { get; set; }
         public List<links> Link { get; set; }
+        public string Linkname { get; set; }
+        public string Url { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Address { get; set; }
