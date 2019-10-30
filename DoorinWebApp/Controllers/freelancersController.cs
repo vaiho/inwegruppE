@@ -16,11 +16,17 @@ namespace DoorinWebApp.Controllers
         private doorinDBEntities db = new doorinDBEntities();
 
         // GET: freelancers
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-            //return View(db.freelancer.ToList());
-            return View(fpop.GetFreelancersList());
+            if (id == null)
+              return View(fpop.GetFreelancersList());
+            else
+              return View(fpop.FilterByCompetence(id));
+                                
+             //FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            ////return View(db.freelancer.ToList());
+            //return View(fpop.GetFreelancersList());
         }
 
         // GET: freelancers/Details/5
