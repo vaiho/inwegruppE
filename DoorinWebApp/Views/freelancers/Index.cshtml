@@ -16,11 +16,8 @@
 <div class="box">
     @using (Html.BeginForm())
     {
-        <p>
-            Sök efter kompetenser eller teknologier: @Html.TextBox("SearchString")
-
-        </p>
-        <input type="submit" value="Sök" src="~/Content/images/search.png" placeholder="Sök" />
+        <p>Sök efter kompetenser eller teknologier: @Html.TextBox("SearchString") </p>
+        <input type="submit" value="Sök" />
     }
 
 </div>
