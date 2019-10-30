@@ -14,12 +14,12 @@ namespace DoorinWebApp.Controllers
     {
         private doorinDBEntities db = new doorinDBEntities();
 
-        //// GET: links
-        //public ActionResult Index()
-        //{
-        //    var links = db.links.Include(l => l.resume);
-        //    return View(links.ToList());
-        //}
+        // GET: links
+        public ActionResult Index()
+        {
+            var links = db.links.Include(l => l.resume);
+            return View(links.ToList());
+        }
 
         // GET: links/Details/5
         public ActionResult Details(int? id)
@@ -129,34 +129,45 @@ namespace DoorinWebApp.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    links Links = new links();
+        //    return View(Links.link);
+        //}
+
+        public JsonResult InsertLinks(List<links> links)
         {
-            links Links = new links();
-            return View(Links.link);
+            foreach (var link in links)
+            {
+                if (!(string.IsNullOrEmpty(link.name) && string.IsNullOrEmpty(link.link)))
+                {
+                    db.links.Add(link);
+                }
+
+                  
+            }
+            int num = db.SaveChanges();
+            return Json(num);
+            //        using (links Links = new links())
+            //        {
+            //            //Truncate Table to delete all old records.
+            //            entities.Database.ExecuteSqlCommand("TRUNCATE TABLE [links]");
+
+            //            //Check for NULL.
+            //            if (customers == null)
+            //            {
+            //                customers = new List<links>();
+            //            }
+
+            //            //Loop and insert records.
+            //            foreach (Customer customer in customers)
+            //            {
+            //                Links.link.Add(link);
+            //            }
+            //            int insertedRecords = entities.SaveChanges();
+            //            return Json(insertedRecords);
+            //        }
         }
-
-    //    public JsonResult InsertLinks(List<links> customers)
-    //    {
-    //        using (links Links = new links())
-    //        {
-    //            //Truncate Table to delete all old records.
-    //            entities.Database.ExecuteSqlCommand("TRUNCATE TABLE [links]");
-
-    //            //Check for NULL.
-    //            if (customers == null)
-    //            {
-    //                customers = new List<links>();
-    //            }
-
-    //            //Loop and insert records.
-    //            foreach (Customer customer in customers)
-    //            {
-    //                Links.link.Add(link);
-    //            }
-    //            int insertedRecords = entities.SaveChanges();
-    //            return Json(insertedRecords);
-    //        }
-    //    }
 
 
     }
