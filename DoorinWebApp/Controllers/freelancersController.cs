@@ -26,8 +26,9 @@ namespace DoorinWebApp.Controllers
 
 
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
-            {             
-                list = list.Where(x => x.CompetencesList.Any(z => z.name == searchString) || x.TechnologysList.Any(z => z.name == searchString) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
+            {   
+                //Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
+                list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
 
                 //Returnerar den filtrerade listan
                 return View(list.ToList());
@@ -200,6 +201,13 @@ namespace DoorinWebApp.Controllers
                 });
             }
             return selectList;
+        }
+
+        public ActionResult SaveFreelancer(int? id, int c)
+        {
+            c = 5;
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -44,6 +44,7 @@ namespace DoorinWebApp.Models
         [EmailAddress]
         public string email { get; set; }
         [DisplayName("Födelsedatum")]
+        [Required(ErrorMessage = "Vänligen fyll ett födelsedatum")]
         public Nullable<System.DateTime> birthdate { get; set; }
         [DisplayName("Födelseort")]
         public string birthcity { get; set; }
