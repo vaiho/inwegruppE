@@ -8,6 +8,8 @@ namespace DoorinWebApp.Controllers
 {
     public class HomeController : Controller
     {
+
+
         public ActionResult Index()
         {
             return View();
@@ -23,6 +25,8 @@ namespace DoorinWebApp.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+            var competences = db.Items.ToList(); ////Your model that you want to pass
+            return View(model);
 
             return View();
         }
