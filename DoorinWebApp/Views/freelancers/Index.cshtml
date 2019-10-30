@@ -4,25 +4,37 @@
 @{
     ViewBag.Title = "Alla frilansare";
 }
-
-<div class="box">
-    <input type="text" id="search" placeholder="Sök här" >
+<h2>Alla Frilansare</h2>
+@*<div class="box">
+    <input type="text" id="search" placeholder="Sök här">
     <img id="searchbtn" src="~/Content/images/search.png" />
     <div id="filterbtn">
         <img src="~/Content/images/filter.png" />
         Filters
     </div>
+</div>*@
+<div class="box">
+    @using (Html.BeginForm())
+    {
+        <p>
+            Sök efter kompetenser eller teknologier: @Html.TextBox("SearchString")
+
+        </p>
+        <input type="submit" value="Sök" src="~/Content/images/search.png" placeholder="Sök" />
+    }
+
 </div>
 
-<h2>Alla Frilansare</h2>
 
-<h4>Sortera på kompetenser:</h4>
+
+
+<h4>Filtrera kompetenser:</h4>
 <p class="btn">Programmer</p> <p class="btn">Designer</p>
 
 <br />
 <br />
 
-<h4>Sortera på teknologier:</h4>
+<h4>Filtrera teknologier:</h4>
 <p class="btn">C#</p> <p class="btn">Javascript</p> <p class="btn">Adobe Illustrator</p> <p class="btn">Word</p>
 
 <br />
@@ -72,7 +84,7 @@
             }
         </td>
         <td>
-            @Html.ActionLink("Spara |", "ProfilePage", new { id = item.Freelancer_id }) 
+            @Html.ActionLink("Spara |", "ProfilePage", new { id = item.Freelancer_id })
             @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
         </td>
     </tr>

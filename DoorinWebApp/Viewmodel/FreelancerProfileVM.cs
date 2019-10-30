@@ -41,6 +41,7 @@ namespace DoorinWebApp.Viewmodel
         {
             CompetencesList = new List<competence>();
             TechnologysList = new List<FullTechnology>();
+            
         }
         [DisplayName("Ålder")]
         public int Age //För att räkna ut en ålder

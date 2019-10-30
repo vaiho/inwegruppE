@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DoorinWebApp.Models;
 using DoorinWebApp.Models.Operations;
+using DoorinWebApp.Viewmodel;
 
 namespace DoorinWebApp.Controllers
 {
@@ -16,11 +17,52 @@ namespace DoorinWebApp.Controllers
         private doorinDBEntities db = new doorinDBEntities();
 
         // GET: freelancers
-        public ActionResult Index()
+        public ActionResult Index(string searchString) 
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-            //return View(db.freelancer.ToList());
-            return View(fpop.GetFreelancersList());
+            //List<FreelancerProfileVM> freelancers = new List<FreelancerProfileVM>();
+            var freelancers = fpop.GetFreelancersList(); //Hämtar alla frilansare
+            var list = from s in freelancers select s; //Sparar alla frilansare i en variabel
+            
+            List<FreelancerProfileVM> filteredList = new List<FreelancerProfileVM>();
+
+
+            if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
+            {
+                //Om man vill söka på namn:
+                //list = freelancers.Where(x => x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
+                
+                foreach (var item in list)
+                {
+                    var a = from comp in item.CompetencesList select comp;
+                    var b = from tech in item.TechnologysList select tech;
+
+                    foreach (var it in a)
+                        {
+                            if (it.name.Contains(searchString))
+                            {
+                                filteredList.Add(item); //Lägger till freelancer i filtrerad lista om den har söksträngen i sin lista av kompetenser
+                            }                      
+                        }
+                    foreach (var te in b)
+                        {
+                            if (te.name.Contains(searchString))
+                            {
+                                filteredList.Add(item); //Lägger till freelancer i filtrerad lista om den har söksträngen i sin lista av teknologier
+                            }
+                        }
+                }
+                //Returnerar den filtrerade listan
+                return View(filteredList);
+            }
+
+            //Annars skickas en ofiltrerad lista tillbaka
+            return View(list.ToList());
+
+
+            //OLD:
+            //return View(db.freelancer.ToList()); 1 orginal, 
+            //return View(fpop.GetFreelancersList()); 2, om man vill ha hela listan
         }
 
         // GET: freelancers/Details/5
