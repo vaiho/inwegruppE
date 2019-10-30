@@ -5,34 +5,56 @@
     ViewBag.Title = "Alla frilansare";
 }
 
-<div class="box">
-    <input type="text" id="search" placeholder="Sök här" >
-    <img id="searchbtn" src="~/Content/images/search.png" />
-    <div id="filterbtn">
-        <img src="~/Content/images/filter.png" />
-        Filters
+@*<div class="box">
+        <input type="text" id="search" placeholder="Sök här" >
+        <img id="searchbtn" src="~/Content/images/search.png" />
+        <div id="filterbtn">
+            <img src="~/Content/images/filter.png" />
+            Filters
+        </div>
     </div>
+
+    <h2>Alla Frilansare</h2>
+
+    <h4>Sortera på kompetenser:</h4>
+    <p class="btn">Programmer</p> <p class="btn">Designer</p>
+
+    <br />
+    <br />
+
+    <h4>Sortera på teknologier:</h4>
+    <p class="btn">C#</p> <p class="btn">Javascript</p> <p class="btn">Adobe Illustrator</p> <p class="btn">Word</p>
+        <br />
+        <br />
+        <br />*@
+<div>
+    @using (Html.BeginForm())
+    {
+        <div class="box">
+            <p>Sök efter kompetenser eller teknologier: @Html.TextBox("SearchString") </p>
+            <input type="submit" value="Sök" />
+            <input type="submit" value="Nollställ" onclick="setValue('')" />
+        </div>
+        <br />
+        <h4>Filtrera kompetenser:</h4>
+        <input type="submit" value="Testare" onclick="setValue('Testare')" />
+        <input type="submit" value="Programmerare" onclick="setValue('Programmerare')" />
+        <input type="submit" value="Designer" onclick="setValue('Designer')" />
+        <input type="submit" value="Projektledare" onclick="setValue('Projektledare')" />
+
+        <br />
+        <br />
+
+        <h4>Filtrera teknologier:</h4>
+        <input type="submit" value="HTML" onclick="setValue('HTML')" />
+        <input type="submit" value="CSS" onclick="setValue('CSS')" />
+        <input type="submit" value="JS" onclick="setValue('JavaScript')" />
+        <input type="submit" value="C#" onclick="setValue('C#')" />
+        <input type="submit" value="Adobe Illustrator" onclick="setValue('Adobe Illustrator')" />
+        <br /><br /><br />
+    }
 </div>
 
-<h2>Alla Frilansare</h2>
-
-<h4>Sortera på kompetenser:</h4>
-<p class="btn">Programmer</p> <p class="btn">Designer</p>
-
-<br />
-<br />
-
-<h4>Sortera på teknologier:</h4>
-<p class="btn">C#</p> <p class="btn">Javascript</p> <p class="btn">Adobe Illustrator</p> <p class="btn">Word</p>
-
-<br />
-<br />
-<br />
-
-
-@*<p>
-    @Html.ActionLink("Skapa ny", "Create")
-</p>*@
 <table class="table">
     <tr>
         <th>
@@ -52,31 +74,36 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fullname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nationality)
-        </td>
-        <td>
-            @foreach (var x in item.CompetencesList)
-            {
-            <span>@Html.DisplayFor(modelItem => x.name),</span>
-            }
-        </td>
-        <td>
-            @foreach (var x in item.TechnologysList)
-            {
-            <span>@Html.DisplayFor(modelItem => x.name), </span>
-            }
-        </td>
-        <td>
-            @Html.ActionLink("Spara |", "ProfilePage", new { id = item.Freelancer_id }) 
-            @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fullname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nationality)
+            </td>
+            <td>
+                @foreach (var x in item.CompetencesList)
+                {
+                    <span>@Html.DisplayFor(modelItem => x.name),</span>
+                }
+            </td>
+            <td>
+                @foreach (var x in item.TechnologysList)
+                {
+                    <span>@Html.DisplayFor(modelItem => x.name), </span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Spara |", "ProfilePage", new { id = item.Freelancer_id })
+                @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
+            </td>
+        </tr>
 
     }
 
 </table>
+<script>
+    function setValue(txt) {
+        document.getElementById("SearchString").value = txt;
+    }
+</script>

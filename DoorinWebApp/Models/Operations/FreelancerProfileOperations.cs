@@ -141,14 +141,14 @@ namespace DoorinWebApp.Models.Operations
                                 Firstname = reader.GetString(1),
                                 Lastname = reader.GetString(2),
                                 Resume_id = reader.GetInt32(3),
-                                ProfileText = reader.GetString(4),
-                                Email = reader.GetString(5),
+                                //ProfileText = reader.GetString(4),
+                                //Email = reader.GetString(5),
                                 Nationality = reader.GetString(6),
-                                City = reader.GetString(7),
-                                Birthdate = reader.GetDateTime(8),
-                                Address = reader.GetString(9),
-                                Zipcode = reader.GetString(10),
-                                Username = reader.GetString(11),
+                                //City = reader.GetString(7),
+                                //Birthdate = reader.GetDateTime(8),
+                                //Address = reader.GetString(9),
+                                //Zipcode = reader.GetString(10),
+                                //Username = reader.GetString(11),
                             };
                             GetCompetences(fp); //Hämtar och sparar kompetenser
                             GetTechnology(fp); //Hämtar och sparar teknologier

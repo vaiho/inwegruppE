@@ -16,17 +16,28 @@ namespace DoorinWebApp.Controllers
         private doorinDBEntities db = new doorinDBEntities();
 
         // GET: freelancers
-        public ActionResult Index(int? id)
+        public ActionResult Index(string searchString) //int? id
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-            if (id == null)
-              return View(fpop.GetFreelancersList());
-            else
-              return View(fpop.FilterByCompetence(id));
-                                
-             //FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-            ////return View(db.freelancer.ToList());
-            //return View(fpop.GetFreelancersList());
+            //if (id == null)
+            //  return View(fpop.GetFreelancersList());
+            //else
+            //  return View(fpop.FilterByCompetence(id));
+
+            var allFreelancersList = fpop.GetFreelancersList(); //Hämtar alla frilansare
+            var list = from s in allFreelancersList select s; //Sparar alla frilansare i variabel
+
+            if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
+            {
+                //Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
+                list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
+
+                //Returnerar den filtrerade listan
+                return View(list.ToList());
+            }
+
+            //Annars skickas en ofiltrerad lista tillbaka
+            return View(allFreelancersList);
         }
 
         // GET: freelancers/Details/5
