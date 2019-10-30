@@ -95,7 +95,16 @@
             </div>
         </div>
     </div>
+    <div>
+        <p><b>Mina länkar</b></p>
 
+        <select class="form-control">
+            @foreach (var item in Model.Link)
+            {
+                <option> @item.name </option>
+            }
+        </select>
+    </div>
 
 }
 
