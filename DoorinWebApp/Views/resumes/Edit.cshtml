@@ -95,24 +95,112 @@
             </div>
         </div>
     </div>
-    <div>
-        <p><b>Mina länkar</b></p>
 
-        <select class="form-control">
-            @foreach (var item in Model.Link)
-            {
-                <option> @item.name </option>
+
+    <h2>Add Links</h2>
+
+
+
+    <table class="table" id="tblLinks">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Linkname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Url)
+                </th>                
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                @*<td>
+            @Html.EditorFor(modelItem => modelItem.Linkname, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.Url, new { htmlAttributes = new { @class = "form-control" } })
+        </td>*@
+               
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtLinkname" /></td>
+                <td><input type="text" id="txtLink" /></td>
+                <td>
+                    <input class="btnAddLink btn btn-default" type="button" name="name" value="Add" />
+                </td>
+
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+    <script type="text/javascript">
+        $(".btnAddLink").click(function () {
+            //Reference the Name and Country TextBoxes.
+            var txtLinkname = $("#txtLinkname");
+            var txtLink = $("#txtLink");
+
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tblLinks > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add Name cell.
+            var cell = $(row.insertCell(-1));
+            cell.html(txtLinkname.val());
+
+            //Add Country cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtLink.val());
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<input class=btn btn-default/>");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.val("Remove");
+            cell.append(btnRemove);
+
+            //Clear the TextBoxes.
+            txtLinkname.val("");
+            txtLink.val("");
+        });
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblLinks")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
             }
-        </select>
+        };
+    </script>
+
+
+
+
+
+
+        
+
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
     </div>
 
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-<script type="text/javascript">
+    <script type="text/javascript">
 
     $(document).ready(function () {
 
@@ -150,79 +238,81 @@
 
     });
 
-</script>
-
-
-
-@*
-    <script type="text/javascript">
-
-            $(document).ready(function () {
-
-                $("CompetencesDropDown").change(function () {
-                    alert("#DropDown selected value is changed");
-                    var DropDownSelectedVal = $("#CompetencesDropDown :selected").val();
-
-                    if (DropDownSelectedVal != null) {
-
-                        $.ajax({
-                            url: "@(Url.Action("YourActions", "resume"))",
-
-                            type: 'POST',
-
-                            data: { "@Model": DropDownSelectedVal },
-
-                            success: function (response) {
-
-                            alert("If Alert Shown this means Ajax call is working properly");
-
-                    },
-
-                    error: function (xhr) {
-
-                        alert("Something went wrong, please try again");
-
-                    }
-
-                });
-
-            }
-
-                });
-
-            });
-
     </script>
-*@
-<script>
 
-    $(document).ready(function () {
-        $("#Competences").on("change", function () {
-            $.ajax(
-                {
-                    url: '/resume/AddMyCompetences?Name=' + $(this).attr("value"),
-                    type: 'GET',
-                    data: "",
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        $("#partialDiv").html(data);
-                    },
-                    error: function () {
-                        alert("error");
-                    }
+
+
+    @*
+        <script type="text/javascript">
+
+                $(document).ready(function () {
+
+                    $("CompetencesDropDown").change(function () {
+                        alert("#DropDown selected value is changed");
+                        var DropDownSelectedVal = $("#CompetencesDropDown :selected").val();
+
+                        if (DropDownSelectedVal != null) {
+
+                            $.ajax({
+                                url: "@(Url.Action("YourActions", "resume"))",
+
+                                type: 'POST',
+
+                                data: { "@Model": DropDownSelectedVal },
+
+                                success: function (response) {
+
+                                alert("If Alert Shown this means Ajax call is working properly");
+
+                        },
+
+                        error: function (xhr) {
+
+                            alert("Something went wrong, please try again");
+
+                        }
+
+                    });
+
+                }
+
+                    });
+
                 });
-        });
-    });</script>
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script>
-    $(dokument).ready(function () {
+        </script>
+    *@
+    <script>
 
-        $("#AddMyCompetences").change(function () {
-        })
-    })
-</script>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        $(document).ready(function () {
+                $("#Competences").on("change", function () {
+                    $.ajax(
+                        {
+                            url: '/resume/AddMyCompetences?Name=' + $(this).attr("value"),
+                            type: 'GET',
+                            data: "",
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                $("#partialDiv").html(data);
+                            },
+                            error: function () {
+                                alert("error");
+                            }
+                        });
+                });
+            });</script>
+
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script>
+
+            $(dokument).ready(function () {
+
+                    $("#AddMyCompetences").change(function () {
+                    })
+                })
+    </script>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
