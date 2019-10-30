@@ -20,49 +20,27 @@ namespace DoorinWebApp.Controllers
         public ActionResult Index(string searchString) 
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-            //List<FreelancerProfileVM> freelancers = new List<FreelancerProfileVM>();
-            var freelancers = fpop.GetFreelancersList(); //Hämtar alla frilansare
-            var list = from s in freelancers select s; //Sparar alla frilansare i en variabel
+            var allFreelancersList = fpop.GetFreelancersList(); //Hämtar alla frilansare
+            var list = from s in allFreelancersList select s; //Sparar alla frilansare i variabel
             
-            List<FreelancerProfileVM> filteredList = new List<FreelancerProfileVM>();
 
 
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
-            {
-                //Om man vill söka på namn:
-                //list = freelancers.Where(x => x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
-                
-                foreach (var item in list)
-                {
-                    var a = from comp in item.CompetencesList select comp;
-                    var b = from tech in item.TechnologysList select tech;
+            {             
+                list = list.Where(x => x.CompetencesList.Any(z => z.name == searchString) || x.TechnologysList.Any(z => z.name == searchString) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
 
-                    foreach (var it in a)
-                        {
-                            if (it.name.Contains(searchString))
-                            {
-                                filteredList.Add(item); //Lägger till freelancer i filtrerad lista om den har söksträngen i sin lista av kompetenser
-                            }                      
-                        }
-                    foreach (var te in b)
-                        {
-                            if (te.name.Contains(searchString))
-                            {
-                                filteredList.Add(item); //Lägger till freelancer i filtrerad lista om den har söksträngen i sin lista av teknologier
-                            }
-                        }
-                }
                 //Returnerar den filtrerade listan
-                return View(filteredList);
+                return View(list.ToList());
             }
 
             //Annars skickas en ofiltrerad lista tillbaka
-            return View(list.ToList());
+            return View(allFreelancersList);
 
 
             //OLD:
             //return View(db.freelancer.ToList()); 1 orginal, 
             //return View(fpop.GetFreelancersList()); 2, om man vill ha hela listan
+            //return View(list.ToList()); 3
         }
 
         // GET: freelancers/Details/5
