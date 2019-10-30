@@ -13,13 +13,15 @@ namespace DoorinWebApp.Viewmodel
         public int Freelancer_id { get; set; }
         [Key]
         public string Name { get; set; }
-        public string Driving_license { get; set; }
+        public bool Driving_license { get; set; }
         public string Profile { get; set; }
         public List<competence> Competences { get; set; }
         public List<competence> MyCompetences { get; set; }
         public List<technology> Technologies { get; set; }
         public List<FullTechnology> MyTechnologies { get; set; }
         public List<links> Link { get; set; }
+        public string Linkname { get; set; }
+        public string Url { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Address { get; set; }
