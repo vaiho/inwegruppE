@@ -23,8 +23,6 @@ namespace DoorinWebApp.Controllers
             var allFreelancersList = fpop.GetFreelancersList(); //Hämtar alla frilansare
             var list = from s in allFreelancersList select s; //Sparar alla frilansare i variabel
             
-
-
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
             {   
                 //Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
@@ -36,12 +34,6 @@ namespace DoorinWebApp.Controllers
 
             //Annars skickas en ofiltrerad lista tillbaka
             return View(allFreelancersList);
-
-
-            //OLD:
-            //return View(db.freelancer.ToList()); 1 orginal, 
-            //return View(fpop.GetFreelancersList()); 2, om man vill ha hela listan
-            //return View(list.ToList()); 3
         }
 
         // GET: freelancers/Details/5
