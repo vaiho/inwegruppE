@@ -24,97 +24,81 @@
             <input type="submit" value="Nollställ" onclick="setValue('')" />
         </div>
         <br />
-            <h4>Filtrera kompetenser:</h4>
-            <input type="submit" value="Testare" onclick="setValue('Testare')" />
-            <input type="submit" value="Programmerare" onclick="setValue('Programmerare')" />
-            <input type="submit" value="Designer" onclick="setValue('Designer')" />
-            <input type="submit"  value="Projektledare" onclick="setValue('Projektledare')" />
+        <h4>Filtrera kompetenser:</h4>
+        <input type="submit" value="Testare" onclick="setValue('Testare')" />
+        <input type="submit" value="Programmerare" onclick="setValue('Programmerare')" />
+        <input type="submit" value="Designer" onclick="setValue('Designer')" />
+        <input type="submit" value="Projektledare" onclick="setValue('Projektledare')" />
 
-            <br />
-            <br />
+        <br />
+        <br />
 
-            <h4>Filtrera teknologier:</h4>
-            <input type="submit" value="HTML" onclick="setValue('HTML')" />
-            <input type="submit" value="CSS" onclick="setValue('CSS')" />
-            <input type="submit" value="JS" onclick="setValue('JavaScript')" />
-            <input type="submit" value="C#" onclick="setValue('C#')" />
-            <input type="submit" value="Adobe Illustrator" onclick="setValue('Adobe Illustrator')" />
-            <br /><br /><br />
+        <h4>Filtrera teknologier:</h4>
+        <input type="submit" value="HTML" onclick="setValue('HTML')" />
+        <input type="submit" value="CSS" onclick="setValue('CSS')" />
+        <input type="submit" value="JS" onclick="setValue('JavaScript')" />
+        <input type="submit" value="C#" onclick="setValue('C#')" />
+        <input type="submit" value="Illustrator" onclick="setValue('Illustrator')" />
+        <br /><br /><br />
     }
 </div>
 
+<table class="table">
+    <tr>
+        <th>
+            Namn
+        </th>
+        <th>
+            Nationalitet
+        </th>
+        <th>
+            Kompetenser
+        </th>
+        <th>
+            Teknologier
+        </th>
+        <th></th>
+    </tr>
 
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fullname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nationality)
+            </td>
+            <td>
+                @foreach (var x in item.CompetencesList)
+                {
+                    <span>@Html.DisplayFor(modelItem => x.name),</span>
+                }
+            </td>
+            <td>
+                @foreach (var x in item.TechnologysList)
+                {
+                    <span>@Html.DisplayFor(modelItem => x.name), </span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Spara |", "SaveFreelancer", new { id = item.Freelancer_id })
+                @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
+            </td>
+        </tr>
 
+    }
+    
+</table>
+<hr />
+<br />
 
-
-        @*<h4>Filtrera kompetenser:</h4>
-            <p class="btn">Programmer</p> <p class="btn">Designer</p>
-
-            <br />
-            <br />
-
-            <h4>Filtrera teknologier:</h4>
-            <p class="btn">C#</p> <p class="btn">Javascript</p> <p class="btn">Adobe Illustrator</p> <p class="btn">Word</p>
-
-            <br />
-            <br />
-            <br />*@
-
-
-        @*<p>
-                @Html.ActionLink("Skapa ny", "Create")
-            </p>*@
-        <table class="table">
-            <tr>
-                <th>
-                    Namn
-                </th>
-                <th>
-                    Nationalitet
-                </th>
-                <th>
-                    Kompetenser
-                </th>
-                <th>
-                    Teknologier
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fullname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nationality)
-                    </td>
-                    <td>
-                        @foreach (var x in item.CompetencesList)
-                        {
-                            <span>@Html.DisplayFor(modelItem => x.name),</span>
-                        }
-                    </td>
-                    <td>
-                        @foreach (var x in item.TechnologysList)
-                        {
-                            <span>@Html.DisplayFor(modelItem => x.name), </span>
-                        }
-                    </td>
-                    <td>
-                        @Html.ActionLink("Spara |", "ProfilePage", new { id = item.Freelancer_id })
-                        @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
-                    </td>
-                </tr>
-
-            }
-
-        </table>
-
-        <script>
-            function setValue(txt) {
-                document.getElementById("SearchString").value = txt;
-            }
-        </script>
+@Html.ActionLink("Mina sparade frilansare", "SavedFreelancers", "customers")
+<br />
+<br />
+<script>
+    function setValue(txt) {
+        document.getElementById("SearchString").value = txt;
+    }
+</script>
 

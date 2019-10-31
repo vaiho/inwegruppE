@@ -170,6 +170,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Operations\CustomerOperations.cs" />
     <Compile Include="Models\Operations\FreelancerProfileOperations.cs" />
     <Compile Include="Models\resume.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -294,6 +295,7 @@
     <Content Include="Views\links\Details.cshtml" />
     <Content Include="Views\links\Edit.cshtml" />
     <Content Include="Views\links\Index.cshtml" />
+    <Content Include="Views\customers\SavedFreelancers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

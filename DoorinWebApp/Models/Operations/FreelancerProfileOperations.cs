@@ -182,6 +182,31 @@ namespace DoorinWebApp.Models.Operations
             return filteredFreelancers;
         }
 
+        public void SaveFreelancerToCustomerList(int? f, int c)
+        {
+            string sql = "INSERT INTO customer_freelancer(freelancer_id, customer_id) VALUES (@free_id, @cus_id)";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
+                    {
+                        command.Connection = conn;
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("free_id", f);
+                        command.Parameters.AddWithValue("cus_id", c);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                //TODO: gör något med meddelandet
+            }
+            
+
+        }
 
     }
 }

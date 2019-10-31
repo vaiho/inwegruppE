@@ -195,11 +195,20 @@ namespace DoorinWebApp.Controllers
             return selectList;
         }
 
-        public ActionResult SaveFreelancer(int? id, int c)
+        public ActionResult SaveFreelancer(int? id) //Sparar freelancer i tabellen customer_freelancer
         {
-            c = 5;
+            int c = 5; //hårdkodad customer
+
+            if (id != null)
+            {
+                FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+                fpop.SaveFreelancerToCustomerList(id, c);
+            }
+
 
             return RedirectToAction("Index");
         }
+
+
     }
 }
