@@ -137,6 +137,11 @@ namespace DoorinWebApp.Controllers
 
         public JsonResult InsertLinks(List<links> links)
         {
+
+            var resume_id = links[0].resume_id;
+            var existingLinks = db.links.Where(l => l.resume_id == resume_id).ToList();            
+            db.links.RemoveRange(existingLinks);
+
             foreach (var link in links)
             {
                 if (!(string.IsNullOrEmpty(link.name) && string.IsNullOrEmpty(link.link)))
@@ -147,26 +152,7 @@ namespace DoorinWebApp.Controllers
                   
             }
             int num = db.SaveChanges();
-            return Json(num);
-            //        using (links Links = new links())
-            //        {
-            //            //Truncate Table to delete all old records.
-            //            entities.Database.ExecuteSqlCommand("TRUNCATE TABLE [links]");
-
-            //            //Check for NULL.
-            //            if (customers == null)
-            //            {
-            //                customers = new List<links>();
-            //            }
-
-            //            //Loop and insert records.
-            //            foreach (Customer customer in customers)
-            //            {
-            //                Links.link.Add(link);
-            //            }
-            //            int insertedRecords = entities.SaveChanges();
-            //            return Json(insertedRecords);
-            //        }
+            return Json(num);          
         }
 
 

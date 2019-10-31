@@ -44,7 +44,7 @@ namespace DoorinWebApp.Models.Operations
                     }
                 }
             }*/
-            // ska inte stå med här, men eftersom det ovan är bortkommenterat så tilldelar jag reusme_id här
+            // TODO ska inte stå med här, men eftersom det ovan är bortkommenterat så tilldelar jag reusme_id här
             fullResume.Resume_id = 1;
             GetMyCompetences(fullResume); //Hämtar och sparar frilansarens kompetenser
             GetMyTechnology(fullResume); //Hämtar och sparar frilansarens teknologier

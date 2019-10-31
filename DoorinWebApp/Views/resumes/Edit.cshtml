@@ -102,8 +102,8 @@
     </div>
 
 
-    <h2>Add Links</h2>
-
+    <h2>Links</h2>
+   
 
     //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
     //https://forums.asp.net/t/2126284.aspx?MVC+Input+in+form+of+Table+With+Add+Delete+Row
@@ -120,15 +120,14 @@
         </thead>
 
         <tbody>
-            <tr>
-                @*<td>
-                        @Html.EditorFor(modelItem => modelItem.Linkname, new { htmlAttributes = new { @class = "form-control" } })
-                    </td>
-                    <td>
-                        @Html.EditorFor(modelItem => modelItem.Url, new { htmlAttributes = new { @class = "form-control" } })
-                    </td>*@
-
-            </tr>
+                @foreach (var link in Model.Link)
+                {
+                    <tr>
+                        <td>@link.name</td>
+                        <td>@link.link</td>
+                        <td><input class="btnRemoveLink btn btn-default" type="button" value="Remove" onclick="Remove(this)" /></td>
+                    </tr>
+                 }
         </tbody>
 
         <tfoot>
@@ -146,8 +145,6 @@
         </tfoot>
     </table>
     <input type="button" class="btn btn-default" id="btnSave" value="Save All links" />
-
-
 
 
     <br />
@@ -234,13 +231,12 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {
-                    alert(r + " record(s) inserted.");
+                    alert("link(s) updated.");
                 }
             });
         });
 
     </script>
-
 
 }
 
