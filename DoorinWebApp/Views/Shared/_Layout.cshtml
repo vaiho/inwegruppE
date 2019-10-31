@@ -28,9 +28,12 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Freelancers", "Index", "freelancers")</li>
+                            <li>@Html.ActionLink("Sök frilansare", "Index", "freelancers")</li>
                             <li>@Html.ActionLink("Customers", "Index", "customers")</li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <a style="color:#FFF;" href="@Url.Action("Details/30", "freelancers")"><li style="">Profil frilansare</li></a>
+                            <a style="color:#FFF;" href="@Url.Action("Details/1", "customers")"><li style=" margin-top:15px;">Profil rekryterare</li></a>
                         </ul>
                     </div>
                 </div>
