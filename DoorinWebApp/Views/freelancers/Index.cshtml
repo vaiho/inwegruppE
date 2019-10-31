@@ -30,22 +30,13 @@
             <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
         }
 
-
-        @*<input class="filters" type="submit" value="Testare" onclick="setValue('Testare')" />
-        <input class="filters" type="submit" value="Programmerare" onclick="setValue('Programmerare')" />
-        <input class="filters" type="submit" value="Designer" onclick="setValue('Designer')" />
-        <input class="filters" type="submit" value="Projektledare" onclick="setValue('Projektledare')" />*@
-
-
         <br />
 
-
         <h4 style="font-weight:bold;">Teknologier</h4>
-        <input class="filters" type="submit" value="HTML" onclick="setValue('HTML')" />
-        <input class="filters" type="submit" value="CSS" onclick="setValue('CSS')" />
-        <input class="filters" type="submit" value="JS" onclick="setValue('JavaScript')" />
-        <input class="filters" type="submit" value="C#" onclick="setValue('C#')" />
-        <input class="filters" type="submit" value="Illustrator" onclick="setValue('Illustrator')" />
+        @foreach (var item in ViewBag.Technology)
+        {
+            <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
+        }
         <br />
     </div>
     }

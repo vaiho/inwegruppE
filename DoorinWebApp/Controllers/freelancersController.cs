@@ -24,6 +24,7 @@ namespace DoorinWebApp.Controllers
 
             //Viewbags här
             ViewBag.Competence = GetCompetences();
+            ViewBag.Technology = GetTechnologies();
 
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
             {
@@ -63,6 +64,23 @@ namespace DoorinWebApp.Controllers
 
             return (CList);
         }
+
+        private List<technology> GetTechnologies()
+        {
+            List<technology> TList = new List<technology>();
+            var technologylist = (from t in db.technology
+                                  select new { t.name }).ToList();
+
+            foreach (var t in technologylist)
+            {
+                technology item = new technology();
+                item.name = t.name;
+                TList.Add(item);
+            }
+
+            return (TList);
+        }
+
         // GET: freelancers/Details/5
         public ActionResult Details(int? id)
         {
