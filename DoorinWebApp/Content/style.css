@@ -75,6 +75,10 @@ a:hover {
     margin-left: 10px;
 }
 
+.margintop10 {
+    margin-top: 10px;
+}
+
 /*#endregion*/
 
 
@@ -127,7 +131,7 @@ a:hover {
     max-width:45px;
 }
 
-#filterbtn {
+.filterbtn {
     width:125px;
     color: #2c473d;
     padding: 0px 3px;
@@ -140,15 +144,45 @@ a:hover {
     transition-duration: 0.4s;
 }
 
-#filterbtn:hover {
-    background-color: #09964f; 
+.filterbtn:hover {
+    background-color: #2c473d; 
     color: #FFF;
-    border: 2px solid #ddd;
+    border: 2px solid #2c473d;
+}
+
+.filterbtnactive {
+    background-color:#2c473d;
+    color:#FFF;
 }
 
 #search {
 border-radius:0px;
 width: 70%;
+}
+
+.filters {
+    display: inline-block;
+    border: 2px solid #ddd;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin-right: 10px;
+}
+
+    .filters:hover {
+        color: #FFF;
+        background-color: #09964f;
+        border: 2px solid #09964f;
+    }
+
+#filters {
+    display: none;
+}
+
+#technologies {
+    display: none;
 }
 
 /*#endregion*/
