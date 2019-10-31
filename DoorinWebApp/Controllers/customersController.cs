@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoorinWebApp.Models;
+using DoorinWebApp.Models.Operations;
 
 namespace DoorinWebApp.Controllers
 {
@@ -33,6 +34,12 @@ namespace DoorinWebApp.Controllers
                 return HttpNotFound();
             }
             return View(customer);
+        }
+        public ActionResult SavedFreelancers()
+        {
+            int id = 5; //Hårdkodad customer
+            CustomerOperations co = new CustomerOperations();
+            return View(co.GetSavedFreelancersList(id));
         }
 
         // GET: customers/Create

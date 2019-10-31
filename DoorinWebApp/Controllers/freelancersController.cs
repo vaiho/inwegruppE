@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DoorinWebApp.Models;
 using DoorinWebApp.Models.Operations;
+using DoorinWebApp.Viewmodel;
 
 namespace DoorinWebApp.Controllers
 {
@@ -16,19 +17,16 @@ namespace DoorinWebApp.Controllers
         private doorinDBEntities db = new doorinDBEntities();
 
         // GET: freelancers
-        public ActionResult Index(string searchString) //int? id
+        public ActionResult Index(string searchString) 
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-            //if (id == null)
-            //  return View(fpop.GetFreelancersList());
-            //else
-            //  return View(fpop.FilterByCompetence(id));
-
             var allFreelancersList = fpop.GetFreelancersList(); //Hämtar alla frilansare
-            var list = from s in allFreelancersList select s; //Sparar alla frilansare i variabel
-
+            
+            
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
             {
+                var list = from s in allFreelancersList select s; //Sparar alla frilansare i variabel
+
                 //Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
                 list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
 
@@ -36,11 +34,15 @@ namespace DoorinWebApp.Controllers
                 return View(list.ToList());
             }
 
-            //Hämtar teknologierna efter vad som finns i databasen.
-            ViewBag.Technologies = GetTechnologies();
-
             //Annars skickas en ofiltrerad lista tillbaka
             return View(allFreelancersList);
+
+
+
+            //if (id == null)
+            //    return View(fpop.GetFreelancersList());
+            //else
+            //    return View(fpop.FilterByCompetence(id));
         }
 
         // GET: freelancers/Details/5
@@ -202,20 +204,20 @@ namespace DoorinWebApp.Controllers
             return selectList;
         }
 
-        private List<technology> GetTechnologies()
+        public ActionResult SaveFreelancer(int? id) //Sparar freelancer i tabellen customer_freelancer
         {
-            List<technology> TList = new List<technology>();
-            var technologylist = (from t in db.technology
-                                  select new { t.name }).ToList();
+            int c = 5; //hårdkodad customer
 
-            foreach (var t in technologylist)
+            if (id != null)
             {
-                technology item = new technology();
-                item.name = t.name;
-                TList.Add(item);
+                FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+                fpop.SaveFreelancerToCustomerList(id, c);
             }
 
-            return (TList);
+
+            return RedirectToAction("Index");
         }
+
+
     }
 }
