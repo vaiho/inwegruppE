@@ -21,10 +21,12 @@ namespace DoorinWebApp.Controllers
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
             var allFreelancersList = fpop.GetFreelancersList(); //Hämtar alla frilansare
-            var list = from s in allFreelancersList select s; //Sparar alla frilansare i variabel
+            
             
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
-            {   
+            {
+                var list = from s in allFreelancersList select s; //Sparar alla frilansare i variabel
+
                 //Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
                 list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
 
@@ -34,6 +36,13 @@ namespace DoorinWebApp.Controllers
 
             //Annars skickas en ofiltrerad lista tillbaka
             return View(allFreelancersList);
+
+
+
+            //if (id == null)
+            //    return View(fpop.GetFreelancersList());
+            //else
+            //    return View(fpop.FilterByCompetence(id));
         }
 
         // GET: freelancers/Details/5
