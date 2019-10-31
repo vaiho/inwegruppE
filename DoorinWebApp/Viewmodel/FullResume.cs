@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DoorinWebApp.Viewmodel
 {
@@ -13,7 +14,7 @@ namespace DoorinWebApp.Viewmodel
         public int Freelancer_id { get; set; }
         [Key]
         public string Name { get; set; }
-        public bool? Driving_license { get; set; }
+        public string Driving_license { get; set; }
         public string Profile { get; set; }
         public List<competence> Competences { get; set; }
         public List<competence> MyCompetences { get; set; }
@@ -33,14 +34,18 @@ namespace DoorinWebApp.Viewmodel
         public string Birthcity { get; set; }
         public string Nationality { get; set; }
 
+        public IEnumerable<SelectListItem> DrivingLicenceChoice { get; set; } //För att skapa en lista att välja "Ja" eller "nej" på körkort
+
+
         public FullResume()
         {
             Competences = new List<competence>();
             MyCompetences = new List<competence>();
             Technologies = new List<technology>();
             MyTechnologies = new List<FullTechnology>();
-            Link = new List<links>();
-        }
+            Link = new List<links>();            
+
+    }
 
     }
 

@@ -82,7 +82,12 @@ namespace DoorinWebApp.Controllers
 
             FullResumeOperations resumeOperations = new FullResumeOperations();
 
-            return View(resumeOperations.GetFullResumeById(id));
+            var driving_licence = GetYesOrNo();
+            
+            var fullResume = resumeOperations.GetFullResumeById(id);
+            fullResume.DrivingLicenceChoice = GetSelectListItems(driving_licence);
+
+            return View(fullResume);
         }
 
         [HttpPost]
@@ -155,5 +160,31 @@ namespace DoorinWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+        //TODO: TEst Stina
+        private IEnumerable<string> GetYesOrNo()
+        {
+            return new List<string>
+            {
+                "Yes",
+                "No",
+            };
+        }
+
+        // TODO: TEst Stina
+        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
+        {
+            // Stinas test
+            var selectList = new List<SelectListItem>();
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element,
+                    Text = element
+                });
+            }
+            return selectList;
+        }
+      
     }
 }

@@ -50,14 +50,14 @@ namespace DoorinWebApp.Models.Operations
             GetMyTechnology(fullResume); //Hämtar och sparar frilansarens teknologier
             GetCompetenceList(fullResume); //Hämtar den fördiga listan av kompetenser
             GetTechnologyList(fullResume); //Hämtar den färdiga listan av teknologier
-            links link = new links() {
-                link_id = 1,
-                name = "LinkedIn",
-                resume_id = 1,
-                link = "linkedIn.se"
+            //links link = new links() {
+            //    link_id = 1,
+            //    name = "LinkedIn",
+            //    resume_id = 1,
+            //    link = "linkedIn.se"
 
-            };
-            fullResume.Link.Add(link);
+            //};
+            //fullResume.Link.Add(link);
 
             return fullResume;
         }
