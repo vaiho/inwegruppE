@@ -35,10 +35,11 @@ namespace DoorinWebApp.Controllers
             }
             return View(customer);
         }
-        public ActionResult SavedFreelancers()
+        public ActionResult SavedFreelancers() //Hämtar sparade frilansare för en customer och skickar tillbaka en lista med dessa
         {
             int id = 5; //Hårdkodad customer
             CustomerOperations co = new CustomerOperations();
+
             return View(co.GetSavedFreelancersList(id));
         }
 
