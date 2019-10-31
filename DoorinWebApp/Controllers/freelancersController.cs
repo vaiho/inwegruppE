@@ -21,15 +21,17 @@ namespace DoorinWebApp.Controllers
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
             var allFreelancersList = fpop.GetFreelancersList(); //Hämtar alla frilansare
-            
-            
+
+            //Viewbags här
+            ViewBag.Competence = GetCompetences();
+
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
             {
                 var list = from s in allFreelancersList select s; //Sparar alla frilansare i variabel
 
                 //Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
                 list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
-
+            
                 //Returnerar den filtrerade listan
                 return View(list.ToList());
             }
@@ -44,7 +46,23 @@ namespace DoorinWebApp.Controllers
             //else
             //    return View(fpop.FilterByCompetence(id));
         }
+        private List<competence> GetCompetences()
+        {
 
+            List<competence> CList = new List<competence>();
+            var competencelist = (from c in db.competence
+                                  select new { c.name, c.competence_id }).ToList();
+
+            foreach (var v in competencelist)
+            {
+                competence item = new competence();
+                item.name = v.name;
+                item.competence_id = v.competence_id;
+                CList.Add(item);
+            }
+
+            return (CList);
+        }
         // GET: freelancers/Details/5
         public ActionResult Details(int? id)
         {
