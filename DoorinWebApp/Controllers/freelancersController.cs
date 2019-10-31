@@ -137,12 +137,20 @@ namespace DoorinWebApp.Controllers
                 r.freelancer_id = freelancer.freelancer_id;
                 db.resume.Add(r);
                 db.SaveChanges();
-                
-                return RedirectToAction("Index");
+                var savedid = freelancer.freelancer_id;
+
+                return RedirectToAction("Details", new { id = savedid });
             }
 
             return View(freelancer);
         }
+
+
+        //http://localhost:50489/freelancer/Details?freelancer_id=26
+
+        //http://localhost:50489/freelancer/Details?freelancer_id=28
+
+        //http://localhost:50489/freelancers/details/5
 
         // GET: freelancers/Edit/5
         public ActionResult Edit(int? id)
@@ -171,7 +179,7 @@ namespace DoorinWebApp.Controllers
             {
                 db.Entry(freelancer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = freelancer.freelancer_id });
             }
             return View(freelancer);
         }
