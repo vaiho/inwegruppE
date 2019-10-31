@@ -1,58 +1,55 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Contact";
 }
 
-
-
-
-<div class="box">
-    <input type="text" id="search" Value="Search">
-    <img id="searchbtn" src="~/Content/images/search.png" />
-    <div id="filterbtn" class="filterbtn" onclick="myFunction()">
-        <img src="~/Content/images/filter.png" />
-        Filters
-    </div>
-
-    <div id="filters" style="display:none;">
-
-        <div style="border-bottom:1px solid #ddd; margin-top:20px;"></div>
-
-        <h4 style="font-weight:bold; margin-top:20px;">Kompetenser</h4>
-        <p class="filters">Programmer</p>
-        <p class="filters">Designer</p>
-
-        <div id="technologies">
-            <h4 style="font-weight:bold; margin-top:20px;">Technologies</h4>
-            <p class="filters">Javascript</p>
-            <p class="filters">C#</p>
+    
+    <div class="box">
+        <input type="text" id="search" Value="Search">
+        <img id="searchbtn" src="~/Content/images/search.png" />
+        <div id="filterbtn" class="filterbtn" onclick="myFunction()">
+            <img src="~/Content/images/filter.png" />
+            Filters
         </div>
 
+        <div id="filters" style="display:block;">
+
+            <div style="border-bottom:1px solid #ddd; margin-top:20px;"></div>
+
+            <h4 style="font-weight:bold; margin-top:20px;">Kompetenser</h4>
+
+            @foreach (var item in ViewBag.Competence)
+            {
+                <p class="filters">@item.name</p>
+            }
+
+            <div id="technologies" style="display:block;">
+                <h4 style="font-weight:bold; margin-top:20px;">Teknologier</h4>
+                @foreach (var item in ViewBag.Technologies)
+                {
+                    <input class="filters" type="submit" value="@item.name" onclick="setValue('@item.name')" />
+                }
+            </div>
+
+       </div>
+    
     </div>
+
+<div class="freelancerbox">
+
+    
+        @foreach (var item in ViewBag.Freelancers)
+        {
+            <div class="freelancerlist">
+                <h4 style="font-weight:bold;">@item.Firstname @item.Lastname</h4>
+                
+            </div>
+        }
+
+            
+
 
 </div>
 
 
 
-
-
-
-
-
-
-
-
-
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>

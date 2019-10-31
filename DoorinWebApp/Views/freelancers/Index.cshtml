@@ -18,87 +18,90 @@
 <div>
     @using (Html.BeginForm())
     {
-        <div class="box">
-            <p>Sök efter kompetenser eller teknologier: @Html.TextBox("SearchString") </p>
-            <input type="submit" value="Sök" />
-            <input type="submit" value="Nollställ" onclick="setValue('')" />
-        </div>
-        <br />
-        <h4>Filtrera kompetenser:</h4>
-        <input type="submit" value="Testare" onclick="setValue('Testare')" />
-        <input type="submit" value="Programmerare" onclick="setValue('Programmerare')" />
-        <input type="submit" value="Designer" onclick="setValue('Designer')" />
-        <input type="submit" value="Projektledare" onclick="setValue('Projektledare')" />
+    <div class="box">
+        <p>Sök efter kompetenser eller teknologier: @Html.TextBox("SearchString") </p>
+        <input type="submit" value="Sök" />
+        <input type="submit" value="Nollställ" onclick="setValue('')" />
 
         <br />
-        <br />
+        <h4 style="font-weight:bold;">Kompetenser</h4>
+        <input class="filters" type="submit" value="Testare" onclick="setValue('Testare')" />
+        <input class="filters" type="submit" value="Programmerare" onclick="setValue('Programmerare')" />
+        <input class="filters" type="submit" value="Designer" onclick="setValue('Designer')" />
+        <input class="filters" type="submit" value="Projektledare" onclick="setValue('Projektledare')" />
 
-        <h4>Filtrera teknologier:</h4>
-        <input type="submit" value="HTML" onclick="setValue('HTML')" />
-        <input type="submit" value="CSS" onclick="setValue('CSS')" />
-        <input type="submit" value="JS" onclick="setValue('JavaScript')" />
-        <input type="submit" value="C#" onclick="setValue('C#')" />
-        <input type="submit" value="Illustrator" onclick="setValue('Illustrator')" />
-        <br /><br /><br />
+        <br />
+        
+
+        <h4 style="font-weight:bold;">Teknologier</h4>
+        <input class="filters" type="submit" value="HTML" onclick="setValue('HTML')" />
+        <input class="filters" type="submit" value="CSS" onclick="setValue('CSS')" />
+        <input class="filters" type="submit" value="JS" onclick="setValue('JavaScript')" />
+        <input class="filters" type="submit" value="C#" onclick="setValue('C#')" />
+        <input class="filters" type="submit" value="Illustrator" onclick="setValue('Illustrator')" />
+        <br />
+    </div>
     }
 </div>
 
-<table class="table">
-    <tr>
-        <th>
-            Namn
-        </th>
-        <th>
-            Nationalitet
-        </th>
-        <th>
-            Kompetenser
-        </th>
-        <th>
-            Teknologier
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="freelancerbox">
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fullname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nationality)
-            </td>
-            <td>
-                @foreach (var x in item.CompetencesList)
-                {
-                    <span>@Html.DisplayFor(modelItem => x.name),</span>
-                }
-            </td>
-            <td>
-                @foreach (var x in item.TechnologysList)
-                {
-                    <span>@Html.DisplayFor(modelItem => x.name), </span>
-                }
-            </td>
-            <td>
-                @Html.ActionLink("Spara |", "SaveFreelancer", new { id = item.Freelancer_id })
-                @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
-            </td>
+            <th>
+                Namn
+            </th>
+            <th>
+                Nationalitet
+            </th>
+            <th>
+                Kompetenser
+            </th>
+            <th>
+                Teknologier
+            </th>
+            <th></th>
         </tr>
 
-    }
-    
-</table>
-<hr />
-<br />
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fullname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nationality)
+                </td>
+                <td>
+                    @foreach (var x in item.CompetencesList)
+                    {
+                        <span>@Html.DisplayFor(modelItem => x.name),</span>
+                    }
+                </td>
+                <td>
+                    @foreach (var x in item.TechnologysList)
+                    {
+                        <span>@Html.DisplayFor(modelItem => x.name), </span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Spara |", "SaveFreelancer", new { id = item.Freelancer_id })
+                    @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
+                </td>
+            </tr>
 
-@Html.ActionLink("Mina sparade frilansare", "SavedFreelancers", "customers")
-<br />
-<br />
-<script>
-    function setValue(txt) {
-        document.getElementById("SearchString").value = txt;
-    }
-</script>
+        }
+
+    </table>
+    </div>
+    <hr />
+    <br />
+
+    @Html.ActionLink("Mina sparade frilansare", "SavedFreelancers", "customers")
+    <br />
+    <br />
+    <script>
+        function setValue(txt) {
+            document.getElementById("SearchString").value = txt;
+        }
+    </script>
 
