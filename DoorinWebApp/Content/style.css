@@ -189,6 +189,25 @@ width: 70%;
 
 
 
+/*#region Styles för freelancers på söksidan*/
+
+.freelancerbox {
+border-top: 1px solid #ddd;
+margin:20px 0 20px 0;
+}
+
+.freelancerlist {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+
+/*#endregion*/
+
+
+
 /*#region Header saker*/
 header {
     background: #FFF;
@@ -348,6 +367,29 @@ input[type=text], input[type=email], input[type=number], select, textarea {
     margin-top: 6px;
     margin-bottom: 6px;
     resize: vertical;
+}
+
+input[type=submit].filters, .filters {
+    display: inline-block;
+    background-color: white;
+    border-radius: 1px;
+    color: black;
+    border: 2px solid #ddd;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+input[type=submit].filters:hover, .filters:hover {
+    background-color: #09964f;
+    color: white;
+    border: 2px solid #09964f;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 input[type=submit], .btn {

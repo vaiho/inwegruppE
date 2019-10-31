@@ -36,6 +36,9 @@ namespace DoorinWebApp.Controllers
                 return View(list.ToList());
             }
 
+            //Hämtar teknologierna efter vad som finns i databasen.
+            ViewBag.Technologies = GetTechnologies();
+
             //Annars skickas en ofiltrerad lista tillbaka
             return View(allFreelancersList);
         }
@@ -197,6 +200,22 @@ namespace DoorinWebApp.Controllers
                 });
             }
             return selectList;
+        }
+
+        private List<technology> GetTechnologies()
+        {
+            List<technology> TList = new List<technology>();
+            var technologylist = (from t in db.technology
+                                  select new { t.name }).ToList();
+
+            foreach (var t in technologylist)
+            {
+                technology item = new technology();
+                item.name = t.name;
+                TList.Add(item);
+            }
+
+            return (TList);
         }
     }
 }
