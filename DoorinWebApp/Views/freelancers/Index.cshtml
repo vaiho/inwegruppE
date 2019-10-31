@@ -6,6 +6,7 @@
 }
 
 <h2>Sök efter frilansare</h2>
+<br />
 @*<div class="box">
         <input type="text" id="search" placeholder="Sök här">
         <img id="searchbtn" src="~/Content/images/search.png" />
@@ -19,30 +20,44 @@
     @using (Html.BeginForm())
     {
     <div class="box">
-        <p>Sök efter kompetenser eller teknologier: @Html.TextBox("SearchString") </p>
+        <p>Sök efter kompetenser eller teknologier: </p>
+
+        @*<input class="search" type="text" id="SearchString" name="SearchString" onfocus="this.value=''"/>*@
+        <p id="search">@Html.TextBox("SearchString")</p>
+
+        <div id="filterbtn" class="filterbtn" onclick="myFunction()">
+            <img src="~/Content/images/filter.png" />
+            Filters
+        </div>
+
         <input type="submit" value="Sök" />
         <input type="submit" value="Nollställ" onclick="setValue('')" />
 
         <br />
-        <h4 style="font-weight:bold;">Kompetenser</h4>
-        @foreach (var item in ViewBag.Competence)
-        {
-            <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-        }
+        
+        
+        <div id="filters" style="display:none;">
+            <hr />
+            <h4 style="font-weight:bold;">Kompetenser</h4>
+            @foreach (var item in ViewBag.Competence)
+            {
+                <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
+            }
 
-        <br />
+            <br />
 
-        <h4 style="font-weight:bold;">Teknologier</h4>
-        @foreach (var item in ViewBag.Technology)
-        {
-            <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-        }
-        <br />
+            <h4 style="font-weight:bold;">Teknologier</h4>
+            @foreach (var item in ViewBag.Technology)
+            {
+                <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
+            }
+            <br />
+        </div>
     </div>
-    }
-</div>
+        }
+    </div>
 
-
+<br />
 
 <div class="freelancerbox">
     <table class="table">

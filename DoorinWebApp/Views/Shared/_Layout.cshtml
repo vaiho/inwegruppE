@@ -29,7 +29,6 @@
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li>@Html.ActionLink("Sök frilansare", "Index", "freelancers")</li>
-                            <li>@Html.ActionLink("Customers", "Index", "customers")</li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <a style="color:#FFF;" href="@Url.Action("Details/30", "freelancers")"><li style="">Profil frilansare</li></a>
@@ -53,6 +52,11 @@
                 </a>
                 &copy; 2019 &nbsp;&nbsp;&nbsp;&nbsp;
                 @Html.ActionLink("Kontakt", "Contact", "Home")
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Rekryterare", "Index", "customers")
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("CV:n", "Index", "resumes")
+
             </p>
         </div>
 

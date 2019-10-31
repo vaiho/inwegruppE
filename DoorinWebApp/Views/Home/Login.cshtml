@@ -13,8 +13,8 @@
                 <h5 class="center ">Vänligen använd användarnamnet och lösenordet som du skapade när du gick med.</h5>
 
                 <form id="commentForm" onsubmit="whenSubmitted()" class="paddingtop20">
-                    <input type="text" id="fname" name="firstname" Value="anpe" required>
-                    <input type="text" id="lname" name="lastname" Value="*********" required>
+                    <input type="text" id="username" name="username" Value="anpe" required onfocus="this.value=''">
+                    <input type="text" id="password" name="password" Value="*********" required onfocus="this.value=''">
                     <div class="center paddingtop20">
                         <p style="color:red;">Du behöver endast välja vilken typ av person du vill logga in som.</p>
                         <a href="@Url.Action("Details/5", "freelancers")"><p class="btn">Logga in som frilansare</p></a>

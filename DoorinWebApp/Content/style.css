@@ -155,9 +155,16 @@ a:hover {
     color:#FFF;
 }
 
-#search {
-border-radius:0px;
-width: 70%;
+.search {
+    border-radius: 0px;
+    width: 70%;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    resize: vertical;
 }
 
 .filters {
