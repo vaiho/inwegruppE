@@ -36,12 +36,16 @@ namespace DoorinWebApp.Viewmodel
 
         public List<competence> CompetencesList{ get; set; }
         public List<FullTechnology> TechnologysList { get; set; }
+        public List<education> EducationsList { get; set; }
+        public List<workhistory> WorkHistoryList { get; set; }
 
         public FreelancerProfileVM()
         {
             CompetencesList = new List<competence>();
             TechnologysList = new List<FullTechnology>();
-            
+            EducationsList = new List<education>();
+            WorkHistoryList = new List<workhistory>();
+
         }
         [DisplayName("Ålder")]
         public int Age //För att räkna ut en ålder

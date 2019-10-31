@@ -9,52 +9,78 @@
 <p>Sara, du är mer än välkommen att flytta om och snygga till innehållet på denna sida!</p>
 <br />
 
-<div class="col-md-4">
-    <h2>Om mig</h2>
-    <h4>@Html.DisplayNameFor(model => model.Firstname)</h4>
-    <p>@Html.DisplayFor(modelItem => Model.Firstname)</p>
-    <h4> @Html.DisplayNameFor(model => model.Lastname)</h4>
-    <p>@Html.DisplayFor(modelItem => Model.Lastname)</p>
-    <h4>@Html.DisplayNameFor(model => model.Email)</h4>
-    <p>@Html.DisplayFor(modelItem => Model.Email)</p>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Om mig</h2>
+        <h4>@Html.DisplayNameFor(model => model.Firstname)</h4>
+        <p>@Html.DisplayFor(modelItem => Model.Firstname)</p>
+        <h4> @Html.DisplayNameFor(model => model.Lastname)</h4>
+        <p>@Html.DisplayFor(modelItem => Model.Lastname)</p>
+        <h4>@Html.DisplayNameFor(model => model.Email)</h4>
+        <p>@Html.DisplayFor(modelItem => Model.Email)</p>
 
-    <h4>@Html.DisplayNameFor(model => model.Nationality)</h4>
-    <p> @Html.DisplayFor(modelItem => Model.Nationality)</p>
-    <h4>@Html.DisplayNameFor(model => model.City)</h4>
-    <p> @Html.DisplayFor(modelItem => Model.City)</p>
-    <h4>@Html.DisplayNameFor(model => model.Age)</h4>
-    <p> @Html.DisplayFor(modelItem => Model.Age) år</p>
+        <h4>@Html.DisplayNameFor(model => model.Nationality)</h4>
+        <p> @Html.DisplayFor(modelItem => Model.Nationality)</p>
+        <h4>@Html.DisplayNameFor(model => model.City)</h4>
+        <p> @Html.DisplayFor(modelItem => Model.City)</p>
+        <h4>@Html.DisplayNameFor(model => model.Age)</h4>
+        <p> @Html.DisplayFor(modelItem => Model.Age) år</p>
+    </div>
+    <div class="col-md-4">
+        <h2>CV</h2>
+
+        <h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
+        <p>@Model.Resume_id</p>
+        <h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
+        <p>@Model.ProfileText</p>
+
+    </div>
+
+    <div class="col-md-4">
+        <h2>Profilbild</h2>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV0I6VDKQ3vmT9y2QFvx7UZ4aTK_HZUbbHyIvmr_sgoa3sIBB6cg&s">
+    </div>
 </div>
-<div class="col-md-4">
-    <h2>CV</h2>
-
-    <h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
-    <p>@Model.Resume_id</p>
-    <h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
-    <p>@Model.ProfileText</p>
-
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Kompetenser</h2>
+        @foreach (var item in Model.CompetencesList)
+        {
+            <p>
+                @Html.DisplayFor(modelItem => item.name)
+            </p>
+        }
+    </div>
+    <div class="col-sm-6">
+        <h2>Teknologier</h2>
+        @foreach (var item in Model.TechnologysList)
+        {
+            <p>@Html.DisplayFor(modelItem => item.name) Ranking: @Html.DisplayFor(modelItem => item.rank)</p>
+        }
+    </div>
 </div>
-
-<div class="col-md-4">
-    <h2>Profilbild</h2>
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV0I6VDKQ3vmT9y2QFvx7UZ4aTK_HZUbbHyIvmr_sgoa3sIBB6cg&s">
-</div>
-
-<div class="col-md-6">
-    <h2>Kompetenser</h2>
-    @foreach (var item in Model.CompetencesList)
-    {
-        <p>
-            @Html.DisplayFor(modelItem => item.name)
-        </p>
-    }
-</div>
-<div class="col-md-6">
-    <h2>Teknologier</h2>
-    @foreach (var item in Model.TechnologysList)
-    {
-        <p>@Html.DisplayFor(modelItem => item.name) Ranking: @Html.DisplayFor(modelItem => item.rank)</p>     
-    }
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Utbildning</h2>
+        @foreach (var item in Model.EducationsList)
+        {
+            <p><strong>Titel:</strong> @Html.DisplayFor(modelItem => item.title)</p>
+            <p><strong>Beskrivning:</strong> @Html.DisplayFor(modelItem => item.description)</p>
+            <p><strong>Datum: </strong>@Html.DisplayFor(modelItem => item.date)</p>
+            <hr />
+        }
+    </div>
+    <div class="col-sm-6">
+        <h2>Erfarenheter</h2>
+        @foreach (var item in Model.WorkHistoryList)
+        {
+            <p><strong>Arbetsgivare:</strong> @Html.DisplayFor(modelItem => item.employer)</p>
+            <p><strong>Position:</strong> @Html.DisplayFor(modelItem => item.position)</p>
+            <p><strong>Beskrivning:</strong> @Html.DisplayFor(modelItem => item.description)</p>
+            <p><strong>Datum:</strong> @Html.DisplayFor(modelItem => item.date)</p>
+            <hr />
+        }
+    </div>
 </div>
 <div class="col-lg-12">
     <br />

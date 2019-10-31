@@ -46,6 +46,8 @@ namespace DoorinWebApp.Models.Operations
             }
             GetCompetences(fp); //Hämtar och sparar kompetenser
             GetTechnology(fp); //Hämtar och sparar teknologier
+            GetEducation(fp); //Hämtar och sparar utbildningar
+            GetWorkHistory(fp); //Hämtar och sparar workhistory
             //GetFreelancersList();
 
             return fp;
@@ -107,6 +109,43 @@ namespace DoorinWebApp.Models.Operations
                 }
             }
         }
+        private void GetEducation(FreelancerProfileVM fp)
+        {
+            var list = (from e in db.education
+                                  join r in db.resume on e.resume_id equals r.resume_id where e.resume_id == fp.Resume_id
+                                  select new { e.education_id, e.resume_id, e.title, e.description, e.date }).ToList();
+
+            foreach (var item in list)
+            {
+                education ed = new education();
+                ed.education_id = item.education_id;
+                ed.resume_id = item.resume_id;
+                ed.title = item.title;
+                ed.description = item.description;
+                ed.date = item.date;
+                fp.EducationsList.Add(ed);
+            }          
+        }
+        private void GetWorkHistory(FreelancerProfileVM fp)
+        {
+            var list = (from w in db.workhistory
+                        join r in db.resume on w.resume_id equals r.resume_id
+                        where w.resume_id == fp.Resume_id
+                        select new { w.workhistory_id, w.resume_id, w.employer, w.position, w.description, w.date }).ToList();
+
+            foreach (var item in list)
+            {
+                workhistory wo = new workhistory();
+                wo.workhistory_id = item.workhistory_id;
+                wo.resume_id = item.resume_id;
+                wo.employer = item.employer;
+                wo.position = item.position;
+                wo.description = item.description;
+                wo.date = item.date;
+                fp.WorkHistoryList.Add(wo);
+            }
+        }
+
 
         private SqlConnectionStringBuilder GetBuilder() //Anropa vid användning för connection mot databasen
         {
@@ -207,6 +246,7 @@ namespace DoorinWebApp.Models.Operations
             
 
         }
+
 
     }
 }
