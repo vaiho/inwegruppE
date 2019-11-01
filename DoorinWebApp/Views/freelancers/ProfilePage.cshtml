@@ -31,7 +31,7 @@
 
         <h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
         <p>@Model.Resume_id</p>
-        <h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
+        <h4>Beskrivning</h4> @*@Html.DisplayNameFor(model => model.ProfileText)*@
         <p>@Model.ProfileText</p>
 
     </div>
@@ -55,7 +55,7 @@
         <h2>Teknologier</h2>
         @foreach (var item in Model.TechnologysList)
         {
-            <p>@Html.DisplayFor(modelItem => item.name) Ranking: @Html.DisplayFor(modelItem => item.rank)</p>
+            <p><strong>@Html.DisplayFor(modelItem => item.name)</strong> Ranking: @Html.DisplayFor(modelItem => item.rank)</p>
         }
     </div>
 </div>
@@ -94,11 +94,13 @@
 <div class="col-lg-12">
     <div class="col-md-8">
         <p>
-            @Html.ActionLink("Tillbaka", "Index")
+            @*@Html.ActionLink("Tillbaka", "Index")*@
+            <a href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
         </p>
     </div>
     <div class="ml-auto col-md-4">
-        <p class="btn">Spara </p>
+        <a href="@Url.Action("SaveFreelancer", "freelancers", new { id = Model.Freelancer_id }, null)"><p class="btn">Spara</p></a>
+        @*<p class="btn">Spara </p>*@
         <p class="btn">Kontakta mig &raquo; </p>
     </div>
     <br />
@@ -107,5 +109,7 @@
     <br />
 </div>
 
+
+@*@Html.ActionLink("Spara |", "SaveFreelancer", new { id = item.Freelancer_id })*@
 
 

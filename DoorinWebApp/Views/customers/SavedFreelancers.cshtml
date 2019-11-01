@@ -39,7 +39,8 @@
         </td>
 
         <td>
-            @Html.ActionLink("Besök profil", "ProfilePage", "freelancers", new { id = item.Freelancer_id }, null)
+            @Html.ActionLink("Besök profil |", "ProfilePage", "freelancers", new { id = item.Freelancer_id }, null)
+            @Html.ActionLink("Ta bort", "RemoveFreelancer", "freelancers", new { idfromview = item.Freelancer_id }, null)
         </td>
     </tr>
     }
