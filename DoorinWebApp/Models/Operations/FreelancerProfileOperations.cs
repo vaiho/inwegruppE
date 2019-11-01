@@ -389,6 +389,5 @@ namespace DoorinWebApp.Models.Operations
             }
         }
 
-
     }
 }

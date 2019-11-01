@@ -268,14 +268,13 @@ namespace DoorinWebApp.Controllers
             }
 
             int? customer_id = 5; //Hårdkodad customer
-            int? id = idfromview;
+            int? id = idfromview; //Markerad freelancer
 
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
             fpop.RemoveFreelancerFromCustomerList(id, customer_id);
 
-            //return RedirectToAction("SavedFreelancer", "customersController", null);
-            return RedirectToAction("Index");
-            //Vill refresha samma sida, inte skicka tillbaka till index
+            //Refreshar samma sida
+            return RedirectToAction("SavedFreelancers", "customers");  
         }
     }
 }
