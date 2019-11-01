@@ -32,7 +32,8 @@ namespace DoorinWebApp.Viewmodel
         public string Zipcode { get; set; }
         public string Username { get; set; }
         public string Fullname => $"{Firstname} {Lastname}";
-
+        [DisplayName("B-körkort")]
+        public string DrivingLicence { get; set; }
 
         public List<competence> CompetencesList{ get; set; }
         public List<FullTechnology> TechnologysList { get; set; }

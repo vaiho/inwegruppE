@@ -9,7 +9,10 @@
 <p>Sara, du är mer än välkommen att flytta om och snygga till innehållet på denna sida!</p>
 <br />
 
-<div class="row">
+@Html.Partial("_FreelancerProfileResume", Model)
+
+
+@*<div class="row">
     <div class="col-md-4">
         <h2>Om mig</h2>
         <h4>@Html.DisplayNameFor(model => model.Firstname)</h4>
@@ -31,7 +34,7 @@
 
         <h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
         <p>@Model.Resume_id</p>
-        <h4>Beskrivning</h4> @*@Html.DisplayNameFor(model => model.ProfileText)*@
+        <h4>Beskrivning</h4> @Html.DisplayNameFor(model => model.ProfileText)
         <p>@Model.ProfileText</p>
 
     </div>
@@ -88,7 +91,7 @@
     <br />
     <br />
 
-</div>
+</div>*@
 
 
 <div class="col-lg-12">

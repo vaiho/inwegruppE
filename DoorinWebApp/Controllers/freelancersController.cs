@@ -94,10 +94,10 @@ namespace DoorinWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //freelancer freelancer = db.freelancer.Find(id);
-            FreelancerOperations fop = new FreelancerOperations();
-            freelancer freelancer = fop.GetFreelancerById(id);
-
+            freelancer freelancer = db.freelancer.Find(id);
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            freelancer.FreelancerProfileResume = fpop.GetFreelancerProfileById(id);
+            
             if (freelancer == null)
             {
                 return HttpNotFound();
