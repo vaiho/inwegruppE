@@ -52,19 +52,20 @@
                 @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
             </div>
         </div>
-        @using (Html.BeginForm("YourAction"))
-        {
             <div>
                 <p><b>Lägg till kompetenser</b></p>
 
-                <select class="form-control" id="CompetencesDropDown" name="CompetencesDropDown" onchange="this.form.onsubmit()">
+                <select class="form-control" id="Competences" name="Competences">
                     @foreach (var item in Model.Competences)
                     {
                         <option> @item.name </option>
                     }
+                    <input class="btnAdd btn btn-default" type="button" name="name" value="Add" />
                 </select>
+                @*@Html.DropDownListFor(@Model => @Model.Competences, new SelectList(Model.Competences, "Competence_id", "Name"))
+                    <input value="submit" type="submit" id="AddMyCom" />    *@
             </div>
-        }
+        
         <div id="AddMyCompetences">
             <p><b>Mina kompetenser</b></p>
 
@@ -72,6 +73,7 @@
                 @foreach (var item in Model.MyCompetences)
                 {
                     <option> @item.name </option>
+
                 }
             </select>
         </div>
@@ -103,7 +105,7 @@
 
 
     <h2>Links</h2>
-   
+
 
     //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
     //https://forums.asp.net/t/2126284.aspx?MVC+Input+in+form+of+Table+With+Add+Delete+Row
@@ -120,14 +122,14 @@
         </thead>
 
         <tbody>
-                @foreach (var link in Model.Link)
-                {
-                    <tr>
-                        <td>@link.name</td>
-                        <td>@link.link</td>
-                        <td><input class="btnRemoveLink btn btn-default" type="button" value="Remove" onclick="Remove(this)" /></td>
-                    </tr>
-                 }
+            @foreach (var link in Model.Link)
+            {
+                <tr>
+                    <td>@link.name</td>
+                    <td>@link.link</td>
+                    <td><input class="btnRemoveLink btn btn-default" type="button" value="Remove" onclick="Remove(this)" /></td>
+                </tr>
+            }
         </tbody>
 
         <tfoot>
@@ -136,7 +138,7 @@
                 <td><input type="text" id="txtLink" /></td>
                 <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
                 <td>
-                    <input class="btnAddLink btn btn-default" type="button" name="name" value="Add" />
+                    <input class="btnAddLink btn btn-default" type="button" name="name" value="Add" /> 
                 </td>
 
                 <td></td>
@@ -245,46 +247,78 @@
 </div>
 
 <script type="text/javascript">
+@*
+
+
+    $(".btnAdd").click(function () {
+            var selectedCompetence = $("#CompetencesDropDown :selected").val();
+
+          $.ajax({
+                type: "POST",
+                url: "/resumes/AddMyCompetences",
+                data: selectedCompetence,
+                contentType: "application/json; charset=utf-8",
+                alert("Kompetensen är tillagd. ");
+       });
+    }*@
+
+   @* $("body").on("click", "#AddMyCom", function () {
+          @*  //Loop through the Table rows and build a JSON array.
+            var customers = new Array();
+            $("#tblCustomers TBODY TR").each(function () {
+                var row = $(this);
+                var customer = {};
+                customer.Name = row.find("TD").eq(0).html();
+                customer.Country = row.find("TD").eq(1).html();
+                customers.push(customer);
+            });
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/resumes/AddMyCompetences",
+                data: @Model,
+                contentType: "application/json; charset=utf-8",
+              @* dataType: "json",
+                alert("Kompetensen är tillagd. ");
+            });
+        }); *@
+
+
+
 
     $(document).ready(function () {
 
-        $("#CompetencesDropDown").change(function () {
+        $("#Competences").change(function () {
 
             alert("DropDown selected value is changed ");
 
-            var DropDownSelectedVal = $("#CompetencesDropDown :selected").val();
+            @*var DropDownSelectedVal = $("#Competences :selected").val(); *@
+            var DropDownSelectedVal = document.querySelector('#Competences');
 
-            if (DropDownSelectedVal != null) {
+            $.ajax({
+                type: "POST",
+                url: "/Resumes/AddMyCompetences",
+                data: JSON.stringify(DropDownSelectedVal),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json", 
+                success: function (r) {
+                    alert("Kompetensen är tillagd.");
+                },
 
-                $.ajax({
+                error: function (xhr) {
 
-                    url: "/resume/YourActions ",
+                  alert("Something went wrong, please try again");
 
-                    data: { "@Model": DropDownSelectedVal },
-
-                    success: function (response) {
-
-                        alert("If Alert Shown this means Ajax call is working properly");
-
-                    },
-
-                    error: function (xhr) {
-
-                        alert("Something went wrong, please try again");
-
-                    }
-
-                });
-
-            }
+                 }
+            });
 
         });
 
     });
 
 </script>
-
-
+       
 
 @*
     <script type="text/javascript">
@@ -326,36 +360,39 @@
 
     </script>
 *@
-<script>
+@*
+    <script>
 
 
-    $(document).ready(function () {
-        $("#Competences").on("change", function () {
-            $.ajax(
-                {
-                    url: '/resume/AddMyCompetences?Name=' + $(this).attr("value"),
-                    type: 'GET',
-                    data: "",
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        $("#partialDiv").html(data);
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-                });
-        });
-    });</script>
+        $(document).ready(function () {
+            $("#Competences").on("change", function () {
+                var DropDownSelectedVal = $("#Competences :selected").val();
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script>
+                $.ajax(
+                    {
+                        url: '/resumes/AddMyCompetences?Name=' + $(this).attr("value"),
+                        type: 'GET',
+                        data: "DropDownSelectedVal",
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            $("#partialDiv").html(data);
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+            });
+        });</script> *@
+@*
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script>
 
-    $(dokument).ready(function () {
+        $(dokument).ready(function () {
 
-        $("#AddMyCompetences").change(function () {
+            $("#AddMyCompetences").change(function () {
+            })
         })
-    })
-</script>
+    </script>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

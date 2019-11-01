@@ -92,21 +92,19 @@ namespace DoorinWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMyCompetences(int competence_id, string competence_name)
+        public ActionResult AddMyCompetences(string name)
         {
-            FullResume fullResume = new FullResume();
-            int selectedId = competence_id;
-            competence selectedCompetence = fullResume.Competences[0];
 
+            FullResume fullResume = new FullResume();
             foreach (var competence in fullResume.Competences)
             {
-                if (competence.competence_id == selectedId)
+                if (competence.competence_id == fullResume.Competences[0].competence_id)
                 {
                     // Visa meddelande "Du har redan lagt till den här kompetensen."
                 }
                 else
                 {
-                    fullResume.MyCompetences.Add(selectedCompetence);
+                    fullResume.MyCompetences.Add(fullResume.Competences[0]);
                 }
             }
                               
