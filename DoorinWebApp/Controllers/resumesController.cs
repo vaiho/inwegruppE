@@ -92,10 +92,12 @@ namespace DoorinWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMyCompetences(FullResume fullResume)
+        public ActionResult AddMyCompetences(FullResume objectResume)
         {
-            FullResumeOperations fullResumeOperations = new FullResumeOperations();
-            fullResume.Competences = fullResumeOperations.GetCompetenceList1();
+            FullResumeOperations resumeOperations = new FullResumeOperations();
+            var fullResume = resumeOperations.GetFullResumeById(objectResume.Resume_id);
+            fullResume.Competences = resumeOperations.GetCompetenceList1();
+            fullResume.SelectedCompetenceId = objectResume.SelectedCompetenceId;
 
             if (fullResume.MyCompetences.Count == 0)
             {
@@ -104,6 +106,7 @@ namespace DoorinWebApp.Controllers
                     if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
                     {
                         fullResume.MyCompetences.Add(fullResume.Competences[i]);
+                        //anropa metod att lägga till det nya CV i databsaen
                         return View(fullResume);
                     }
                 }
@@ -124,6 +127,7 @@ namespace DoorinWebApp.Controllers
                             if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
                             {
                                 fullResume.MyCompetences.Add(fullResume.Competences[i]);
+                                //anropa metod att lägga till det nya CV i databsaen
                             }
                         }
                     }

@@ -26,6 +26,7 @@
         <div class="col-md-10">
             @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(@Model => @Model.Freelancer_id, "", new { @class = "text-danger" })
+            <input type="hidden" id="freelancer_id" value="@Model.Freelancer_id"/>
         </div>
     </div>
 
@@ -254,10 +255,12 @@
             alert(competenceId);
             // ska testa om det gick att hämta värdet på resume så jag sedan kan hämta detta i databasen ifrån
             // controllern
-            var resume_id = $('#resume_id2').text;
+                var resume_id = $("#resume_id").val();
+                var freelancer_id = $("#freelancer_id").val();
+                alert(resume_id);
 
               var compObj = {
-                    "Resume_id": resume_id, "Freelancer_id": $('#resume_id2').text,
+                    Resume_id : resume_id, Freelancer_id: freelancer_id,
                     "Name": $('#freelancer_name').text() , "Driving_license": $('#Driving_license').text() , "Profile": "Hej jag heter", "Competences": "null",
                     "MyCompetences": "null", "Technologies": "null", "Technologies": "null", "Link": "facebook.com",
                     "Linkname": "facebook", "Url": ".com", "Firstname": "hej", "Lastname": "hejson",
