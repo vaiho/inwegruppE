@@ -122,7 +122,7 @@ namespace DoorinWebApp.Models.Operations
             }
         }
 
-        private void GetCompetenceList(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
+        public void GetCompetenceList(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
         {
             string sql = "SELECT competence_id, name FROM competence";
             competence c;
@@ -147,6 +147,35 @@ namespace DoorinWebApp.Models.Operations
                     }
                 }
             }
+
+        }
+
+        public List<competence> GetCompetenceList1() //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
+        {
+            string sql = "SELECT competence_id, name FROM competence";
+            competence c;
+            List<competence> competencesList = new List<competence>();
+
+            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(sql, conn))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            c = new competence()
+                            {
+                                competence_id = (reader.GetInt32(0)),
+                                name = (reader.GetString(1))
+                            };
+                            competencesList.Add(c);
+                        }
+                    }
+                }
+            }
+            return competencesList;
 
         }
 

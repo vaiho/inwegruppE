@@ -16,17 +16,18 @@
 
     <div class="form-horizontal">
         <h4>resume</h4>
-        <hr />
+        
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(@Model => @Model.Resume_id)
 
-        <div class="form-group">
-            @Html.LabelFor(@Model => @Model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(@Model => @Model.Freelancer_id, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+  
+        @Html.LabelFor(@Model => @Model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(@Model => @Model.Freelancer_id, "", new { @class = "text-danger" })
         </div>
+    </div>
 
         @*<div class="form-group">
                 @Html.LabelFor(@Model => @Model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -52,19 +53,20 @@
                 @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
             </div>
         </div>
-            <div>
-                <p><b>Lägg till kompetenser</b></p>
 
-                <select class="form-control" id="Competences" name="Competences">
-                    @foreach (var item in Model.Competences)
-                    {
-                        <option> @item.name </option>
-                    }
-                    <input class="btnAdd btn btn-default" type="button" name="name" value="Add" />
-                </select>
-                @*@Html.DropDownListFor(@Model => @Model.Competences, new SelectList(Model.Competences, "Competence_id", "Name"))
-                    <input value="submit" type="submit" id="AddMyCom" />    *@
-            </div>
+        <div>
+            <p><b>Lägg till kompetenser</b></p>
+            <select class="form-control" id="Competences" name="Competences">
+                @foreach (var item in Model.Competences)
+                {
+                    <option value="@item.competence_id"> @item.name </option>
+                }
+                <input class="btnAdd btn btn-default" type="button" name="name" value="Add" />
+            </select>
+            @*@Html.DropDownListFor(@Model => @Model.Competences, new SelectList(Model.Competences, "Competence_id", "Name"))
+        <input value="submit" type="submit" id="AddMyCom" />    *@
+            
+        </div>
         
         <div id="AddMyCompetences">
             <p><b>Mina kompetenser</b></p>
@@ -109,6 +111,8 @@
 
     //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
     //https://forums.asp.net/t/2126284.aspx?MVC+Input+in+form+of+Table+With+Add+Delete+Row
+    // Ny inspirations-länk för att skicka över objekt med Json: 
+    //https://andrewlock.net/model-binding-json-posts-in-asp-net-core/?fbclid=IwAR3c5Cr4QzojMNkgMZ4Zy14-CRerAxFKbRVGs6tUeyDjS0ySFk342K5EH1Q#how-it-works-in-asp-net-4
     <table class="table" id="tblLinks">
         <thead>
             <tr>
@@ -137,6 +141,7 @@
                 <td><input type="text" id="txtLinkname" /></td>
                 <td><input type="text" id="txtLink" /></td>
                 <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
+
                 <td>
                     <input class="btnAddLink btn btn-default" type="button" name="name" value="Add" /> 
                 </td>
@@ -238,68 +243,33 @@
             });
         });
 
-    </script>
+        // Script rörande Competens-DropDownListan
+        $(document).ready(function () {
+            $("#Competences").change(function () {
 
-}
+                alert("DropDown selected value is changed ");           
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+                var selectedCompetence = document.getElementById("Competences");
+            var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
+            alert(competenceId);
+            // ska testa om det gick att hämta värdet på resume så jag sedan kan hämta detta i databasen ifrån
+            // controllern
+            var resume_id = $('#resume_id2').text;
 
-<script type="text/javascript">
-@*
-
-
-    $(".btnAdd").click(function () {
-            var selectedCompetence = $("#CompetencesDropDown :selected").val();
-
-          $.ajax({
-                type: "POST",
-                url: "/resumes/AddMyCompetences",
-                data: selectedCompetence,
-                contentType: "application/json; charset=utf-8",
-                alert("Kompetensen är tillagd. ");
-       });
-    }*@
-
-   @* $("body").on("click", "#AddMyCom", function () {
-          @*  //Loop through the Table rows and build a JSON array.
-            var customers = new Array();
-            $("#tblCustomers TBODY TR").each(function () {
-                var row = $(this);
-                var customer = {};
-                customer.Name = row.find("TD").eq(0).html();
-                customer.Country = row.find("TD").eq(1).html();
-                customers.push(customer);
-            });
-
-            //Send the JSON array to Controller using AJAX.
-            $.ajax({
-                type: "POST",
-                url: "/resumes/AddMyCompetences",
-                data: @Model,
-                contentType: "application/json; charset=utf-8",
-              @* dataType: "json",
-                alert("Kompetensen är tillagd. ");
-            });
-        }); *@
-
-
-
-
-    $(document).ready(function () {
-
-        $("#Competences").change(function () {
-
-            alert("DropDown selected value is changed ");
-
-            @*var DropDownSelectedVal = $("#Competences :selected").val(); *@
-            var DropDownSelectedVal = document.querySelector('#Competences');
+              var compObj = {
+                    "Resume_id": resume_id, "Freelancer_id": $('#resume_id2').text,
+                    "Name": $('#freelancer_name').text() , "Driving_license": $('#Driving_license').text() , "Profile": "Hej jag heter", "Competences": "null",
+                    "MyCompetences": "null", "Technologies": "null", "Technologies": "null", "Link": "facebook.com",
+                    "Linkname": "facebook", "Url": ".com", "Firstname": "hej", "Lastname": "hejson",
+                    "Address": "hrj", "City": "sundsvall", "Zipcode": "hej", "Phonenumber": "082",
+                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "svrige",
+                    "SelectedCompetenceId" : competenceId
+            };
 
             $.ajax({
                 type: "POST",
                 url: "/Resumes/AddMyCompetences",
-                data: JSON.stringify(DropDownSelectedVal),
+                data: JSON.stringify(compObj),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json", 
                 success: function (r) {
@@ -311,88 +281,22 @@
                   alert("Something went wrong, please try again");
 
                  }
-            });
+            });           
 
         });
 
-    });
-
-</script>
-       
-
-@*
-    <script type="text/javascript">
-
-            $(document).ready(function () {
-
-                $("CompetencesDropDown").change(function () {
-                    alert("#DropDown selected value is changed");
-                    var DropDownSelectedVal = $("#CompetencesDropDown :selected").val();
-
-                    if (DropDownSelectedVal != null) {
-
-                        $.ajax({
-                            url: "@(Url.Action("YourActions", "resume"))",
-
-                            type: 'POST',
-
-                            data: { "@Model": DropDownSelectedVal },
-
-                            success: function (response) {
-
-                            alert("If Alert Shown this means Ajax call is working properly");
-
-                    },
-
-                    error: function (xhr) {
-
-                        alert("Something went wrong, please try again");
-
-                    }
-
-                });
-
-            }
-
-                });
-
-            });
+             
+        });
+        // Script rörande Competens-DropDownListan slutar här
 
     </script>
-*@
-@*
-    <script>
+}
 
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 
-        $(document).ready(function () {
-            $("#Competences").on("change", function () {
-                var DropDownSelectedVal = $("#Competences :selected").val();
-
-                $.ajax(
-                    {
-                        url: '/resumes/AddMyCompetences?Name=' + $(this).attr("value"),
-                        type: 'GET',
-                        data: "DropDownSelectedVal",
-                        contentType: 'application/json; charset=utf-8',
-                        success: function (data) {
-                            $("#partialDiv").html(data);
-                        },
-                        error: function () {
-                            alert("error");
-                        }
-                    });
-            });
-        });</script> *@
-@*
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script>
-
-        $(dokument).ready(function () {
-
-            $("#AddMyCompetences").change(function () {
-            })
-        })
-    </script>*@
+       
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -92,19 +92,41 @@ namespace DoorinWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMyCompetences(string name)
+        public ActionResult AddMyCompetences(FullResume fullResume)
         {
+            FullResumeOperations fullResumeOperations = new FullResumeOperations();
+            fullResume.Competences = fullResumeOperations.GetCompetenceList1();
 
-            FullResume fullResume = new FullResume();
-            foreach (var competence in fullResume.Competences)
+            if (fullResume.MyCompetences.Count == 0)
             {
-                if (competence.competence_id == fullResume.Competences[0].competence_id)
+                for (int i = 0; i < fullResume.Competences[i].competence_id; i++)
                 {
-                    // Visa meddelande "Du har redan lagt till den här kompetensen."
+                    if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
+                    {
+                        fullResume.MyCompetences.Add(fullResume.Competences[i]);
+                        return View(fullResume);
+                    }
                 }
-                else
+            }
+            else
+            {
+
+                foreach (var competence in fullResume.MyCompetences)
                 {
-                    fullResume.MyCompetences.Add(fullResume.Competences[0]);
+                    if (competence.competence_id == fullResume.SelectedCompetenceId)
+                    {
+                        // Visa meddelande "Du har redan lagt till den här kompetensen."
+                    }
+                    else
+                    {
+                        for (int i = 0; i < fullResume.Competences[i].competence_id; i++)
+                        {
+                            if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
+                            {
+                                fullResume.MyCompetences.Add(fullResume.Competences[i]);
+                            }
+                        }
+                    }
                 }
             }
                               

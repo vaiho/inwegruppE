@@ -33,6 +33,7 @@ namespace DoorinWebApp.Viewmodel
         public Nullable<System.DateTime> Birthdate { get; set; }
         public string Birthcity { get; set; }
         public string Nationality { get; set; }
+        public int SelectedCompetenceId { get; set; }
 
         public IEnumerable<SelectListItem> DrivingLicenceChoice { get; set; } //För att skapa en lista att välja "Ja" eller "nej" på körkort
 
