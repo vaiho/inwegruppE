@@ -29,9 +29,9 @@ namespace DoorinWebApp.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
-            ViewBag.Competence = GetCompetences();
-            ViewBag.Technologies = GetTechnologies();
-            ViewBag.Freelancers = GetFreelancersTest2();
+            //ViewBag.Competence = GetCompetences();
+            //ViewBag.Technologies = GetTechnologies();
+            //ViewBag.Freelancers = GetFreelancersTest2();
             return View();
         }
 
@@ -46,38 +46,38 @@ namespace DoorinWebApp.Controllers
         }
 
 
-        private List<competence> GetCompetences() {
+        //private List<competence> GetCompetences() {
 
-            List<competence> CList = new List<competence>();
-            var competencelist = (from c in di.competence
-                                  select new { c.name, c.competence_id }).ToList();
+        //    List<competence> CList = new List<competence>();
+        //    var competencelist = (from c in di.competence
+        //                          select new { c.name, c.competence_id }).ToList();
 
-            foreach (var v in competencelist)
-            {
-                competence item = new competence();
-                item.name = v.name;
-                item.competence_id = v.competence_id;
-                CList.Add(item);
-            }
+        //    foreach (var v in competencelist)
+        //    {
+        //        competence item = new competence();
+        //        item.name = v.name;
+        //        item.competence_id = v.competence_id;
+        //        CList.Add(item);
+        //    }
 
-            return (CList);
-        }
+        //    return (CList);
+        //}
 
-        private List<technology> GetTechnologies()
-        {
-            List<technology> TList = new List<technology>();
-            var technologylist = (from t in di.technology
-                                  select new { t.name }).ToList();
+        //private List<technology> GetTechnologies()
+        //{
+        //    List<technology> TList = new List<technology>();
+        //    var technologylist = (from t in di.technology
+        //                          select new { t.name }).ToList();
 
-            foreach (var t in technologylist)
-            {
-                technology item = new technology();
-                item.name = t.name;
-                TList.Add(item);
-            }
+        //    foreach (var t in technologylist)
+        //    {
+        //        technology item = new technology();
+        //        item.name = t.name;
+        //        TList.Add(item);
+        //    }
 
-            return (TList);
-        }
+        //    return (TList);
+        //}
 
         //private List<technology> GetTechnologyBasedOnCompetence()
         //{
@@ -92,42 +92,42 @@ namespace DoorinWebApp.Controllers
         //}
         
 
-        private List<FreelancerProfileVM> GetFreelancersTest2()
-        {
-            List<FreelancerProfileVM> FList = new List<FreelancerProfileVM>();
-            var freelancerlist = (from f in di.freelancer
-                                  join r in di.resume on f.freelancer_id equals r.freelancer_id
-                                  //join t in di.technology_resume on r.resume_id equals t.resume_id
-                                  select new { f.firstname, f.lastname, f.resume, r.resume_id }).ToList();
+        //private List<FreelancerProfileVM> GetFreelancersTest2()
+        //{
+        //    List<FreelancerProfileVM> FList = new List<FreelancerProfileVM>();
+        //    var freelancerlist = (from f in di.freelancer
+        //                          join r in di.resume on f.freelancer_id equals r.freelancer_id
+        //                          //join t in di.technology_resume on r.resume_id equals t.resume_id
+        //                          select new { f.firstname, f.lastname, f.resume, r.resume_id }).ToList();
 
-            foreach (var f in freelancerlist)
-            {
-                FreelancerProfileVM item = new FreelancerProfileVM();
-                item.Firstname = f.firstname;
-                item.Lastname = f.lastname;
-                item.Resume_id = f.resume_id;
-                FList.Add(item);
-            }
+        //    foreach (var f in freelancerlist)
+        //    {
+        //        FreelancerProfileVM item = new FreelancerProfileVM();
+        //        item.Firstname = f.firstname;
+        //        item.Lastname = f.lastname;
+        //        item.Resume_id = f.resume_id;
+        //        FList.Add(item);
+        //    }
 
-            return (FList);
-        }
+        //    return (FList);
+        //}
 
-        private List<freelancer> GetFreelancers()
-        {
-            List<freelancer> FList = new List<freelancer>();
-            var freelancerlist = (from f in di.freelancer
-                                  select new {f.firstname, f.lastname}).ToList();
+        //private List<freelancer> GetFreelancers()
+        //{
+        //    List<freelancer> FList = new List<freelancer>();
+        //    var freelancerlist = (from f in di.freelancer
+        //                          select new {f.firstname, f.lastname}).ToList();
 
-            foreach (var f in freelancerlist)
-            {
-                freelancer item = new freelancer();
-                item.firstname = f.firstname;
-                item.lastname = f.lastname;
-                FList.Add(item);
-            }
+        //    foreach (var f in freelancerlist)
+        //    {
+        //        freelancer item = new freelancer();
+        //        item.firstname = f.firstname;
+        //        item.lastname = f.lastname;
+        //        FList.Add(item);
+        //    }
 
-            return (FList);
-        }
+        //    return (FList);
+        //}
 
         
 
