@@ -5,12 +5,9 @@
 }
 
 <h2>Edit</h2>
-<head>
-    @Styles.Render("~/Content/style.css")
-</head>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddMyCompetences", "resumes", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -43,50 +40,30 @@
                 @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
             </div>
         </div>
-        @using (Html.BeginForm("YourAction"))
-        {
-            <div>
-                <p><b>Lägg till kompetenser</b></p>
 
-                <select class="form-control" id="CompetencesDropDown" name="CompetencesDropDown" onchange="this.form.onsubmit()">
-                    @foreach (var item in Model.Competences)
-                    {
-                        <option> @item.name </option>
-                    }
-                </select>
+        <div class="form-group">
+            <p><b>Lägg till kompetenser</b></p>
+            <div>
+                @Html.DropDownListFor(@Model => @Model.Competences, new SelectList(Model.Competences, "Competence_id", "Name"))
+                <input value="submit" type="submit" />
             </div>
-        }
-        <div id="AddMyCompetences">
+        </div>
+
+        <div>
             <p><b>Mina kompetenser</b></p>
 
-            <select class="form-control" id="Competences" name="Competences">
-                @foreach (var item in Model.MyCompetences)
-                {
-                    <option> @item.name </option>
-                }
-            </select>
+            @Html.DropDownListFor(@Model => @Model.MyCompetences, new SelectList(Model.MyCompetences, "Competence_id", "Name"))
         </div>
 
         <div>
             <p><b>Lägg till teknologier</b></p>
 
-            <select class="form-control">
-                @foreach (var item in Model.Technologies)
-                {
-                    <option> @item.name </option>
-                }
-            </select>
+            @Html.DropDownListFor(@Model => @Model.Technologies, new SelectList(Model.Technologies, "Technology_id", "Name"))
         </div>
 
         <div id="AddMyTechnologies">
             <p><b>Mina teknologier</b></p>
-
-            <select class="form-control">
-                @foreach (var item in Model.MyTechnologies)
-                {
-                    <option> @item.name </option>
-                }
-            </select>
+            @Html.DropDownListFor(@Model => @Model.MyTechnologies, new SelectList(Model.MyTechnologies, "Technology_id", "Name"))
         </div>
 
         <div class="form-group">
@@ -145,54 +122,68 @@
     <br />
     <input type="button" class="btn btn-default" id="btnSave" value="Save All" />
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
-    <script type="text/javascript">
-        $(".btnAddLink").click(function () {
-            //Reference the Name and Country TextBoxes.
-            var txtLinkname = $("#txtLinkname");
-            var txtLink = $("#txtLink");
+    @section Scrips{
 
-            //Get the reference of the Table's TBODY element.
-            var tBody = $("#tblLinks > TBODY")[0];
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+        <script type="text/javascript">
+            $(".btnAddLink").click(function () {
+                //Reference the Name and Country TextBoxes.
+                var txtLinkname = $("#txtLinkname");
+                var txtLink = $("#txtLink");
 
-            //Add Row.
-            var row = tBody.insertRow(-1);
+                //Get the reference of the Table's TBODY element.
+                var tBody = $("#tblLinks > TBODY")[0];
 
-            //Add Name cell.
-            var cell = $(row.insertCell(-1));
-            cell.html(txtLinkname.val());
+                //Add Row.
+                var row = tBody.insertRow(-1);
 
-            //Add Country cell.
-            cell = $(row.insertCell(-1));
-            cell.html(txtLink.val());
+                //Add Name cell.
+                var cell = $(row.insertCell(-1));
+                cell.html(txtLinkname.val());
 
-            //Add Button cell.
-            cell = $(row.insertCell(-1));
-            var btnRemove = $("<input class=btn btn-default/>");
-            btnRemove.attr("type", "button");
-            btnRemove.attr("onclick", "Remove(this);");
-            btnRemove.val("Remove");
-            cell.append(btnRemove);
+                //Add Country cell.
+                cell = $(row.insertCell(-1));
+                cell.html(txtLink.val());
 
-            //Clear the TextBoxes.
-            txtLinkname.val("");
-            txtLink.val("");
-        });
+                //Add Button cell.
+                cell = $(row.insertCell(-1));
+                var btnRemove = $("<input class=btn btn-default/>");
+                btnRemove.attr("type", "button");
+                btnRemove.attr("onclick", "Remove(this);");
+                btnRemove.val("Remove");
+                cell.append(btnRemove);
 
-        function Remove(button) {
-            //Determine the reference of the Row using the Button.
-            var row = $(button).closest("TR");
-            var name = $("TD", row).eq(0).html();
-            if (confirm("Do you want to delete: " + name)) {
-                //Get the reference of the Table.
-                var table = $("#tblLinks")[0];
+                //Clear the TextBoxes.
+                txtLinkname.val("");
+                txtLink.val("");
+            });
 
-                //Delete the Table row using it's Index.
-                table.deleteRow(row[0].rowIndex);
+            function Remove(button) {
+                //Determine the reference of the Row using the Button.
+                var row = $(button).closest("TR");
+                var name = $("TD", row).eq(0).html();
+                if (confirm("Do you want to delete: " + name)) {
+                    //Get the reference of the Table.
+                    var table = $("#tblLinks")[0];
+
+                    //Delete the Table row using it's Index.
+                    table.deleteRow(row[0].rowIndex);
+                }
+            };
+
+            $(".btnAddComp").click(function () {
+
             }
-        };
-    </script>
+        </script>
+        <script type="text/javascript">
+                                                $(document).ready(function () }
+                    $("SelID").change(function (evt) {
+                        $("#Competences").val($("#SelID option:selected").text().trim())
+                    });
+                                                });
+        </script>
+    }
 
 
 

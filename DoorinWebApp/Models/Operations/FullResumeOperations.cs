@@ -14,7 +14,7 @@ namespace DoorinWebApp.Models.Operations
         public FullResume GetFullResumeById(int? id) //Metod för att hämta information om en freelancer
         {
            FullResume fullResume = new FullResume();
-            /*string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, " +
+           /* string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, " +
                 "nationality, city, birthdate, resume.driving_license, resume.profile from freelancer" +
                 "INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id" +
                 "WHERE freelancer.freelancer_id = @freelancer_id";

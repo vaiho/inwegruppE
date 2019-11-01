@@ -86,23 +86,26 @@ namespace DoorinWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMyCompetences(FullResume fullResume)
+        public ActionResult AddMyCompetences(int competence_id, string competence_name)
         {
-            //FullResume fullResume = new FullResume();
-            int selectedId = fullResume.MyCompetences[0].competence_id;
+            FullResume fullResume = new FullResume();
+            int selectedId = competence_id;
             competence selectedCompetence = fullResume.Competences[0];
-            if (fullResume.MyCompetences[0].competence_id == selectedId)
+
+            foreach (var competence in fullResume.Competences)
             {
-                // Visa meddelande "Du har redan lagt till den här kompetensen."
+                if (competence.competence_id == selectedId)
+                {
+                    // Visa meddelande "Du har redan lagt till den här kompetensen."
+                }
+                else
+                {
+                    fullResume.MyCompetences.Add(selectedCompetence);
+                }
             }
-            else
-            {
-                fullResume.MyCompetences.Add(selectedCompetence);
-            }
-         
+                              
             return View(fullResume);
         }
-
 
         // POST: resumes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
