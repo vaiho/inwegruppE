@@ -364,9 +364,9 @@ namespace DoorinWebApp.Models.Operations
 
         }
 
-        public void RemoveFreelancerFromCustomerList(int? f)
+        public void RemoveFreelancerFromCustomerList(int? f, int? c) //Tar bort kombination mellan freelancer och customer
         {
-            string sql = "DELETE FROM customer_freelancer WHERE freelancer_id = @free_id";
+            string sql = "DELETE FROM customer_freelancer WHERE freelancer_id = @free_id AND customer_id = @cus_id";
             try
             {
                 using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
@@ -377,6 +377,7 @@ namespace DoorinWebApp.Models.Operations
                         command.Connection = conn;
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("free_id", f);
+                        command.Parameters.AddWithValue("cus_id", c);
                         command.ExecuteNonQuery();
                     }
                 }

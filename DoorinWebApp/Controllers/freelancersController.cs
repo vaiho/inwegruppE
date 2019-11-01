@@ -267,9 +267,11 @@ namespace DoorinWebApp.Controllers
                 idfromview = 5;
             }
 
+            int? customer_id = 5; //Hårdkodad customer
             int? id = idfromview;
+
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-            fpop.RemoveFreelancerFromCustomerList(id);
+            fpop.RemoveFreelancerFromCustomerList(id, customer_id);
 
             //return RedirectToAction("SavedFreelancer", "customersController", null);
             return RedirectToAction("Index");

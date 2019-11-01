@@ -11,6 +11,7 @@ namespace DoorinWebApp.Models.Operations
     {
         public List<FreelancerProfileVM> GetSavedFreelancersList(int? id) //Hämtar en lista av sparade frilansare för en customer
         {
+            //TODO: Gör om till Linq
             FreelancerProfileVM fp;
             string sql = "SELECT freelancer.freelancer_id, firstname, lastname, email, nationality from customer_freelancer INNER JOIN freelancer on customer_freelancer.freelancer_id = freelancer.freelancer_id WHERE customer_id = @id";
             List<FreelancerProfileVM> list = new List<FreelancerProfileVM>();
