@@ -29,6 +29,8 @@ namespace DoorinWebApp.Models
         [DisplayName("Efternamn")]
         [Required(ErrorMessage = "Vänligen fyll i ett efternamn")]
         public string lastname { get; set; }
+        [DisplayName("Telefonnummer")]
+        [Required(ErrorMessage = "Vänligen fyll i ett telefonnummer")]
         public string phonenumber { get; set; }
         [DisplayName("Epost")]
         [Required(ErrorMessage = "Vänligen fyll i en epostadress")]
