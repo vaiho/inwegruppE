@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -15,7 +16,7 @@ namespace DoorinWebApp.Controllers
     public class freelancersController : Controller
     {
         private doorinDBEntities db = new doorinDBEntities();
-
+        public static List<FreelancerProfileVM> filterList = new List<FreelancerProfileVM>();
         // GET: freelancers
         public ActionResult Index(string searchString) 
         {
@@ -28,25 +29,30 @@ namespace DoorinWebApp.Controllers
 
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
             {
-                var list = from s in allFreelancersList select s; //Sparar alla frilansare i variabel
+                //(OLD) Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
+                //list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
+                //return View(list.ToList());
 
-                //Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
-                list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
-            
+                foreach (var item in allFreelancersList)
+                {
+                    if (item.CompetencesList.Any(x => x.name.Contains(searchString)) || item.TechnologysList.Any(z => z.name.Contains(searchString)) || item.Firstname.Contains(searchString) || item.Lastname.Contains(searchString))
+                    {
+                        if (!filterList.Any(y => y.Freelancer_id == item.Freelancer_id)) //om freelancer redan finns i listan
+                        {
+                            filterList.Add(item);
+                            //Do nothing
+                        }
+                    }
+                }
                 //Returnerar den filtrerade listan
-                return View(list.ToList());
+                return View(filterList);
             }
 
+            filterList.Clear();
             //Annars skickas en ofiltrerad lista tillbaka
             return View(allFreelancersList);
-
-
-
-            //if (id == null)
-            //    return View(fpop.GetFreelancersList());
-            //else
-            //    return View(fpop.FilterByCompetence(id));
         }
+
         private List<competence> GetCompetences()
         {
 
@@ -251,14 +257,25 @@ namespace DoorinWebApp.Controllers
             return selectList;
         }
 
+        [HandleError]
         public ActionResult SaveFreelancer(int? id) //Sparar freelancer i tabellen customer_freelancer
         {
             int c = 5; //hårdkodad customer
 
             if (id != null)
             {
-                FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-                fpop.SaveFreelancerToCustomerList(id, c);
+                try
+                {
+                    FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+                    fpop.SaveFreelancerToCustomerList(id, c);
+                }
+                catch (SqlException ex)
+                {
+                    //return;
+                    //TODO: Visa ett felmeddelande
+                }
+
+                
             }
             return RedirectToAction("Index");
         }

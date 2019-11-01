@@ -362,6 +362,8 @@ namespace DoorinWebApp.Models.Operations
             }
 
 
+
+
         }
 
         public void RemoveFreelancerFromCustomerList(int? f, int? c) //Tar bort kombination mellan freelancer och customer

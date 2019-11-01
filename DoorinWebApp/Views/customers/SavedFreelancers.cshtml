@@ -24,28 +24,29 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nationality)
-        </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nationality)
+            </td>
 
-        <td>
-            @Html.ActionLink("Besök profil |", "ProfilePage", "freelancers", new { id = item.Freelancer_id }, null)
-            @Html.ActionLink("Ta bort", "RemoveFreelancer", "freelancers", new { idfromview = item.Freelancer_id }, null)
-        </td>
-    </tr>
+            <td>
+                @Html.ActionLink("Besök profil |", "ProfilePage", "freelancers", new { id = item.Freelancer_id }, null)
+                @Html.ActionLink("Ta bort", "RemoveFreelancer", "freelancers", new { idfromview = item.Freelancer_id }, null)
+            </td>
+        </tr>
     }
 
 </table>
 <br /><br />
-      <a href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
+<a href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
+@*<a href="javascript:void(0);" onclick="history.back();">Tillbaka</a>*@
 
