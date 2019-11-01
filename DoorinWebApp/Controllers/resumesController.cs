@@ -78,11 +78,17 @@ namespace DoorinWebApp.Controllers
             ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
             
             freelancer freelancer = db.freelancer.Find(id);
-            id = 5;
+            //id = 5;
 
             FullResumeOperations resumeOperations = new FullResumeOperations();
 
-            return View(resumeOperations.GetFullResumeById(id));
+            var driving_licence = GetYesOrNo();
+            
+            var fullResume = resumeOperations.GetFullResumeById(id);
+            fullResume.DrivingLicenceChoice = GetSelectListItems(driving_licence);
+            fullResume.Link = db.links.Where(l => l.resume_id == id).ToList();
+
+            return View(fullResume);
         }
 
         [HttpPost]
@@ -158,5 +164,31 @@ namespace DoorinWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+        
+
+        private IEnumerable<string> GetYesOrNo()
+        {
+            return new List<string>
+            {
+                "Yes",
+                "No",
+            };
+        }
+
+        
+        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
+        {
+            var selectList = new List<SelectListItem>();
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element,
+                    Text = element
+                });
+            }
+            return selectList;
+        }
+      
     }
 }

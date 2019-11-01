@@ -44,20 +44,20 @@ namespace DoorinWebApp.Models.Operations
                     }
                 }
             }*/
-            // ska inte stå med här, men eftersom det ovan är bortkommenterat så tilldelar jag reusme_id här
+            // TODO ska inte stå med här, men eftersom det ovan är bortkommenterat så tilldelar jag reusme_id här
             fullResume.Resume_id = 1;
             GetMyCompetences(fullResume); //Hämtar och sparar frilansarens kompetenser
             GetMyTechnology(fullResume); //Hämtar och sparar frilansarens teknologier
             GetCompetenceList(fullResume); //Hämtar den fördiga listan av kompetenser
             GetTechnologyList(fullResume); //Hämtar den färdiga listan av teknologier
-            links link = new links() {
-                link_id = 1,
-                name = "LinkedIn",
-                resume_id = 1,
-                link = "linkedIn.se"
+            //links link = new links() {
+            //    link_id = 1,
+            //    name = "LinkedIn",
+            //    resume_id = 1,
+            //    link = "linkedIn.se"
 
-            };
-            fullResume.Link.Add(link);
+            //};
+            //fullResume.Link.Add(link);
 
             return fullResume;
         }
