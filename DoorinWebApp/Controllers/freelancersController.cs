@@ -260,11 +260,25 @@ namespace DoorinWebApp.Controllers
                 FreelancerProfileOperations fpop = new FreelancerProfileOperations();
                 fpop.SaveFreelancerToCustomerList(id, c);
             }
-
-
             return RedirectToAction("Index");
         }
 
+        public ActionResult RemoveFreelancer(int? idfromview)
+        {
+            if (idfromview == null )
+            {
+                idfromview = 5;
+            }
 
+            int? customer_id = 5; //Hårdkodad customer
+            int? id = idfromview;
+
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            fpop.RemoveFreelancerFromCustomerList(id, customer_id);
+
+            //return RedirectToAction("SavedFreelancer", "customersController", null);
+            return RedirectToAction("Index");
+            //Vill refresha samma sida, inte skicka tillbaka till index
+        }
     }
 }

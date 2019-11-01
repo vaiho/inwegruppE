@@ -9,8 +9,7 @@ using DoorinWebApp.Viewmodel;
 namespace DoorinWebApp.Models.Operations
 {
     public class FreelancerProfileOperations
-    {
-        
+    {     
         doorinDBEntities db = new doorinDBEntities();
         public FreelancerProfileVM GetFreelancerProfileById(int? id) //Metod för att hämta information om en freelancer
         {
@@ -117,8 +116,7 @@ namespace DoorinWebApp.Models.Operations
             {
                 //TODO: Gör något med felmeddelandet?
                 throw;
-            }
-            
+            }         
         }
 
         private void GetTechnology(FreelancerProfileVM fp) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en dennes teknologi-lista
@@ -364,6 +362,31 @@ namespace DoorinWebApp.Models.Operations
             }
 
 
+        }
+
+        public void RemoveFreelancerFromCustomerList(int? f, int? c) //Tar bort kombination mellan freelancer och customer
+        {
+            string sql = "DELETE FROM customer_freelancer WHERE freelancer_id = @free_id AND customer_id = @cus_id";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
+                    {
+                        command.Connection = conn;
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("free_id", f);
+                        command.Parameters.AddWithValue("cus_id", c);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                //TODO: gör något med felmeddelandet
+                throw;
+            }
         }
 
 
