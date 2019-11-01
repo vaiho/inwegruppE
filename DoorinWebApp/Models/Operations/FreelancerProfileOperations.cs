@@ -15,137 +15,226 @@ namespace DoorinWebApp.Models.Operations
         public FreelancerProfileVM GetFreelancerProfileById(int? id) //Metod för att hämta information om en freelancer
         {
             FreelancerProfileVM fp = new FreelancerProfileVM();
-            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate, address, zipcode, username from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id WHERE freelancer.freelancer_id = @freelancer_id";
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
-                {
-                    command.Parameters.AddWithValue("freelancer_id", id);
+                var free = (from f in db.freelancer
+                            join r in db.resume on f.freelancer_id equals r.freelancer_id
+                            where f.freelancer_id == id
+                            select new { f.freelancer_id, f.firstname, f.lastname, r.resume_id, r.profile, f.email, f.nationality, f.city, f.birthdate, f.address }).ToList();
 
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            fp.Freelancer_id = reader.GetInt32(0);
-                            fp.Firstname = reader.GetString(1);
-                            fp.Lastname = reader.GetString(2);
-                            fp.Resume_id = reader.GetInt32(3);
-                            fp.ProfileText = reader.GetString(4);
-                            fp.Email = reader.GetString(5);
-                            fp.Nationality = reader.GetString(6);
-                            fp.City = reader.GetString(7);
-                            fp.Birthdate = reader.GetDateTime(8);
-                            fp.Address = reader.GetString(9);
-                            //fp.Zipcode = reader.GetString(10);
-                            fp.Username = reader.GetString(11);
-                        }
-                    }
+                foreach (var item in free)
+                {
+                    fp.Freelancer_id = item.freelancer_id;
+                    fp.Firstname = item.firstname;
+                    fp.Lastname = item.lastname;
+                    fp.Resume_id = item.resume_id;
+                    fp.ProfileText = item.profile;
+                    fp.Email = item.email;
+                    fp.Nationality = item.nationality;
+                    fp.City = item.city;
+                    fp.Birthdate = item.birthdate;
+                    fp.Address = item.address;
                 }
+
+                GetCompetences(fp); //Hämtar och sparar kompetenser
+                GetTechnology(fp); //Hämtar och sparar teknologier
+                GetEducation(fp); //Hämtar och sparar utbildningar
+                GetWorkHistory(fp); //Hämtar och sparar workhistory
             }
-            GetCompetences(fp); //Hämtar och sparar kompetenser
-            GetTechnology(fp); //Hämtar och sparar teknologier
-            GetEducation(fp); //Hämtar och sparar utbildningar
-            GetWorkHistory(fp); //Hämtar och sparar workhistory
-            //GetFreelancersList();
+            catch (SqlException ex)
+            {
+                //TODO: Gär något med felmedelandet
+                throw;
+            }
+            
 
             return fp;
+
+
+            //OLD:
+            //string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate, address, zipcode, username from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id WHERE freelancer.freelancer_id = @freelancer_id";
+
+            //using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            //{
+            //    conn.Open();
+            //    using (SqlCommand command = new SqlCommand(sql, conn))
+            //    {
+            //        command.Parameters.AddWithValue("freelancer_id", id);
+
+            //        using (SqlDataReader reader = command.ExecuteReader())
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                fp.Freelancer_id = reader.GetInt32(0);
+            //                fp.Firstname = reader.GetString(1);
+            //                fp.Lastname = reader.GetString(2);
+            //                fp.Resume_id = reader.GetInt32(3);
+            //                fp.ProfileText = reader.GetString(4);
+            //                fp.Email = reader.GetString(5);
+            //                fp.Nationality = reader.GetString(6);
+            //                fp.City = reader.GetString(7);
+            //                fp.Birthdate = reader.GetDateTime(8);
+            //                fp.Address = reader.GetString(9);
+            //                //fp.Zipcode = reader.GetString(10);
+            //                fp.Username = reader.GetString(11);
+            //            }
+            //        }
+            //    }
+            //}
+
         }
 
-        private void GetCompetences(FreelancerProfileVM fp)//Metod för att hämta kompetenser på inskickad freelancerVM och lagra dessa i en lista
+        private void GetCompetences(FreelancerProfileVM fp)//Metod för att hämta kompetenser på inskickad freelancerVM och lagra dessa i dennes kompetens-lista
         {
+            //Kan inte göra Linq här då tabellen competence_resume inte finns i doorinDBEntities..
             competence c;
             string sql = "SELECT competence.competence_id, name from competence_resume INNER JOIN competence on competence_resume.competence_id = competence.competence_id WHERE resume_id = @resume_id";
 
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
                 {
-                    command.Parameters.AddWithValue("resume_id", fp.Resume_id);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
                     {
-                        while (reader.Read())
+                        command.Parameters.AddWithValue("resume_id", fp.Resume_id);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            c = new competence()
+                            while (reader.Read())
                             {
-                                competence_id = (reader.GetInt32(0)),
-                                name = (reader.GetString(1))
-                            };
-                            fp.CompetencesList.Add(c);
+                                c = new competence()
+                                {
+                                    competence_id = (reader.GetInt32(0)),
+                                    name = (reader.GetString(1))
+                                };
+                                fp.CompetencesList.Add(c);
+                            }
                         }
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                //TODO: Gör något med felmeddelandet?
+                throw;
+            }
+            
         }
 
-        private void GetTechnology(FreelancerProfileVM fp) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
+        private void GetTechnology(FreelancerProfileVM fp) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en dennes teknologi-lista
         {
-            string sql = "SELECT technology.technology_id, technology.name, technology_resume.rank, technology_resume.core_technology, technology.competence_id from technology_resume INNER JOIN technology on technology_resume.technology_id = technology.technology_id WHERE resume_id = @resume_id";
-            FullTechnology t;
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
+                var list = (from tr in db.technology_resume
+                            join te in db.technology on tr.technology_id equals te.technology_id
+                            where tr.resume_id == fp.Resume_id
+                            select new { te.technology_id, te.name, tr.rank, tr.core_technology, te.competence_id }).ToList();
+
+                foreach (var item in list)
                 {
-                    command.Parameters.AddWithValue("resume_id", fp.Resume_id);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            t = new FullTechnology()
-                            {
-                                technology_id = (reader.GetInt32(0)),
-                                name = (reader.GetString(1)),
-                                rank = (reader.GetInt32(2)),
-                                core_technology = (reader.GetBoolean(3)),
-                                competence_id = (reader.GetInt32(4)),
-                            };
-                            fp.TechnologysList.Add(t);
-                        }
-                    }
+                    FullTechnology ft = new FullTechnology();
+                    ft.technology_id = item.technology_id;
+                    ft.name = item.name;
+                    ft.rank = item.rank;
+                    ft.core_technology = item.core_technology;
+                    ft.competence_id = item.competence_id;
+
+                    fp.TechnologysList.Add(ft);
                 }
             }
-        }
-        private void GetEducation(FreelancerProfileVM fp)
-        {
-            var list = (from e in db.education
-                                  join r in db.resume on e.resume_id equals r.resume_id where e.resume_id == fp.Resume_id
-                                  select new { e.education_id, e.resume_id, e.title, e.description, e.date }).ToList();
-
-            foreach (var item in list)
+            catch (SqlException ex)
             {
-                education ed = new education();
-                ed.education_id = item.education_id;
-                ed.resume_id = item.resume_id;
-                ed.title = item.title;
-                ed.description = item.description;
-                ed.date = item.date;
-                fp.EducationsList.Add(ed);
-            }          
-        }
-        private void GetWorkHistory(FreelancerProfileVM fp)
-        {
-            var list = (from w in db.workhistory
-                        join r in db.resume on w.resume_id equals r.resume_id
-                        where w.resume_id == fp.Resume_id
-                        select new { w.workhistory_id, w.resume_id, w.employer, w.position, w.description, w.date }).ToList();
+                //TODO: gör något med felmeddelandet
+                throw;
+            }
 
-            foreach (var item in list)
+
+            //OLD:
+            //string sql = "SELECT technology.technology_id, technology.name, technology_resume.rank, technology_resume.core_technology, technology.competence_id from technology_resume INNER JOIN technology on technology_resume.technology_id = technology.technology_id WHERE resume_id = @resume_id";
+            //FullTechnology t;
+
+            //using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            //{
+            //    conn.Open();
+            //    using (SqlCommand command = new SqlCommand(sql, conn))
+            //    {
+            //        command.Parameters.AddWithValue("resume_id", fp.Resume_id);
+            //        using (SqlDataReader reader = command.ExecuteReader())
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                t = new FullTechnology()
+            //                {
+            //                    technology_id = (reader.GetInt32(0)),
+            //                    name = (reader.GetString(1)),
+            //                    rank = (reader.GetInt32(2)),
+            //                    core_technology = (reader.GetBoolean(3)),
+            //                    competence_id = (reader.GetInt32(4)),
+            //                };
+            //                fp.TechnologysList.Add(t);
+            //            }
+            //        }
+            //    }
+            //}
+        }
+
+        private void GetEducation(FreelancerProfileVM fp) //Metod för att hämta utbildningar på inskickad freelancerVM och lagra dessa i dennes utbildnings-lista
+        {
+            try
             {
-                workhistory wo = new workhistory();
-                wo.workhistory_id = item.workhistory_id;
-                wo.resume_id = item.resume_id;
-                wo.employer = item.employer;
-                wo.position = item.position;
-                wo.description = item.description;
-                wo.date = item.date;
-                fp.WorkHistoryList.Add(wo);
+                var list = (from e in db.education
+                            join r in db.resume on e.resume_id equals r.resume_id
+                            where e.resume_id == fp.Resume_id
+                            select new { e.education_id, e.resume_id, e.title, e.description, e.date }).ToList();
+
+                foreach (var item in list)
+                {
+                    education ed = new education();
+                    ed.education_id = item.education_id;
+                    ed.resume_id = item.resume_id;
+                    ed.title = item.title;
+                    ed.description = item.description;
+                    ed.date = item.date;
+
+                    fp.EducationsList.Add(ed);
+                }
+            }
+            catch (SqlException ex)
+            {
+                //TODO: gör något med felmeddelandet
+                throw;
             }
         }
 
+        private void GetWorkHistory(FreelancerProfileVM fp) //Metod för att hämta erfarenheter på inskickad freelancerVM och lagra dessa i dennes workhistory-lista
+        {
+            try
+            {
+                var list = (from w in db.workhistory
+                            join r in db.resume on w.resume_id equals r.resume_id
+                            where w.resume_id == fp.Resume_id
+                            select new { w.workhistory_id, w.resume_id, w.employer, w.position, w.description, w.date }).ToList();
+
+                foreach (var item in list)
+                {
+                    workhistory wo = new workhistory();
+                    wo.workhistory_id = item.workhistory_id;
+                    wo.resume_id = item.resume_id;
+                    wo.employer = item.employer;
+                    wo.position = item.position;
+                    wo.description = item.description;
+                    wo.date = item.date;
+
+                    fp.WorkHistoryList.Add(wo);
+                }
+            }
+            catch (SqlException ex)
+            {
+                //TODO: gör något med felmeddelandet
+                throw;
+            }
+            
+        }
 
         private SqlConnectionStringBuilder GetBuilder() //Anropa vid användning för connection mot databasen
         {
@@ -158,46 +247,75 @@ namespace DoorinWebApp.Models.Operations
             return builder;
         }
 
-        public List<FreelancerProfileVM> GetFreelancersList()
+        public List<FreelancerProfileVM> GetFreelancersList() //Hämtar och returnerar en lista av alla freelancers ink kompetenser och teknologier
         {
-            FreelancerProfileVM fp;
-            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate, address, zipcode, username from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id";
-            List<FreelancerProfileVM> list = new List<FreelancerProfileVM>();
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            List<FreelancerProfileVM> freelancersList = new List<FreelancerProfileVM>();
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
-                {
-                    //command.Parameters.AddWithValue("resume_id", fp.Resume_id);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            fp = new FreelancerProfileVM()
-                            {
-                                Freelancer_id = reader.GetInt32(0),
-                                Firstname = reader.GetString(1),
-                                Lastname = reader.GetString(2),
-                                Resume_id = reader.GetInt32(3),
-                                //ProfileText = reader.GetString(4),
-                                //Email = reader.GetString(5),
-                                Nationality = reader.GetString(6),
-                                //City = reader.GetString(7),
-                                //Birthdate = reader.GetDateTime(8),
-                                //Address = reader.GetString(9),
-                                //Zipcode = reader.GetString(10),
-                                //Username = reader.GetString(11),
-                            };
-                            GetCompetences(fp); //Hämtar och sparar kompetenser
-                            GetTechnology(fp); //Hämtar och sparar teknologier
-                            list.Add(fp);
-                        }
-                    }
-                }
-            }
+                var l = (from f in db.freelancer
+                         join r in db.resume on f.freelancer_id equals r.freelancer_id
+                         select new { f.freelancer_id, f.firstname, f.lastname, r.resume_id, f.nationality }).ToList();
 
-            return list;
+                foreach (var item in l)
+                {
+                    FreelancerProfileVM fp = new FreelancerProfileVM();
+                    fp.Freelancer_id = item.freelancer_id;
+                    fp.Firstname = item.firstname;
+                    fp.Lastname = item.lastname;
+                    fp.Resume_id = item.resume_id;
+                    fp.Nationality = item.nationality;
+                    GetCompetences(fp); //Hämtar och sparar kompetenser
+                    GetTechnology(fp); //Hämtar och sparar teknologier
+
+                    freelancersList.Add(fp);
+                }
+                
+            }
+            catch (SqlException ex)
+            {
+                //TODO: gör något med felmeddelandet
+                throw;
+            }
+            return freelancersList;
+
+
+
+            //FreelancerProfileVM fp;
+            //string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate, address, zipcode, username from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id";
+
+            //using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            //{
+            //    conn.Open();
+            //    using (SqlCommand command = new SqlCommand(sql, conn))
+            //    {
+            //        //command.Parameters.AddWithValue("resume_id", fp.Resume_id);
+            //        using (SqlDataReader reader = command.ExecuteReader())
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                fp = new FreelancerProfileVM()
+            //                {
+            //                    Freelancer_id = reader.GetInt32(0),
+            //                    Firstname = reader.GetString(1),
+            //                    Lastname = reader.GetString(2),
+            //                    Resume_id = reader.GetInt32(3),
+            //                    //ProfileText = reader.GetString(4),
+            //                    //Email = reader.GetString(5),
+            //                    Nationality = reader.GetString(6),
+            //                    //City = reader.GetString(7),
+            //                    //Birthdate = reader.GetDateTime(8),
+            //                    //Address = reader.GetString(9),
+            //                    //Zipcode = reader.GetString(10),
+            //                    //Username = reader.GetString(11),
+            //                };
+            //                GetCompetences(fp); //Hämtar och sparar kompetenser
+            //                GetTechnology(fp); //Hämtar och sparar teknologier
+            //                list.Add(fp);
+            //            }
+            //        }
+            //    }
+            //}
+
         }
 
         public List<FreelancerProfileVM> FilterByCompetence(int? id)
@@ -221,7 +339,7 @@ namespace DoorinWebApp.Models.Operations
             return filteredFreelancers;
         }
 
-        public void SaveFreelancerToCustomerList(int? f, int c)
+        public void SaveFreelancerToCustomerList(int? f, int c) //Sparar en kombination mellan freelancer och customer
         {
             string sql = "INSERT INTO customer_freelancer(freelancer_id, customer_id) VALUES (@free_id, @cus_id)";
             try
@@ -241,9 +359,10 @@ namespace DoorinWebApp.Models.Operations
             }
             catch (SqlException ex)
             {
-                //TODO: gör något med meddelandet
+                //TODO: gör något med felmeddelandet
+                throw;
             }
-            
+
 
         }
 
