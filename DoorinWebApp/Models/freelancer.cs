@@ -14,6 +14,7 @@ namespace DoorinWebApp.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
+    using DoorinWebApp.Viewmodel;
 
     public partial class freelancer
     {
@@ -61,6 +62,8 @@ namespace DoorinWebApp.Models
         public string fullname => $"{firstname} {lastname}";
         [DisplayName("Nationalitet")]
         public IEnumerable<SelectListItem> country { get; set; } //För att skapa en lista av valbara nationalitet
+
+        public FreelancerProfileVM FreelancerProfileResume { get; set; }  // Property för partial view http://pratapreddypilaka.blogspot.com/2011/11/partial-views-with-diefferent-models.html
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customer> customer { get; set; }
