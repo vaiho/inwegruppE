@@ -19,7 +19,7 @@ namespace DoorinWebApp.Models.Operations
                 var free = (from f in db.freelancer
                             join r in db.resume on f.freelancer_id equals r.freelancer_id
                             where f.freelancer_id == id
-                            select new { f.freelancer_id, f.firstname, f.lastname, r.resume_id, r.profile, f.email, f.nationality, f.city, f.birthdate, f.address, r.driving_license }).ToList();
+                            select new { f.freelancer_id, f.firstname, f.lastname, f.phonenumber, r.resume_id, r.profile, f.email, f.nationality, f.city, f.birthdate, f.address, r.driving_license }).ToList();
 
                 foreach (var item in free)
                 {
@@ -34,6 +34,7 @@ namespace DoorinWebApp.Models.Operations
                     fp.Birthdate = item.birthdate;
                     fp.Address = item.address;
                     fp.DrivingLicence = item.driving_license;
+                    fp.phonenumber = item.phonenumber;
                 }
 
                 GetCompetences(fp); //Hämtar och sparar kompetenser

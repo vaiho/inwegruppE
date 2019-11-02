@@ -200,6 +200,7 @@
     <Content Include="Content\images\filter.png" />
     <Content Include="Content\images\in.png" />
     <Content Include="Content\images\search.png" />
+    <Content Include="Content\images\star.png" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

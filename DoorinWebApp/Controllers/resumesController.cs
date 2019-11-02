@@ -88,7 +88,8 @@ namespace DoorinWebApp.Controllers
             {
                 db.Entry(resume).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "freelancers", new { id = resume.freelancer_id });
+                //return RedirectToAction("Index");
             }
             ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
             return View(resume);
