@@ -1,8 +1,10 @@
 ﻿@model DoorinWebApp.Viewmodel.FreelancerProfileVM
 
 @{
-    ViewBag.Title = "Profilsida";
+    ViewBag.Title = "Profilbesök";
 }
+
+
 
 <a href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
 
@@ -13,7 +15,9 @@
     <br />
     <hr />
 
-    @Html.ActionLink("Skriv ut CV", "CVPage", new { id = Model.Resume_id }, null)
+
+    @Html.ActionLink("Skriv ut CV", "CVPage", new { id = Model.Freelancer_id }, new { target = "_blank", @class = "btn" })
+    
 
     <div class="row">
         <div class="col-sm-6 center">
@@ -182,22 +186,22 @@
 
 
 @*<div class="col-lg-12">
-    <div class="col-md-8">
-        <p>
-            @Html.ActionLink("Tillbaka", "Index")
-            <a href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
-        </p>
-    </div>
-    <div class="ml-auto col-md-4">
-        <a href="@Url.Action("SaveFreelancer", "freelancers", new { id = Model.Freelancer_id }, null)"><p class="btn">Spara</p></a>
-        <p class="btn">Spara </p>
-        <p class="btn">Kontakta mig &raquo; </p>
-    </div>
-    <br />
-    <br />
-    <br />
-    <br />
-</div>*@
+        <div class="col-md-8">
+            <p>
+                @Html.ActionLink("Tillbaka", "Index")
+                <a href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
+            </p>
+        </div>
+        <div class="ml-auto col-md-4">
+            <a href="@Url.Action("SaveFreelancer", "freelancers", new { id = Model.Freelancer_id }, null)"><p class="btn">Spara</p></a>
+            <p class="btn">Spara </p>
+            <p class="btn">Kontakta mig &raquo; </p>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>*@
 
 
 @*@Html.ActionLink("Spara |", "SaveFreelancer", new { id = item.Freelancer_id })*@

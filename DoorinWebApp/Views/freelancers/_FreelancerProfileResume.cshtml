@@ -3,15 +3,19 @@
 
 @Html.ActionLink("Redigera CV", "Edit", "resumes", new { id = Model.Resume_id }, null)
 
+
+
 <div class="row">
     <div class="col-sm-6 center">
         <h1><b>CV</b></h1>
         <h2>@Html.DisplayFor(modelItem => Model.Firstname) @Html.DisplayFor(modelItem => Model.Lastname)</h2>
         <h4> @Html.DisplayFor(modelItem => Model.Age) år från @Html.DisplayFor(modelItem => Model.City), @Html.DisplayFor(modelItem => Model.Nationality)</h4>
         <p><b>Kort om mig:</b> @Model.ProfileText</p>
-        <p><b>Har B-körkort:</b>
-        
-        @Model.DrivingLicence</p>
+        <p>
+            <b>Har B-körkort:</b>
+
+            @Model.DrivingLicence
+        </p>
         <br />
     </div>
     <div class="col-sm-6">

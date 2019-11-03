@@ -9,6 +9,8 @@ namespace DoorinWebApp.Models.Operations
 {
     public class CustomerOperations
     {
+        doorinDBEntities db = new doorinDBEntities();
+
         public List<FreelancerProfileVM> GetSavedFreelancersList(int? id) //Hämtar en lista av sparade frilansare för en customer
         {
             //customer_freelancer finns ej i doorinDBEntities så kan ej göra Linq
@@ -58,6 +60,37 @@ namespace DoorinWebApp.Models.Operations
             builder.InitialCatalog = "doorinDB";
 
             return builder;
+        }
+
+        public customer GetCustomerById(int? id) //Metod för att hämta information om customer
+        {
+            customer co = new customer();
+
+            //FreelancerProfileVM fp = new FreelancerProfileVM();
+            try
+            {
+                var cust = (from c in db.customer
+                            where c.customer_id == id
+                            select new { c.customer_id, c.firstname, c.lastname, c.phonenumber, c.email, c.username, c.password, c.company, c.position }).ToList();
+
+                foreach (var item in cust)
+                {
+                    co.customer_id = item.customer_id;
+                    co.firstname = item.firstname;
+                    co.lastname = item.lastname;
+                    co.email = item.email;
+                    co.phonenumber = item.phonenumber;
+                }
+                
+            }
+            catch (SqlException ex)
+            {
+                //TODO: Gär något med felmedelandet
+                throw;
+            }
+
+
+            return co;
         }
 
     }
