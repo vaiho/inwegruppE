@@ -14,10 +14,10 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.resume_id)
 
         <div class="form-group" style="display:none;">
@@ -28,35 +28,90 @@
             </div>
         </div>
 
-    <div class="form-group">
-        <div class="control-label col-md-2"><b>Kort om mig</b></div>
-        @*@Html.LabelFor(model => model.profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.profile, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.profile, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2"><b>Kort om mig</b></div>
+            @*@Html.LabelFor(model => model.profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.profile, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.profile, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="control-label col-md-2"><b>B-körkort</b></div>
-        @*@Html.LabelFor(model => model.driving_license, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.driving_license, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.driving_license, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2"><b>B-körkort</b></div>
+            @*@Html.LabelFor(model => model.driving_license, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.driving_license, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.driving_license, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Spara" class="btn btn-default" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Spara" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
 }
 
-@*<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>*@
+
+
+<hr />
+<div class="row container">
+    <div class="col-md-6">
+        <h2>Kompetenser</h2>
+        <p>fejk Projktledare <a style="margin-left:60px;" href="#">Ta bort</a></p>
+        <p>fejk Designer <a style="padding-left:80px;" href="#">Ta bort</a></p>
+        <p>fejk Programmerare <a style="padding-left:34px;" href="#">Ta bort</a></p>
+        <p style="margin-top:30px;"><a href="#">Lägg till kompetens</a></p>
+        <br />
+        <p>
+            (Eller lägg till kompetens med dropown listan.
+            Eller ska det ske automatiskt när man lägger till en teknologi i den kompetensgruppen?)
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h2>Teknologier</h2>
+        <p>fejk CSS <a style="margin-left:60px;" href="#">Ta bort</a></p>
+        <p>fejk HTML <a style="padding-left:50px;" href="#">Ta bort</a></p>
+        <p>fejk Javascript <a style="padding-left:20px;" href="#">Ta bort</a></p>
+        <p style="margin-top:30px;"><a href="#">Lägg till teknologi</a></p>
+        <br />
+        <p>Eller lägg till teknologi här med dropown listan.</p>
+    </div>
+</div>
+
+
+
+<hr />
+<div class="row container">
+    <div class="col-md-6">
+        <h2>Erfarenheter</h2>
+        <p>fejk Erfarenhet 1 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+        <p>fejk Erfarenhet 2 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+        <p>fejk Erfarenhet 3 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+        <p style="margin-top:30px;"><a href="#">Lägg till erfarenhet</a></p>
+        <br />
+        <p>Eventuellt att man kan göra en partial view av workhistories/edit och skicka in resume_id???? Hinner inte kolla nu</p>
+    </div>
+    <div class="col-md-6">
+        <h2>Utbildning</h2>
+        <p>fejk Utbildning 1 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+        <p>fejk Utbildning 2 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+        <p>fejk Utbildning 3 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+        <p style="margin-top:30px;"><a href="#">Lägg till utbildning</a></p>
+        <br />
+        <p>Eventuellt att man kan göra en partial view av educations/edit och skicka in resume_id???? Hinner inte kolla nu</p>
+    </div>
+</div>
+
+
+
+<br />
+<br />
+<br />
+<br />
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
