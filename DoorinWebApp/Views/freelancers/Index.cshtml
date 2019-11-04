@@ -12,94 +12,92 @@
 <div>
     @using (Html.BeginForm())
     {
-        <div class="box" id="myDiv">
-            <p style="display:inline-block; float:right; margin-top:10px;">@Html.ActionLink("Visa sparade frilansare", "SavedFreelancers", "customers")</p>
-            <h4 style="display:inline-block;">Sök frilansare efter kompetens/teknologi:</h4>
+    <div class="box" id="myDiv">
+        <p style="display:inline-block; float:right; margin-top:10px;">@Html.ActionLink("Visa sparade frilansare", "SavedFreelancers", "customers")</p>
+        <h4 style="display:inline-block;">Sök frilansare efter kompetens/teknologi:</h4>
 
-            <p id="search">@Html.TextBox("SearchString")</p>
-            <input type="submit" value="Sök" />
-            <input type="submit" value="Nollställ" onclick="setValue('')" />
+        @*<p id="search">@Html.TextBox("SearchString")</p>*@
+        <input id="SearchString" name="SearchString" type="text" placeholder="Sök här" value="">
+        <input type="submit" id="searchButton" value="Sök" /> 
+        <input type="submit" value="Nollställ" onclick="setValue('')" />
 
-            <div id="filterbtn" class="filterbtn" onclick="myFunction()">
-                <img src="~/Content/images/filter.png" />
-                Filter
-            </div>
+        <div id="filterbtn" class="filterbtn" onclick="myFunction()">
+            <img src="~/Content/images/filter.png" />
+            Filter
+        </div>
+
+        <br />
+
+        <div id="filters" style="display:none;">
+            <hr />
+            <h4 style="font-weight:bold;">Kompetenser</h4>
+            @foreach (var item in ViewBag.Competence)
+            {
+                <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
+            }
 
             <br />
 
-            <div id="filters" style="display:none;">
-                <hr />
-                <h4 style="font-weight:bold;">Kompetenser</h4>
-                @foreach (var item in ViewBag.Competence)
-                {
-                    <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-                }
-
-                <br />
-
-                <h4 style="font-weight:bold;">Teknologier</h4>
-                @foreach (var item in ViewBag.Technology)
-                {
-                    <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-                }
-                <br />
-            </div>
+            <h4 style="font-weight:bold;">Teknologier</h4>
+            @foreach (var item in ViewBag.Technology)
+            {
+                <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
+            }
+            <br />
         </div>
+    </div>
     }
 </div>
 
-@*<div id="tempdiv">
-    <input type="submit" class="filters" value="test 1" />
-    <input type="submit" class="filters" value="test 2" />
-    <input type="submit" class="filters" value="test 3" />
-    <input type="submit" class="filters" value="test 4" />
-</div>*@
 <br />
 
 <div class="freelancerbox">
     <table class="table">
-        <tr>
-            <th>
-                Namn
-            </th>
-            <th>
-                Kompetenser
-            </th>
-            <th>
-                Teknologier
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fullname)
-                </td>
-                <td>
-                    @foreach (var x in item.CompetencesList)
-                    {
-                        <span>@Html.DisplayFor(modelItem => x.name),</span>
-                    }
-                </td>
-                <td>
-                    @foreach (var x in item.TechnologysList)
-                    {
-                        <span>@Html.DisplayFor(modelItem => x.name), </span>
-                    }
-                </td>
-                <td>
-                    @Html.ActionLink("Spara |", "SaveFreelancer", new { id = item.Freelancer_id })
-                    @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
-                </td>
+                <th>
+                    Namn
+                </th>
+                <th>
+                    Kompetenser
+                </th>
+                <th>
+                    Teknologier
+                </th>
+                <th></th>
             </tr>
-        }
-
+        </thead>
+        <tbody id="myTable">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fullname)
+                    </td>
+                    <td>
+                        @foreach (var x in item.CompetencesList)
+                        {
+                            <span>@Html.DisplayFor(modelItem => x.name),</span>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var x in item.TechnologysList)
+                        {
+                            <span>@Html.DisplayFor(modelItem => x.name), </span>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Spara |", "SaveFreelancer", new { id = item.Freelancer_id })
+                        @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
 <hr />
 <br />
+
 
 <script>
     function setValue(txt) {
@@ -107,7 +105,7 @@
     }
 </script>
 <script>
-
+    //test
     var header = document.getElementById("filters");
     var btns = header.getElementsByClassName("filters");
     for (var i = 0; i < btns.length; i++) {
@@ -119,5 +117,18 @@
             this.className += " tempactive";
         });
     }
+</script>
+
+
+<script>
+    //Om man skriver något i sökrutan (testar)
+    $(document).ready(function () {
+        $("#SearchString").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 </script>
 
