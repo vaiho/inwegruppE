@@ -20,7 +20,7 @@ namespace DoorinWebApp.Models.Operations
                 "WHERE freelancer.freelancer_id = @freelancer_id";*/
 
             string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, " +
-                "profile, email, nationality, city, birthdate, address, zipcode, username " +
+                "profile, email, nationality, city, birthdate, address, zipcode" +
                 "from freelancer " +
                 "INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id " +
                 "WHERE freelancer.freelancer_id = @freelancer_id";
