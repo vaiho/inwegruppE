@@ -57,7 +57,7 @@ namespace DoorinWebApp.Controllers
         {
 
             List<competence> CList = new List<competence>();
-            var competencelist = (from c in db.competence
+            var competencelist = (from c in db.competence 
                                   select new { c.name, c.competence_id }).ToList();
 
             foreach (var v in competencelist)
