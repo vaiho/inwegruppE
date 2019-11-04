@@ -58,15 +58,12 @@
         <div>
             <p><b>Lägg till kompetenser</b></p>
             <select class="form-control" id="Competences" name="Competences">
+                <option> Välj en kompetens att lägga till</option>
                 @foreach (var item in Model.Competences)
                 {
                     <option value="@item.competence_id"> @item.name </option>
                 }
-                <input class="btnAdd btn btn-default" type="button" name="name" value="Add" />
-            </select>
-            @*@Html.DropDownListFor(@Model => @Model.Competences, new SelectList(Model.Competences, "Competence_id", "Name"))
-        <input value="submit" type="submit" id="AddMyCom" />    *@
-            
+            </select>           
         </div>
         
         <div id="AddMyCompetences">
@@ -248,16 +245,13 @@
         $(document).ready(function () {
             $("#Competences").change(function () {
 
-                alert("DropDown selected value is changed ");           
-
-                var selectedCompetence = document.getElementById("Competences");
+            var selectedCompetence = document.getElementById("Competences");
             var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
-            alert(competenceId);
+
             // ska testa om det gick att hämta värdet på resume så jag sedan kan hämta detta i databasen ifrån
             // controllern
                 var resume_id = $("#resume_id").val();
                 var freelancer_id = $("#freelancer_id").val();
-                alert(resume_id);
 
               var compObj = {
                     Resume_id : resume_id, Freelancer_id: freelancer_id,
@@ -277,11 +271,12 @@
                 dataType: "json", 
                 success: function (r) {
                     alert("Kompetensen är tillagd.");
+                    document.location.reload(true)
                 },
 
                 error: function (xhr) {
 
-                  alert("Something went wrong, please try again");
+                  alert("Nånting blev fel.");
 
                  }
             });           

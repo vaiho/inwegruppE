@@ -167,6 +167,30 @@ namespace DoorinWebApp.Models.Operations
                 }
             }
         }
+        public void AddMyCompetences(int competence_id, int resume_id) //Sparar en kombination mellan freelancer och customer
+        {
+            string sql = "INSERT INTO competence_resume(competence_id, resume_id) VALUES (@competenceID, @reumeID)";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
+                    {
+                        command.Connection = conn;
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("competenceID", competence_id);
+                        command.Parameters.AddWithValue("reumeID", resume_id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                //TODO: gör något med felmeddelandet
+                throw;
+            }
+        }
 
         private SqlConnectionStringBuilder GetBuilder() //Anropa vid användning för connection mot databasen
         {
