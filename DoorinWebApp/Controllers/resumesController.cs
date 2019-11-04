@@ -150,16 +150,23 @@ namespace DoorinWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "resume_id,freelancer_id,driving_license,profile")] resume resume)
+        public ActionResult Edit([Bind(Include = "resume_id,freelancer_id,driving_license,profile")] FullResume fullResume)
         {
+            resume resume = new resume();
+            resume.resume_id = fullResume.Resume_id;
+            resume.freelancer_id = fullResume.Freelancer_id;
+            resume.driving_license = fullResume.Driving_license;
+            resume.profile = fullResume.Profile.Trim();
+
+            
             if (ModelState.IsValid)
             {
                 db.Entry(resume).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details", "freelancers", new { id = resume.freelancer_id });
-                //return RedirectToAction("Index");
+                //return RedirectToAction("Details", "freelancers", new { id = resume.freelancer_id });
+                return RedirectToAction("Index");
             }
-            ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
+            //ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
             return View(resume);
         }
 
