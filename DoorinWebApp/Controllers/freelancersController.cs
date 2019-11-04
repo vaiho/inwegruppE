@@ -2,25 +2,88 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoorinWebApp.Models;
 using DoorinWebApp.Models.Operations;
+using DoorinWebApp.Viewmodel;
 
 namespace DoorinWebApp.Controllers
 {
     public class freelancersController : Controller
     {
         private doorinDBEntities db = new doorinDBEntities();
-
+        public static List<FreelancerProfileVM> filterList = new List<FreelancerProfileVM>();
         // GET: freelancers
-        public ActionResult Index()
+        public ActionResult Index(string searchString) 
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-            //return View(db.freelancer.ToList());
-            return View(fpop.GetFreelancersList());
+            var allFreelancersList = fpop.GetFreelancersList(); //Hämtar alla frilansare
+
+            //Viewbags här
+            ViewBag.Competence = GetCompetences();
+            ViewBag.Technology = GetTechnologies();
+
+            if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
+            {
+                //(OLD) Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
+                //list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
+                //return View(list.ToList());
+
+                foreach (var item in allFreelancersList)
+                {
+                    if (item.CompetencesList.Any(x => x.name.Contains(searchString)) || item.TechnologysList.Any(z => z.name.Contains(searchString)) || item.Firstname.Contains(searchString) || item.Lastname.Contains(searchString))
+                    {
+                        if (!filterList.Any(y => y.Freelancer_id == item.Freelancer_id)) //om freelancer ej finns i listan
+                        {
+                            filterList.Add(item);
+                        }
+                    }
+                }
+                //Returnerar den filtrerade listan
+                return View(filterList);
+            }
+
+            filterList.Clear();
+            //Annars skickas en ofiltrerad lista tillbaka
+            
+            return View(allFreelancersList);
+        }
+
+        private List<competence> GetCompetences()
+        {
+            List<competence> CList = new List<competence>();
+            var competencelist = (from c in db.competence 
+                                  select new { c.name, c.competence_id }).ToList();
+
+            foreach (var c in competencelist)
+            {
+                competence item = new competence();
+                item.name = c.name;
+                item.competence_id = c.competence_id;
+                CList.Add(item);
+            }
+
+            return (CList);
+        }
+
+        private List<technology> GetTechnologies()
+        {
+            List<technology> TList = new List<technology>();
+            var technologylist = (from t in db.technology
+                                  select new { t.name }).ToList();
+
+            foreach (var t in technologylist)
+            {
+                technology item = new technology();
+                item.name = t.name;
+                TList.Add(item);
+            }
+
+            return (TList);
         }
 
         // GET: freelancers/Details/5
@@ -31,6 +94,9 @@ namespace DoorinWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             freelancer freelancer = db.freelancer.Find(id);
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            freelancer.FreelancerProfileResume = fpop.GetFreelancerProfileById(id);
+            
             if (freelancer == null)
             {
                 return HttpNotFound();
@@ -74,12 +140,25 @@ namespace DoorinWebApp.Controllers
             if (ModelState.IsValid)
             {
                 db.freelancer.Add(freelancer);
+                resume r = new resume();
+                r.profile = "";
+                r.freelancer_id = freelancer.freelancer_id;
+                db.resume.Add(r);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                var savedid = freelancer.freelancer_id;
+
+                return RedirectToAction("Details", new { id = savedid });
             }
 
             return View(freelancer);
         }
+
+
+        //http://localhost:50489/freelancer/Details?freelancer_id=26
+
+        //http://localhost:50489/freelancer/Details?freelancer_id=28
+
+        //http://localhost:50489/freelancers/details/5
 
         // GET: freelancers/Edit/5
         public ActionResult Edit(int? id)
@@ -108,7 +187,7 @@ namespace DoorinWebApp.Controllers
             {
                 db.Entry(freelancer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = freelancer.freelancer_id });
             }
             return View(freelancer);
         }
@@ -175,6 +254,53 @@ namespace DoorinWebApp.Controllers
                 });
             }
             return selectList;
+        }
+
+        [HandleError]
+        public ActionResult SaveFreelancer(int? id) //Sparar freelancer i tabellen customer_freelancer
+        {
+            int c = 5; //hårdkodad customer
+
+            if (id != null)
+            {
+                try
+                {
+                    FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+                    fpop.SaveFreelancerToCustomerList(id, c);
+                }
+                catch (SqlException ex)
+                {
+                    //return;
+                    //TODO: Visa ett felmeddelande
+                }
+
+                
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RemoveFreelancer(int? idfromview)
+        {
+            if (idfromview == null )
+            {
+                idfromview = 5;
+            }
+
+            int? customer_id = 5; //Hårdkodad customer
+            int? id = idfromview; //Markerad freelancer
+
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            fpop.RemoveFreelancerFromCustomerList(id, customer_id);
+
+            //Refreshar samma sida
+            return RedirectToAction("SavedFreelancers", "customers");  
+        }
+
+        public ActionResult CVPage(int? id)
+        {
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+
+            return View(fpop.GetFreelancerProfileById(id));
         }
     }
 }

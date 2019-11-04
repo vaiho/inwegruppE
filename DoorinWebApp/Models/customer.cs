@@ -23,6 +23,8 @@ namespace DoorinWebApp.Models
         public int customer_id { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
+        [DisplayName("Telefonnummer")]
+        [Required(ErrorMessage = "Vänligen fyll i ett telefonnummer")]
         public string phonenumber { get; set; }
         public string email { get; set; }
         public string username { get; set; }

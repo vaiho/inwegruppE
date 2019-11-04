@@ -1,8 +1,12 @@
 ﻿@model DoorinWebApp.Models.freelancer
 
 @{
-    ViewBag.Title = "Gå med";
+    ViewBag.Title = "Gå med som frilansare";
 }
+
+<div>
+    <a href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
+</div>
 
 <h2>Gå med som frilansare</h2>
 
@@ -127,9 +131,7 @@
 </div>
 }
 
-<div>
-    @Html.ActionLink("Tillbaka", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

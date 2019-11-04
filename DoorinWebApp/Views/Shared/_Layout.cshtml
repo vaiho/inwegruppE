@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - DoorIn</title>
     <link href="~/Content/Images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <script src="~/Scripts/myjavascript.js" type="text/javascript"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -27,9 +28,11 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Freelancers", "Index", "freelancers")</li>
-                            <li>@Html.ActionLink("Customers", "Index", "customers")</li>
+                            <li>@Html.ActionLink("Sök frilansare", "Index", "freelancers")</li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <a style="color:#FFF;" href="@Url.Action("Details/30", "freelancers")"><li style="">Profil frilansare</li></a>
+                            <a style="color:#FFF;" href="@Url.Action("Details/5", "customers")"><li style=" margin-top:15px;">Profil rekryterare</li></a>
                         </ul>
                     </div>
                 </div>
@@ -48,7 +51,20 @@
                     <img id="footerlogo" alt="Logo" src="~/Content/images/doorin.png">
                 </a>
                 &copy; 2019 &nbsp;&nbsp;&nbsp;&nbsp;
-                @Html.ActionLink("Contact", "Contact", "Home")
+                @Html.ActionLink("Kontakt", "Contact", "Home")
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Kompetenser", "Index", "competences")
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Rekryterare", "Index", "customers")
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Utbildning", "Index", "educations")
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Teknologier", "Index", "technologies")
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("Erfarenheter", "Index", "workhistories")
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                @Html.ActionLink("CV:n", "Index", "resumes")
+
             </p>
         </div>
 

@@ -1,15 +1,20 @@
 ﻿@model DoorinWebApp.Models.freelancer
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Profil";
 }
 
-<h2>Details</h2>
+<h2>Profilsida för @Html.DisplayFor(model => model.firstname) @Html.DisplayFor(model => model.lastname)</h2>
 
 <div>
-    <h4>freelancer</h4>
+    <h5>Du har gått med som en frilansare</h5>
     <hr />
+    <h4>Uppgifter</h4>
+    @Html.ActionLink("Redigera", "Edit", new { id = Model.freelancer_id })
+
     <dl class="dl-horizontal">
+
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.firstname)
         </dt>
@@ -108,7 +113,6 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.freelancer_id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<hr />
+@Html.Partial("_FreelancerProfileResume", Model.FreelancerProfileResume)

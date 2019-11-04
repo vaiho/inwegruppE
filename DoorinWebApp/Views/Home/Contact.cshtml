@@ -1,27 +1,41 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Contact";
 }
 
-<div class="box">
-    <input type="text" id="search" Value="Search"> 
-    <img id="searchbtn" src="~/Content/images/search.png" />
-    <div id="filterbtn">
+    
+    <div class="box">
+        <input type="text" id="search" Value="Search">
+        <img id="searchbtn" src="~/Content/images/search.png" />
+        <div id="filterbtn" class="filterbtn" onclick="myFunction()">
             <img src="~/Content/images/filter.png" />
             Filters
+        </div>
+
+        <div id="filters" style="display:block;">
+
+            <div style="border-bottom:1px solid #ddd; margin-top:20px;"></div>
+
+            <h4 style="font-weight:bold; margin-top:20px;">Kompetenser</h4>
+
+
+            <div id="technologies" style="display:block;">
+                <h4 style="font-weight:bold; margin-top:20px;">Teknologier</h4>
+                
+            </div>
+
+       </div>
+    
     </div>
+
+<div class="freelancerbox">
+
+    
+
+            
+
+
 </div>
 
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>

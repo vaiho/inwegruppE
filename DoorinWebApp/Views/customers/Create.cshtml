@@ -1,10 +1,14 @@
 ﻿@model DoorinWebApp.Models.customer
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Gå med som rekryterare";
 }
 
-<h2>Create</h2>
+<div>
+    <a href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
+</div>
+
+<h2>Gå med som rekryterare</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +16,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>customer</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -81,15 +85,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Gå med" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

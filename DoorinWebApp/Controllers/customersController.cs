@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoorinWebApp.Models;
+using DoorinWebApp.Models.Operations;
 
 namespace DoorinWebApp.Controllers
 {
@@ -34,6 +35,21 @@ namespace DoorinWebApp.Controllers
             }
             return View(customer);
         }
+        public ActionResult SavedFreelancers(int? idfromview) //Hämtar sparade frilansare för en customer och skickar tillbaka en lista med dessa
+        {
+            if (idfromview == null)
+            {
+                idfromview = 5;
+            }
+
+            int? id = idfromview; //Hårdkodad customer - inte länge Johan //Sara 
+            CustomerOperations co = new CustomerOperations();
+
+            ViewBag.customer = co.GetCustomerById(id);
+
+            return View(co.GetSavedFreelancersList(id));
+        }
+
 
         // GET: customers/Create
         public ActionResult Create()
@@ -52,7 +68,10 @@ namespace DoorinWebApp.Controllers
             {
                 db.customer.Add(customer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                var savedid = customer.customer_id;
+
+                return RedirectToAction("Details", new { id = savedid });
+                //return RedirectToAction("Index");
             }
 
             return View(customer);
@@ -84,7 +103,8 @@ namespace DoorinWebApp.Controllers
             {
                 db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = customer.customer_id });
+                //return RedirectToAction("Index");
             }
             return View(customer);
         }

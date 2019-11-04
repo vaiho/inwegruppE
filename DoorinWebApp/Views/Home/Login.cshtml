@@ -5,22 +5,25 @@
 }
 
     <div id="topborder"></div>
-    <h4 class="paddingtop10 marginleft10">@Html.ActionLink("Go back", "Index", "Home")</h4>
+    <h4 class="paddingtop10 marginleft10">@Html.ActionLink("Tillbaka", "Index", "Home")</h4>
 
             <div class="content-middle">
                 <img class="imgcenter" src="~/Content/images/doorin.png" style="max-width:100px;">
-                <h2 class="center paddingtop10">Welcome back</h2>
-                <h5 class="center ">Please login using your username and password that you created when joining.</h5>
+                <h2 class="center paddingtop10">Välkommen tillbaka</h2>
+                <h5 class="center ">Vänligen använd användarnamnet och lösenordet som du skapade när du gick med.</h5>
 
                 <form id="commentForm" onsubmit="whenSubmitted()" class="paddingtop20">
-                    <input type="text" id="fname" name="firstname" Value="Username" required>
-                    <input type="text" id="lname" name="lastname" Value="Password" required>
+                    <input type="text" id="username" name="username" Value="anpe" required onfocus="this.value=''">
+                    <input type="text" id="password" name="password" Value="*********" required onfocus="this.value=''">
                     <div class="center paddingtop20">
-                        <input type="submit" value="Sign in as freelancer" style="margin-right:10px;">
-                        <input type="submit" value="Sign in as recruiter" style="margin-top:10px;">
+                        <p style="color:red;">Du behöver endast välja vilken typ av person du vill logga in som.</p>
+                        <a href="@Url.Action("Details/5", "freelancers")"><p class="btn">Logga in som frilansare</p></a>
+                        <a href="@Url.Action("Index", "freelancers")"><p class="btn">Logga in som rekryterare</p></a>
+                        @*<input type="submit" value="Sign in as freelancer" style="margin-right:10px;">
+                        <input type="submit" value="Sign in as recruiter" style="margin-top:10px;">*@
                     </div>
                 </form>
-                <h4 class="center paddingtop20"><a href="">Forgot password?</a></h4>
+                <h4 class="center paddingtop20"><a href="">Glömt lösenord?</a></h4>
 
             </div>
 

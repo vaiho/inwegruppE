@@ -1,14 +1,17 @@
 ﻿@model DoorinWebApp.Models.customer
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Profil";
 }
 
-<h2>Details</h2>
+<h2>Profilsida för @Html.DisplayFor(model => model.firstname) @Html.DisplayFor(model => model.lastname)</h2>
 
 <div>
-    <h4>customer</h4>
+    <h5>Du har gått med som rekryterare</h5>
     <hr />
+    <h4>Uppgifter</h4>
+    <p>@Html.ActionLink("Redigera", "Edit", new { id = Model.customer_id })</p>
+
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.firstname)
@@ -77,6 +80,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.customer_id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Se mina sparade frilansare", "SavedFreelancers", new { idfromview = Model.customer_id }, new { @class = "btn" })
 </p>

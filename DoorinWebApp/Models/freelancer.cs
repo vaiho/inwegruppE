@@ -14,6 +14,7 @@ namespace DoorinWebApp.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
+    using DoorinWebApp.Viewmodel;
 
     public partial class freelancer
     {
@@ -44,6 +45,7 @@ namespace DoorinWebApp.Models
         [EmailAddress]
         public string email { get; set; }
         [DisplayName("Födelsedatum")]
+        [Required(ErrorMessage = "Vänligen fyll ett födelsedatum")]
         public Nullable<System.DateTime> birthdate { get; set; }
         [DisplayName("Födelseort")]
         public string birthcity { get; set; }
@@ -60,6 +62,8 @@ namespace DoorinWebApp.Models
         public string fullname => $"{firstname} {lastname}";
         [DisplayName("Nationalitet")]
         public IEnumerable<SelectListItem> country { get; set; } //För att skapa en lista av valbara nationalitet
+
+        public FreelancerProfileVM FreelancerProfileResume { get; set; }  // Property för partial view http://pratapreddypilaka.blogspot.com/2011/11/partial-views-with-diefferent-models.html
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<customer> customer { get; set; }

@@ -75,9 +75,19 @@ a:hover {
     margin-left: 10px;
 }
 
+.margintop10 {
+    margin-top: 10px;
+}
+
 /*#endregion*/
 
-
+.competence {
+    display: inline-block;
+    border: 2px solid #ddd;
+    padding: 8px 12px;
+    font-size: 16px;
+    margin-right: 10px;
+}
 
 .around {
     border-radius: 5px;
@@ -127,8 +137,8 @@ a:hover {
     max-width:45px;
 }
 
-#filterbtn {
-    width:125px;
+.filterbtn {
+    width:115px;
     color: #2c473d;
     padding: 0px 3px;
     border: 2px solid #2c473d;
@@ -140,16 +150,77 @@ a:hover {
     transition-duration: 0.4s;
 }
 
-#filterbtn:hover {
-    background-color: #09964f; 
+.filterbtn:hover {
+    background-color: #2c473d; 
     color: #FFF;
-    border: 2px solid #ddd;
+    border: 2px solid #2c473d;
 }
 
-#search {
-border-radius:0px;
-width: 70%;
+.filterbtnactive {
+    background-color:#2c473d;
+    color:#FFF;
 }
+
+.search {
+    border-radius: 0px;
+    width: 70%;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    resize: vertical;
+}
+
+.filters {
+    display: inline-block;
+    border: 2px solid #ddd;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin-right: 10px;
+}
+
+    .filters:hover {
+        color: #FFF;
+        background-color: #09964f;
+        border: 2px solid #09964f;
+    }
+.tempactive {
+    color: #FFF;
+    background-color: #09964f;
+    border: 2px solid #09964f;
+}
+
+#filters {
+    display: none;
+}
+
+#technologies {
+    display: none;
+}
+
+/*#endregion*/
+
+
+
+/*#region Styles för freelancers på söksidan*/
+
+.freelancerbox {
+border-top: 1px solid #ddd;
+margin:20px 0 20px 0;
+}
+
+.freelancerlist {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
 
 /*#endregion*/
 
@@ -316,6 +387,33 @@ input[type=text], input[type=email], input[type=number], select, textarea {
     resize: vertical;
 }
 
+input[type=submit].filters, .filters {
+    display: inline-block;
+    background-color: white;
+    border-radius: 1px;
+    color: black;
+    border: 2px solid #ddd;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+input[type=submit].filters:hover, .filters:hover {
+    background-color: #09964f;
+    color: white;
+    border: 2px solid #09964f;
+    cursor: pointer;
+    font-size: 16px;
+}
+input[type=submit].tempactive {
+    color: #FFF;
+    background-color: #09964f;
+    border: 2px solid #09964f;
+}
 input[type=submit], .btn {
     border-radius: 5px;
     background-color: #09964f;
@@ -349,7 +447,7 @@ position: relative;
 
 @media (min-width: 768px) {
     .navbar-nav {
-        float: right;
+        float: left;
     }
 }
 
@@ -375,16 +473,8 @@ position: relative;
     color: #eee; 
 }
 
-/*#endregion*/
 
-/*#region Style för kompetenserna på CV*/
-.Competences {
-    width: 5%;
-    float: left;
-    margin: 2%;
-    text-align: center;
-    padding-top: 10px;
-    color: #008000;
-}
+
+
 
 /*#endregion*/
