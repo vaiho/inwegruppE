@@ -34,15 +34,8 @@ namespace DoorinWebApp.Models.Operations
                                 Freelancer_id = reader.GetInt32(0),
                                 Firstname = reader.GetString(1),
                                 Lastname = reader.GetString(2),
-                                //Resume_id = reader.GetInt32(3),
-                                //ProfileText = reader.GetString(4),
                                 Email = reader.GetString(3),
                                 Nationality = reader.GetString(4),
-                                //City = reader.GetString(7),
-                                //Birthdate = reader.GetDateTime(8),
-                                //Address = reader.GetString(9),
-                                //Zipcode = reader.GetString(10),
-                                //Username = reader.GetString(11),
                             };
                             list.Add(fp);
                         }

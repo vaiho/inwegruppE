@@ -44,45 +44,11 @@ namespace DoorinWebApp.Models.Operations
             }
             catch (SqlException ex)
             {
-                //TODO: Gär något med felmedelandet
+                //TODO: Gör något med felmedelandet
                 throw;
             }
             
-
             return fp;
-
-
-            //OLD:
-            //string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate, address, zipcode, username from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id WHERE freelancer.freelancer_id = @freelancer_id";
-
-            //using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
-            //{
-            //    conn.Open();
-            //    using (SqlCommand command = new SqlCommand(sql, conn))
-            //    {
-            //        command.Parameters.AddWithValue("freelancer_id", id);
-
-            //        using (SqlDataReader reader = command.ExecuteReader())
-            //        {
-            //            while (reader.Read())
-            //            {
-            //                fp.Freelancer_id = reader.GetInt32(0);
-            //                fp.Firstname = reader.GetString(1);
-            //                fp.Lastname = reader.GetString(2);
-            //                fp.Resume_id = reader.GetInt32(3);
-            //                fp.ProfileText = reader.GetString(4);
-            //                fp.Email = reader.GetString(5);
-            //                fp.Nationality = reader.GetString(6);
-            //                fp.City = reader.GetString(7);
-            //                fp.Birthdate = reader.GetDateTime(8);
-            //                fp.Address = reader.GetString(9);
-            //                //fp.Zipcode = reader.GetString(10);
-            //                fp.Username = reader.GetString(11);
-            //            }
-            //        }
-            //    }
-            //}
-
         }
 
         private void GetCompetences(FreelancerProfileVM fp)//Metod för att hämta kompetenser på inskickad freelancerVM och lagra dessa i dennes kompetens-lista
@@ -147,35 +113,6 @@ namespace DoorinWebApp.Models.Operations
                 //TODO: gör något med felmeddelandet
                 throw;
             }
-
-
-            //OLD:
-            //string sql = "SELECT technology.technology_id, technology.name, technology_resume.rank, technology_resume.core_technology, technology.competence_id from technology_resume INNER JOIN technology on technology_resume.technology_id = technology.technology_id WHERE resume_id = @resume_id";
-            //FullTechnology t;
-
-            //using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
-            //{
-            //    conn.Open();
-            //    using (SqlCommand command = new SqlCommand(sql, conn))
-            //    {
-            //        command.Parameters.AddWithValue("resume_id", fp.Resume_id);
-            //        using (SqlDataReader reader = command.ExecuteReader())
-            //        {
-            //            while (reader.Read())
-            //            {
-            //                t = new FullTechnology()
-            //                {
-            //                    technology_id = (reader.GetInt32(0)),
-            //                    name = (reader.GetString(1)),
-            //                    rank = (reader.GetInt32(2)),
-            //                    core_technology = (reader.GetBoolean(3)),
-            //                    competence_id = (reader.GetInt32(4)),
-            //                };
-            //                fp.TechnologysList.Add(t);
-            //            }
-            //        }
-            //    }
-            //}
         }
 
         private void GetEducation(FreelancerProfileVM fp) //Metod för att hämta utbildningar på inskickad freelancerVM och lagra dessa i dennes utbildnings-lista
@@ -268,8 +205,7 @@ namespace DoorinWebApp.Models.Operations
                     GetTechnology(fp); //Hämtar och sparar teknologier
 
                     freelancersList.Add(fp);
-                }
-                
+                }              
             }
             catch (SqlException ex)
             {
@@ -277,45 +213,6 @@ namespace DoorinWebApp.Models.Operations
                 throw;
             }
             return freelancersList;
-
-
-
-            //FreelancerProfileVM fp;
-            //string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate, address, zipcode, username from freelancer INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id";
-
-            //using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
-            //{
-            //    conn.Open();
-            //    using (SqlCommand command = new SqlCommand(sql, conn))
-            //    {
-            //        //command.Parameters.AddWithValue("resume_id", fp.Resume_id);
-            //        using (SqlDataReader reader = command.ExecuteReader())
-            //        {
-            //            while (reader.Read())
-            //            {
-            //                fp = new FreelancerProfileVM()
-            //                {
-            //                    Freelancer_id = reader.GetInt32(0),
-            //                    Firstname = reader.GetString(1),
-            //                    Lastname = reader.GetString(2),
-            //                    Resume_id = reader.GetInt32(3),
-            //                    //ProfileText = reader.GetString(4),
-            //                    //Email = reader.GetString(5),
-            //                    Nationality = reader.GetString(6),
-            //                    //City = reader.GetString(7),
-            //                    //Birthdate = reader.GetDateTime(8),
-            //                    //Address = reader.GetString(9),
-            //                    //Zipcode = reader.GetString(10),
-            //                    //Username = reader.GetString(11),
-            //                };
-            //                GetCompetences(fp); //Hämtar och sparar kompetenser
-            //                GetTechnology(fp); //Hämtar och sparar teknologier
-            //                list.Add(fp);
-            //            }
-            //        }
-            //    }
-            //}
-
         }
 
         public List<FreelancerProfileVM> FilterByCompetence(int? id)
@@ -362,10 +259,6 @@ namespace DoorinWebApp.Models.Operations
                 //TODO: gör något med felmeddelandet
                 throw;
             }
-
-
-
-
         }
 
         public void RemoveFreelancerFromCustomerList(int? f, int? c) //Tar bort kombination mellan freelancer och customer

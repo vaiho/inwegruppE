@@ -37,10 +37,9 @@ namespace DoorinWebApp.Controllers
                 {
                     if (item.CompetencesList.Any(x => x.name.Contains(searchString)) || item.TechnologysList.Any(z => z.name.Contains(searchString)) || item.Firstname.Contains(searchString) || item.Lastname.Contains(searchString))
                     {
-                        if (!filterList.Any(y => y.Freelancer_id == item.Freelancer_id)) //om freelancer redan finns i listan
+                        if (!filterList.Any(y => y.Freelancer_id == item.Freelancer_id)) //om freelancer ej finns i listan
                         {
                             filterList.Add(item);
-                            //Do nothing
                         }
                     }
                 }
@@ -55,16 +54,15 @@ namespace DoorinWebApp.Controllers
 
         private List<competence> GetCompetences()
         {
-
             List<competence> CList = new List<competence>();
             var competencelist = (from c in db.competence 
                                   select new { c.name, c.competence_id }).ToList();
 
-            foreach (var v in competencelist)
+            foreach (var c in competencelist)
             {
                 competence item = new competence();
-                item.name = v.name;
-                item.competence_id = v.competence_id;
+                item.name = c.name;
+                item.competence_id = c.competence_id;
                 CList.Add(item);
             }
 
