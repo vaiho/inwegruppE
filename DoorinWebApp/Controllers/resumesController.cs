@@ -78,7 +78,7 @@ namespace DoorinWebApp.Controllers
             ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
             
             freelancer freelancer = db.freelancer.Find(id);
-            //id = 5;
+            id = 5;
 
             FullResumeOperations resumeOperations = new FullResumeOperations();
 

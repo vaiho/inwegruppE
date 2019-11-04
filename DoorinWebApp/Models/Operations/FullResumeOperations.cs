@@ -14,9 +14,15 @@ namespace DoorinWebApp.Models.Operations
         public FullResume GetFullResumeById(int? id) //Metod för att hämta information om en freelancer
         {
            FullResume fullResume = new FullResume();
-           /* string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, " +
-                "nationality, city, birthdate, resume.driving_license, resume.profile from freelancer" +
+            /*string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, email, " +
+                "nationality, city, birthdate from freelancer" +
                 "INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id" +
+                "WHERE freelancer.freelancer_id = @freelancer_id";*/
+
+            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, " +
+                "profile, email, nationality, city, birthdate, address, zipcode, username " +
+                "from freelancer " +
+                "INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id " +
                 "WHERE freelancer.freelancer_id = @freelancer_id";
 
             using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
@@ -43,7 +49,7 @@ namespace DoorinWebApp.Models.Operations
                         }
                     }
                 }
-            }*/
+            }
             // TODO ska inte stå med här, men eftersom det ovan är bortkommenterat så tilldelar jag reusme_id här
             fullResume.Resume_id = 1;
             GetMyCompetences(fullResume); //Hämtar och sparar frilansarens kompetenser
