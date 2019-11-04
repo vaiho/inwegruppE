@@ -1,0 +1,44 @@
+﻿@*@model IEnumerable<DoorinWebApp.Viewmodel.FreelancerProfileVM>*@
+@model DoorinWebApp.Viewmodel.FreelancerProfileVM
+
+
+
+        @*<tr>
+            <th>
+                Namn
+            </th>
+            <th>
+                Kompetenser
+            </th>
+            <th>
+                Teknologier
+            </th>
+            <th></th>
+        </tr>*@
+
+  
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Fullname)
+            </td>
+            <td>
+                @foreach (var x in Model.CompetencesList)
+                {
+                    <span>@Html.DisplayFor(modelItem => x.name),</span>
+                }
+            </td>
+            <td>
+                @foreach (var x in Model.TechnologysList)
+                {
+                    <span>@Html.DisplayFor(modelItem => x.name), </span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Spara |", "SaveFreelancer", new { id = Model.Freelancer_id })
+                @Html.ActionLink("Besök profil", "ProfilePage", new { id = Model.Freelancer_id })
+            </td>
+        </tr>
+
+
+
+

@@ -1,5 +1,5 @@
-﻿@*@model IEnumerable<DoorinWebApp.Models.freelancer>*@
-@model List<DoorinWebApp.Viewmodel.FreelancerProfileVM>
+﻿@model IEnumerable<DoorinWebApp.Viewmodel.FreelancerProfileVM>
+@*@model List<DoorinWebApp.Viewmodel.FreelancerProfileVM>*@
 
 @{
     ViewBag.Title = "Sök frilansare";
@@ -48,12 +48,12 @@
     }
 </div>
 
-@*<div id="tempdiv">
+<div id="tempdiv">
     <input type="submit" class="filters" value="test 1" />
     <input type="submit" class="filters" value="test 2" />
     <input type="submit" class="filters" value="test 3" />
     <input type="submit" class="filters" value="test 4" />
-</div>*@
+</div>
 <br />
 
 <div class="freelancerbox">
@@ -101,23 +101,46 @@
 <hr />
 <br />
 
-<script>
-    function setValue(txt) {
-        document.getElementById("SearchString").value = txt;
-    }
-</script>
-<script>
+<div class="freelancerbox">
+    <table class="table">
+        <tr>
+            <th>
+                Namn
+            </th>
+            <th>
+                Kompetenser
+            </th>
+            <th>
+                Teknologier
+            </th>
+            <th></th>
+        </tr>
 
-    var header = document.getElementById("filters");
-    var btns = header.getElementsByClassName("filters");
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function () {
-            var current = document.getElementsByClassName("tempactive");
-            if (current.length > 0) {
-                //current[0].className = current[0].className.replace(" tempactive", "");
-            }
-            this.className += " tempactive";
-        });
-    }
-</script>
+        @foreach (var item in Model)
+        {
+            @Html.Partial("FreelancersList", item)
+        }
+    </table>
+</div>
+
+
+    <script>
+        function setValue(txt) {
+            document.getElementById("SearchString").value = txt;
+        }
+    </script>
+    <script>
+
+        var header = document.getElementById("filters");
+        var btns = header.getElementsByClassName("filters");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var current = document.getElementsByClassName("tempactive");
+                if (current.length > 0) {
+                    //current[0].className = current[0].className.replace(" tempactive", "");
+                }
+                this.className += " tempactive";
+            });
+        }
+    </script>
 
