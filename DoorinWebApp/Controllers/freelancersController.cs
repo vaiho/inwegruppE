@@ -49,6 +49,7 @@ namespace DoorinWebApp.Controllers
 
             filterList.Clear();
             //Annars skickas en ofiltrerad lista tillbaka
+            
             return View(allFreelancersList);
         }
 

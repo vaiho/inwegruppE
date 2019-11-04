@@ -189,6 +189,11 @@ a:hover {
         background-color: #09964f;
         border: 2px solid #09964f;
     }
+.tempactive {
+    color: #FFF;
+    background-color: #09964f;
+    border: 2px solid #09964f;
+}
 
 #filters {
     display: none;
@@ -404,7 +409,11 @@ input[type=submit].filters:hover, .filters:hover {
     cursor: pointer;
     font-size: 16px;
 }
-
+input[type=submit].tempactive {
+    color: #FFF;
+    background-color: #09964f;
+    border: 2px solid #09964f;
+}
 input[type=submit], .btn {
     border-radius: 5px;
     background-color: #09964f;

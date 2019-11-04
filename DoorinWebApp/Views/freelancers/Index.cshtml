@@ -6,52 +6,54 @@
 }
 
 @*<h2>Sök efter frilansare</h2>
-<br />*@
+    <br />*@
 
 
 <div>
     @using (Html.BeginForm())
     {
-    <div class="box">
-        <p style="display:inline-block; float:right; margin-top:10px;">@Html.ActionLink("Visa sparade frilansare", "SavedFreelancers", "customers")</p>
-        <h4 style="display:inline-block;">Sök frilansare efter kompetens/teknologi:</h4>
+        <div class="box" id="myDiv">
+            <p style="display:inline-block; float:right; margin-top:10px;">@Html.ActionLink("Visa sparade frilansare", "SavedFreelancers", "customers")</p>
+            <h4 style="display:inline-block;">Sök frilansare efter kompetens/teknologi:</h4>
 
-        @*<input class="search" type="text" id="SearchString" name="SearchString" onfocus="this.value=''"/>*@
-        <p id="search">@Html.TextBox("SearchString")</p>
-        <input type="submit" value="Sök" />
-        <input type="submit" value="Nollställ" onclick="setValue('')" />
+            <p id="search">@Html.TextBox("SearchString")</p>
+            <input type="submit" value="Sök" />
+            <input type="submit" value="Nollställ" onclick="setValue('')" />
 
-        <div id="filterbtn" class="filterbtn" onclick="myFunction()">
-            <img src="~/Content/images/filter.png" />
-            Filter
-        </div>
-
-
-
-        <br />
-
-
-        <div id="filters" style="display:none;">
-            <hr />
-            <h4 style="font-weight:bold;">Kompetenser</h4>
-            @foreach (var item in ViewBag.Competence)
-            {
-                <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-            }
+            <div id="filterbtn" class="filterbtn" onclick="myFunction()">
+                <img src="~/Content/images/filter.png" />
+                Filter
+            </div>
 
             <br />
 
-            <h4 style="font-weight:bold;">Teknologier</h4>
-            @foreach (var item in ViewBag.Technology)
-            {
-                <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-            }
-            <br />
-        </div>
-    </div>
-        }
-    </div>
+            <div id="filters" style="display:none;">
+                <hr />
+                <h4 style="font-weight:bold;">Kompetenser</h4>
+                @foreach (var item in ViewBag.Competence)
+                {
+                    <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
+                }
 
+                <br />
+
+                <h4 style="font-weight:bold;">Teknologier</h4>
+                @foreach (var item in ViewBag.Technology)
+                {
+                    <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
+                }
+                <br />
+            </div>
+        </div>
+    }
+</div>
+
+@*<div id="tempdiv">
+    <input type="submit" class="filters" value="test 1" />
+    <input type="submit" class="filters" value="test 2" />
+    <input type="submit" class="filters" value="test 3" />
+    <input type="submit" class="filters" value="test 4" />
+</div>*@
 <br />
 
 <div class="freelancerbox">
@@ -60,9 +62,6 @@
             <th>
                 Namn
             </th>
-            @*<th>
-                Nationalitet
-            </th>*@
             <th>
                 Kompetenser
             </th>
@@ -78,9 +77,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Fullname)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Nationality)
-                </td>*@
                 <td>
                     @foreach (var x in item.CompetencesList)
                     {
@@ -98,7 +94,6 @@
                     @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
                 </td>
             </tr>
-
         }
 
     </table>
@@ -109,6 +104,20 @@
 <script>
     function setValue(txt) {
         document.getElementById("SearchString").value = txt;
+    }
+</script>
+<script>
+
+    var header = document.getElementById("filters");
+    var btns = header.getElementsByClassName("filters");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("tempactive");
+            if (current.length > 0) {
+                //current[0].className = current[0].className.replace(" tempactive", "");
+            }
+            this.className += " tempactive";
+        });
     }
 </script>
 
