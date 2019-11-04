@@ -296,5 +296,12 @@ namespace DoorinWebApp.Controllers
             //Refreshar samma sida
             return RedirectToAction("SavedFreelancers", "customers");  
         }
+
+        public ActionResult CVPage(int? id)
+        {
+            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+
+            return View(fpop.GetFreelancerProfileById(id));
+        }
     }
 }

@@ -45,6 +45,8 @@ namespace DoorinWebApp.Controllers
             int? id = idfromview; //Hårdkodad customer - inte länge Johan //Sara 
             CustomerOperations co = new CustomerOperations();
 
+            ViewBag.customer = co.GetCustomerById(id);
+
             return View(co.GetSavedFreelancersList(id));
         }
 

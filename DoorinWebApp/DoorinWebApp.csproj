@@ -200,6 +200,7 @@
     <Content Include="Content\images\filter.png" />
     <Content Include="Content\images\in.png" />
     <Content Include="Content\images\search.png" />
+    <Content Include="Content\images\star.png" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -298,6 +299,7 @@
     <Content Include="Views\links\Index.cshtml" />
     <Content Include="Views\customers\SavedFreelancers.cshtml" />
     <Content Include="Views\freelancers\_FreelancerProfileResume.cshtml" />
+    <Content Include="Views\freelancers\CVPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

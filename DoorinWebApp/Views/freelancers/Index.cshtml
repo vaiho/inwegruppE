@@ -5,37 +5,32 @@
     ViewBag.Title = "Sök frilansare";
 }
 
-<h2>Sök efter frilansare</h2>
-<br />
-@*<div class="box">
-        <input type="text" id="search" placeholder="Sök här">
-        <img id="searchbtn" src="~/Content/images/search.png" />
-        <div id="filterbtn">
-            <img src="~/Content/images/filter.png" />
-            Filters
-        </div>
-    </div>*@
+@*<h2>Sök efter frilansare</h2>
+<br />*@
+
 
 <div>
     @using (Html.BeginForm())
     {
     <div class="box">
-        <p>Sök efter kompetenser eller teknologier: </p>
+        <p style="display:inline-block; float:right; margin-top:10px;">@Html.ActionLink("Visa sparade frilansare", "SavedFreelancers", "customers")</p>
+        <h4 style="display:inline-block;">Sök frilansare efter kompetens/teknologi:</h4>
 
         @*<input class="search" type="text" id="SearchString" name="SearchString" onfocus="this.value=''"/>*@
         <p id="search">@Html.TextBox("SearchString")</p>
-
-        <div id="filterbtn" class="filterbtn" onclick="myFunction()">
-            <img src="~/Content/images/filter.png" />
-            Filters
-        </div>
-
         <input type="submit" value="Sök" />
         <input type="submit" value="Nollställ" onclick="setValue('')" />
 
+        <div id="filterbtn" class="filterbtn" onclick="myFunction()">
+            <img src="~/Content/images/filter.png" />
+            Filter
+        </div>
+
+
+
         <br />
-        
-        
+
+
         <div id="filters" style="display:none;">
             <hr />
             <h4 style="font-weight:bold;">Kompetenser</h4>
@@ -65,9 +60,9 @@
             <th>
                 Namn
             </th>
-            <th>
+            @*<th>
                 Nationalitet
-            </th>
+            </th>*@
             <th>
                 Kompetenser
             </th>
@@ -83,9 +78,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Fullname)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.Nationality)
-                </td>
+                </td>*@
                 <td>
                     @foreach (var x in item.CompetencesList)
                     {
@@ -111,9 +106,6 @@
 <hr />
 <br />
 
-@Html.ActionLink("Mina sparade frilansare", "SavedFreelancers", "customers")
-<br />
-<br />
 <script>
     function setValue(txt) {
         document.getElementById("SearchString").value = txt;

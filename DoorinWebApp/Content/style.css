@@ -81,7 +81,13 @@ a:hover {
 
 /*#endregion*/
 
-
+.competence {
+    display: inline-block;
+    border: 2px solid #ddd;
+    padding: 8px 12px;
+    font-size: 16px;
+    margin-right: 10px;
+}
 
 .around {
     border-radius: 5px;
@@ -132,7 +138,7 @@ a:hover {
 }
 
 .filterbtn {
-    width:125px;
+    width:115px;
     color: #2c473d;
     padding: 0px 3px;
     border: 2px solid #2c473d;
