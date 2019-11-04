@@ -77,13 +77,11 @@ namespace DoorinWebApp.Controllers
             }
             ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
             
-            freelancer freelancer = db.freelancer.Find(id);
-            id = 5;
+            //freelancer freelancer = db.freelancer.Find(id);
 
             FullResumeOperations resumeOperations = new FullResumeOperations();
 
             var driving_licence = GetYesOrNo();
-            
             var fullResume = resumeOperations.GetFullResumeById(id);
             fullResume.DrivingLicenceChoice = GetSelectListItems(driving_licence);
             fullResume.Link = db.links.Where(l => l.resume_id == id).ToList();
@@ -96,18 +94,28 @@ namespace DoorinWebApp.Controllers
         {
             FullResumeOperations resumeOperations = new FullResumeOperations();
             var fullResume = resumeOperations.GetFullResumeById(objectResume.Resume_id);
-            fullResume.Competences = resumeOperations.GetCompetenceList1();
             fullResume.SelectedCompetenceId = objectResume.SelectedCompetenceId;
 
             if (fullResume.MyCompetences.Count == 0)
             {
-                for (int i = 0; i < fullResume.Competences[i].competence_id; i++)
+                for (int i = 0; i < fullResume.MyCompetences.Count; i++)
                 {
                     if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
                     {
                         fullResume.MyCompetences.Add(fullResume.Competences[i]);
-                        //anropa metod att lägga till det nya CV i databsaen
-                        return View(fullResume);
+
+                        /*var resume_id = fullResume.Resume_id;
+                          Linkuttrycket funkar inte:
+                        var existingCompetences = db.competence.Where(l => l.resume_id == resume_id).ToList();
+                        db.competence.RemoveRange(existingCompetences);*/
+
+                        int lastComp = fullResume.MyCompetences.Count;
+                        lastComp--;
+                        // går inte att skriva för den hittar inte tabellen competence_resume
+                        // db.competence_resume.Add(fullResume.MyCompetences[lastComp]);
+
+                        int num = db.SaveChanges();
+                        return Json(num);
                     }
                 }
             }
@@ -122,12 +130,25 @@ namespace DoorinWebApp.Controllers
                     }
                     else
                     {
-                        for (int i = 0; i < fullResume.Competences[i].competence_id; i++)
+                        for (int i = 0; i < fullResume.Competences.Count; i++)
                         {
                             if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
                             {
-                                fullResume.MyCompetences.Add(fullResume.Competences[i]);
-                                //anropa metod att lägga till det nya CV i databsaen
+                                 fullResume.MyCompetences.Add(fullResume.Competences[i]);
+
+                                /*var resume_id = fullResume.Resume_id;
+                                  Linkuttrycket funkar inte:
+                                var existingCompetences = db.competence.Where(l => l.resume_id == resume_id).ToList();
+                                db.competence.RemoveRange(existingCompetences);*/
+
+                                int lastComp = fullResume.MyCompetences.Count;
+                                lastComp--;
+                                // går inte att skriva för den hittar inte tabellen competence_resume
+                               // db.competence_resume.Add(fullResume.MyCompetences[lastComp]);
+
+                                int num = db.SaveChanges();
+                                return Json(num);
+                                
                             }
                         }
                     }

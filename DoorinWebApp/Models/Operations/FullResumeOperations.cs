@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -14,23 +15,15 @@ namespace DoorinWebApp.Models.Operations
         public FullResume GetFullResumeById(int? id) //Metod för att hämta information om en freelancer
         {
            FullResume fullResume = new FullResume();
-            /*string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, email, " +
-                "nationality, city, birthdate from freelancer" +
-                "INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id" +
-                "WHERE freelancer.freelancer_id = @freelancer_id";*/
 
-            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, " +
-                "profile, email, nationality, city, birthdate, address, zipcode" +
-                "from freelancer " +
-                "INNER JOIN resume on freelancer.freelancer_id = resume.freelancer_id " +
-                "WHERE freelancer.freelancer_id = @freelancer_id";
+            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate, driving_license, address, zipcode from resume INNER JOIN freelancer on resume.freelancer_id = freelancer.freelancer_id WHERE resume.resume_id = @resume_id";
 
             using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
             {
                 conn.Open();
                 using (SqlCommand command = new SqlCommand(sql, conn))
                 {
-                    command.Parameters.AddWithValue("freelancer_id", id);
+                    command.Parameters.AddWithValue("resume_id", id);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -45,32 +38,24 @@ namespace DoorinWebApp.Models.Operations
                             fullResume.City = reader.GetString(7);
                             fullResume.Birthdate = reader.GetDateTime(8);
                             fullResume.Driving_license = reader.GetString(9);
-                            fullResume.Profile = reader.GetString(10);
+                            fullResume.Address = reader.GetString(10);
+                            fullResume.Zipcode = reader.GetString(11);
+                            
                         }
                     }
                 }
             }
-            // TODO ska inte stå med här, men eftersom det ovan är bortkommenterat så tilldelar jag reusme_id här
-            fullResume.Resume_id = 1;
-            GetMyCompetences(fullResume); //Hämtar och sparar frilansarens kompetenser
-            GetMyTechnology(fullResume); //Hämtar och sparar frilansarens teknologier
-            GetCompetenceList(fullResume); //Hämtar den fördiga listan av kompetenser
-            GetTechnologyList(fullResume); //Hämtar den färdiga listan av teknologier
-            //links link = new links() {
-            //    link_id = 1,
-            //    name = "LinkedIn",
-            //    resume_id = 1,
-            //    link = "linkedIn.se"
-
-            //};
-            //fullResume.Link.Add(link);
+            GetMyCompetences(fullResume);
+            GetMyTechnology(fullResume);
+            GetCompetenceList(fullResume);
+            GetTechnologyList(fullResume);
 
             return fullResume;
         }
-        public void GetMyCompetences(FullResume fullResume)//Metod för att hämta kompetenser på inskickad freelancerVM och lagra dessa i en lista
+        private void GetMyCompetences(FullResume fullResume)//Metod för att hämta kompetenser på inskickad freelancerVM och lagra dessa i en lista
         {
             competence c;
-            string sql = "SELECT competence.competence_id, name from competence_resume " +
+            string sql = "SELECT competence.competence_id, resume_id, name from competence_resume " +
                 "INNER JOIN competence on competence_resume.competence_id = competence.competence_id " +
                 "WHERE resume_id = @resume_id";
 
@@ -87,7 +72,8 @@ namespace DoorinWebApp.Models.Operations
                             c = new competence()
                             {
                                 competence_id = (reader.GetInt32(0)),
-                                name = (reader.GetString(1))
+                                resume_id = (reader.GetInt32(1)),
+                                name = (reader.GetString(2))
                             };
                             fullResume.MyCompetences.Add(c);
                         }
@@ -128,7 +114,7 @@ namespace DoorinWebApp.Models.Operations
             }
         }
 
-        public void GetCompetenceList(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
+        private void GetCompetenceList(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
         {
             string sql = "SELECT competence_id, name FROM competence";
             competence c;
@@ -153,35 +139,6 @@ namespace DoorinWebApp.Models.Operations
                     }
                 }
             }
-
-        }
-
-        public List<competence> GetCompetenceList1() //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
-        {
-            string sql = "SELECT competence_id, name FROM competence";
-            competence c;
-            List<competence> competencesList = new List<competence>();
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
-            {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            c = new competence()
-                            {
-                                competence_id = (reader.GetInt32(0)),
-                                name = (reader.GetString(1))
-                            };
-                            competencesList.Add(c);
-                        }
-                    }
-                }
-            }
-            return competencesList;
 
         }
 
@@ -210,6 +167,7 @@ namespace DoorinWebApp.Models.Operations
                 }
             }
         }
+
         private SqlConnectionStringBuilder GetBuilder() //Anropa vid användning för connection mot databasen
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
