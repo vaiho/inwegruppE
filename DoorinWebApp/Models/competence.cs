@@ -22,6 +22,7 @@ namespace DoorinWebApp.Models
         }
     
         public int competence_id { get; set; }
+        public int resume_id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

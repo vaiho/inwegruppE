@@ -29,22 +29,39 @@ namespace DoorinWebApp.Controllers
 
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
             {
-                //(OLD) Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
-                //list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
-                //return View(list.ToList());
+                List<FreelancerProfileVM> tempList = new List<FreelancerProfileVM>(); //Temp-lista
+                if (filterList.Count() > 0)
+                {
+                    foreach (var item in filterList)
+                    {
+                        if (item.CompetencesList.Any(x => x.name.Contains(searchString)) || item.TechnologysList.Any(x => x.name.Contains(searchString)))
+                        {
+                            tempList.Add(item); //Lägger till freelancer i temp-listan
+                        }
+                    }
+
+                    filterList = tempList; //Skickar in temp-listan i den filtrerade listan
+                    return View(filterList);
+                }
 
                 foreach (var item in allFreelancersList)
                 {
                     if (item.CompetencesList.Any(x => x.name.Contains(searchString)) || item.TechnologysList.Any(z => z.name.Contains(searchString)) || item.Firstname.Contains(searchString) || item.Lastname.Contains(searchString))
                     {
-                        if (!filterList.Any(y => y.Freelancer_id == item.Freelancer_id)) //om freelancer ej finns i listan
+                        if (!filterList.Any(y => y.Freelancer_id == item.Freelancer_id)) //om freelancer ej redan finns i listan
                         {
                             filterList.Add(item);
                         }
                     }
                 }
+              
                 //Returnerar den filtrerade listan
                 return View(filterList);
+
+
+                //(OLD) Kollar om söksträngen finns bland kompetenser, teknologier, förnamn eller efternamn
+                //list = list.Where(x => x.CompetencesList.Any(z => z.name.Contains(searchString)) || x.TechnologysList.Any(z => z.name.Contains(searchString)) || x.Firstname.Contains(searchString) || x.Lastname.Contains(searchString));
+                //return View(list.ToList());
             }
 
             filterList.Clear();
@@ -161,6 +178,7 @@ namespace DoorinWebApp.Controllers
                 db.freelancer.Add(freelancer);
                 resume r = new resume();
                 r.profile = "";
+                r.driving_license = "";
                 r.freelancer_id = freelancer.freelancer_id;
                 db.resume.Add(r);
                 db.SaveChanges();

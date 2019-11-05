@@ -1,14 +1,13 @@
-﻿@model DoorinWebApp.Models.resume
+﻿@model DoorinWebApp.Viewmodel.FullResume
 
 @{
     ViewBag.Title = "Edit";
 }
 
-<div>
-    @Html.ActionLink("Tillbaka", "Details", "freelancers", new { id = Model.freelancer_id }, null)
-</div>
-
-<h2>Redigera ditt CV @Html.DisplayFor(model => model.freelancer.firstname) @Html.DisplayFor(model => model.freelancer.lastname) </h2>
+<h2>Edit</h2>
+<head>
+    @Styles.Render("~/Content/style.css")
+</head>
 
 
 @using (Html.BeginForm())
@@ -16,103 +15,392 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.resume_id)
+        <h4>resume</h4>
 
-        <div class="form-group" style="display:none;">
-            @Html.LabelFor(model => model.freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(@Model => @Model.Resume_id)
+
+        <div class="form-group">
+
+            @Html.LabelFor(@Model => @Model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.freelancer_id, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(@Model => @Model.Freelancer_id, "", new { @class = "text-danger" })
+                <input type="hidden" id="freelancer_id" value="@Model.Freelancer_id" />
             </div>
         </div>
 
+        @*<div class="form-group">
+                @Html.LabelFor(@Model => @Model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(@Model => @Model.Driving_license, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(@Model => @Model.Driving_license, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        @*Bytt ut ovanstående så att det visas i en dropdown.*@
         <div class="form-group">
-            <div class="control-label col-md-2"><b>Kort om mig</b></div>
-            @*@Html.LabelFor(model => model.profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.profile, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.profile, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Do you have a driving licence? -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Driving_license, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="control-label col-md-2"><b>B-körkort</b></div>
-            @*@Html.LabelFor(model => model.driving_license, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.driving_license, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.driving_license, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Spara" class="btn btn-default" />
-            </div>
+        <div>
+            <p><b>Lägg till kompetenser</b></p>
+            <select class="form-control" id="Competences" name="Competences">
+                <option> Välj en kompetens att lägga till</option>
+                @foreach (var item in Model.Competences)
+                {
+                    <option value="@item.competence_id"> @item.name </option>
+                }
+            </select>
+        </div>
+
+        <div id="AddMyCompetences">
+            <p><b>Mina kompetenser</b></p>
+
+            <select class="form-control" id="Competences" name="Competences">
+                @foreach (var item in Model.MyCompetences)
+                {
+                    <option> @item.name </option>
+
+                }
+            </select>
+        </div>
+
+        <div>
+            <p><b>Lägg till teknologier</b></p>
+
+            <select class="form-control">
+                @foreach (var item in Model.Technologies)
+                {
+                    <option> @item.name </option>
+                }
+            </select>
+        </div>
+
+        <div id="AddMyTechnologies">
+            <p><b>Mina teknologier</b></p>
+
+            <select class="form-control">
+                @foreach (var item in Model.MyTechnologies)
+                {
+                    <option> @item.name </option>
+                }
+            </select>
+        </div>
+
+
+    </div>
+
+
+    <h2>Links</h2>
+
+
+    //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
+    //https://forums.asp.net/t/2126284.aspx?MVC+Input+in+form+of+Table+With+Add+Delete+Row
+    // Ny inspirations-länk för att skicka över objekt med Json:
+    //https://andrewlock.net/model-binding-json-posts-in-asp-net-core/?fbclid=IwAR3c5Cr4QzojMNkgMZ4Zy14-CRerAxFKbRVGs6tUeyDjS0ySFk342K5EH1Q#how-it-works-in-asp-net-4
+    <table class="table" id="tblLinks">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Linkname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Url)
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var link in Model.Link)
+            {
+                <tr>
+                    <td>@link.name</td>
+                    <td>@link.link</td>
+                    <td><input class="btnRemoveLink btn btn-default" type="button" value="Remove" onclick="Remove(this)" /></td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtLinkname" /></td>
+                <td><input type="text" id="txtLink" /></td>
+                <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
+
+                <td>
+                    <input class="btnAddLink btn btn-default" type="button" name="name" value="Add" />
+                </td>
+
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+    //<input type="button" class="btn btn-default" id="btnSave" value="Save All links" />
+
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save CV" id="btnSave" class="btn btn-default" />
         </div>
     </div>
+
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+    <script type="text/javascript">
+        $(".btnAddLink").click(function () {
+            //Reference the Name and Link TextBoxes.
+            var txtLinkname = $("#txtLinkname");
+            var txtLink = $("#txtLink");
+
+
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tblLinks > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add Linkname cell.
+            var cell = $(row.insertCell(-1));
+            cell.html(txtLinkname.val());
+
+            //Add URL cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtLink.val());
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<input class=btn btn-default/>");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.val("Remove");
+            cell.append(btnRemove);
+
+            //Clear the TextBoxes.
+            txtLinkname.val("");
+            txtLink.val("");
+        });
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblLinks")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
+
+        $("body").on("click", "#btnSave", function () {
+            //Loop through the Table rows and build a JSON array.
+            var links = new Array();
+            var resume_id = $("#resume_id").val();
+            $("#tblLinks TBODY TR").each(function () {
+                var row = $(this);
+                var link = {};
+                link.Name = row.find("TD").eq(0).html();
+                link.Link = row.find("TD").eq(1).html();
+                link.resume_id = resume_id;
+                links.push(link);
+            });
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/Links/InsertLinks",
+                data: JSON.stringify(links),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    alert("link(s) updated.");
+                }
+            });
+        });
+
+        // Script rörande Competens-DropDownListan
+        $(document).ready(function () {
+            $("#Competences").change(function () {
+
+                var selectedCompetence = document.getElementById("Competences");
+                var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
+
+                // ska testa om det gick att hämta värdet på resume så jag sedan kan hämta detta i databasen ifrån
+                // controllern
+                var resume_id = $("#resume_id").val();
+                var freelancer_id = $("#freelancer_id").val();
+
+                var compObj = {
+                    Resume_id: resume_id, Freelancer_id: freelancer_id,
+                    "Driving_license": $('#Driving_license').text(), "Profile": "Hej jag heter", "Competences": "null",
+                    "MyCompetences": "null", "Technologies": "null", "Technologies": "null", "Link": "facebook.com",
+                    "Linkname": "facebook", "Url": ".com", "Firstname": "hej", "Lastname": "hejson",
+                    "Address": "hrj", "City": "sundsvall", "Zipcode": "hej", "Phonenumber": "082",
+                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "svrige",
+                    "SelectedCompetenceId": competenceId
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Resumes/AddMyCompetences",
+                    data: JSON.stringify(compObj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        alert("Kompetensen är tillagd.");
+                        document.location.reload(true)
+                    },
+
+                    error: function (xhr) {
+
+                        alert("Nånting blev fel.");
+
+                    }
+                });
+
+            });
+
+
+        });
+            // Script rörande Competens-DropDownListan slutar här
+
+    </script>
 }
 
-
-
-<hr />
-<div class="row container">
-    <div class="col-md-6">
-        <h2>Kompetenser</h2>
-        <p>fejk Projktledare <a style="margin-left:60px;" href="#">Ta bort</a></p>
-        <p>fejk Designer <a style="padding-left:80px;" href="#">Ta bort</a></p>
-        <p>fejk Programmerare <a style="padding-left:34px;" href="#">Ta bort</a></p>
-        <p style="margin-top:30px;"><a href="#">Lägg till kompetens</a></p>
-        <br />
-        <p>
-            (Eller lägg till kompetens med dropown listan.
-            Eller ska det ske automatiskt när man lägger till en teknologi i den kompetensgruppen?)
-        </p>
-    </div>
-    <div class="col-md-6">
-        <h2>Teknologier</h2>
-        <p>fejk CSS <a style="margin-left:60px;" href="#">Ta bort</a></p>
-        <p>fejk HTML <a style="padding-left:50px;" href="#">Ta bort</a></p>
-        <p>fejk Javascript <a style="padding-left:20px;" href="#">Ta bort</a></p>
-        <p style="margin-top:30px;"><a href="#">Lägg till teknologi</a></p>
-        <br />
-        <p>Eller lägg till teknologi här med dropown listan.</p>
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
-
-
-<hr />
-<div class="row container">
-    <div class="col-md-6">
-        <h2>Erfarenheter</h2>
-        <p>fejk Erfarenhet 1 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-        <p>fejk Erfarenhet 2 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-        <p>fejk Erfarenhet 3 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-        <p style="margin-top:30px;"><a href="#">Lägg till erfarenhet</a></p>
-        <br />
-        <p>Eventuellt att man kan göra en partial view av workhistories/edit och skicka in resume_id???? Hinner inte kolla nu</p>
-    </div>
-    <div class="col-md-6">
-        <h2>Utbildning</h2>
-        <p>fejk Utbildning 1 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-        <p>fejk Utbildning 2 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-        <p>fejk Utbildning 3 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-        <p style="margin-top:30px;"><a href="#">Lägg till utbildning</a></p>
-        <br />
-        <p>Eventuellt att man kan göra en partial view av educations/edit och skicka in resume_id???? Hinner inte kolla nu</p>
-    </div>
-</div>
-
-
-
-<br />
-<br />
-<br />
-<br />
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+
+@*Bortkommenterat vid conflict/sync*@
+
+@*
+        <div>
+        @Html.ActionLink("Tillbaka", "Details", "freelancers", new { id = Model.freelancer_id }, null)
+    </div>
+        <h2>Redigera ditt CV @Html.DisplayFor(model => model.freelancer.firstname) @Html.DisplayFor(model => model.freelancer.lastname) </h2>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.resume_id)
+
+            <div class="form-group" style="display:none;">
+                @Html.LabelFor(model => model.freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.freelancer_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2"><b>Kort om mig</b></div>
+                @Html.LabelFor(model => model.profile, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.profile, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.profile, "", new { @class = "text-danger" })
+                </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="control-label col-md-2"><b>B-körkort</b></div>
+                    @Html.LabelFor(model => model.driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.driving_license, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.driving_license, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Spara" class="btn btn-default" />
+                    </div>
+                </div>
+                </div>
+                }
+
+
+
+                <hr />
+                <div class="row container">
+                    <div class="col-md-6">
+                        <h2>Kompetenser</h2>
+                        <p>fejk Projktledare <a style="margin-left:60px;" href="#">Ta bort</a></p>
+                        <p>fejk Designer <a style="padding-left:80px;" href="#">Ta bort</a></p>
+                        <p>fejk Programmerare <a style="padding-left:34px;" href="#">Ta bort</a></p>
+                        <p style="margin-top:30px;"><a href="#">Lägg till kompetens</a></p>
+                        <br />
+                        <p>
+                            (Eller lägg till kompetens med dropown listan.
+                            Eller ska det ske automatiskt när man lägger till en teknologi i den kompetensgruppen?)
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Teknologier</h2>
+                        <p>fejk CSS <a style="margin-left:60px;" href="#">Ta bort</a></p>
+                        <p>fejk HTML <a style="padding-left:50px;" href="#">Ta bort</a></p>
+                        <p>fejk Javascript <a style="padding-left:20px;" href="#">Ta bort</a></p>
+                        <p style="margin-top:30px;"><a href="#">Lägg till teknologi</a></p>
+                        <br />
+                        <p>Eller lägg till teknologi här med dropown listan.</p>
+                    </div>
+                </div>
+
+
+
+                <hr />
+                <div class="row container">
+                    <div class="col-md-6">
+                        <h2>Erfarenheter</h2>
+                        <p>fejk Erfarenhet 1 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+                        <p>fejk Erfarenhet 2 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+                        <p>fejk Erfarenhet 3 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+                        <p style="margin-top:30px;"><a href="#">Lägg till erfarenhet</a></p>
+                        <br />
+                        <p>Eventuellt att man kan göra en partial view av workhistories/edit och skicka in resume_id???? Hinner inte kolla nu</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Utbildning</h2>
+                        <p>fejk Utbildning 1 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+                        <p>fejk Utbildning 2 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+                        <p>fejk Utbildning 3 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
+                        <p style="margin-top:30px;"><a href="#">Lägg till utbildning</a></p>
+                        <br />
+                        <p>Eventuellt att man kan göra en partial view av educations/edit och skicka in resume_id???? Hinner inte kolla nu</p>
+                    </div>
+                </div>*@

@@ -11,7 +11,8 @@ namespace DoorinWebApp.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
+
     public partial class resume
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -40,5 +41,6 @@ namespace DoorinWebApp.Models
         public virtual ICollection<links> links { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<technology_resume> technology_resume { get; set; }
+       
     }
 }

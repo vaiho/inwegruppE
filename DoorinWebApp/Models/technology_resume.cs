@@ -17,8 +17,7 @@ namespace DoorinWebApp.Models
         public int technology_id { get; set; }
         public int resume_id { get; set; }
         public Nullable<bool> core_technology { get; set; }
-        public Nullable<int> rank { get; set; }
-    
+        public Nullable<int> rank { get; set; } 
         public virtual resume resume { get; set; }
         public virtual technology technology { get; set; }
     }
