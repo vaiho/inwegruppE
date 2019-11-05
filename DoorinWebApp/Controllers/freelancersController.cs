@@ -30,7 +30,7 @@ namespace DoorinWebApp.Controllers
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
             {
                 List<FreelancerProfileVM> tempList = new List<FreelancerProfileVM>(); //Temp-lista
-                if (filterList.Count() > 0)
+                if (filterList.Count() > 0) //När den filtrerade listan innhåller något, dvs från sökparameter 2
                 {
                     foreach (var item in filterList)
                     {
@@ -41,10 +41,10 @@ namespace DoorinWebApp.Controllers
                     }
 
                     filterList = tempList; //Skickar in temp-listan i den filtrerade listan
-                    return View(filterList);
+                    return View(filterList); //Skickar tillbaka den filtrerade listan till vyn
                 }
 
-                foreach (var item in allFreelancersList)
+                foreach (var item in allFreelancersList) //Första sökkriteriet
                 {
                     if (item.CompetencesList.Any(x => x.name.Contains(searchString)) || item.TechnologysList.Any(z => z.name.Contains(searchString)) || item.Firstname.Contains(searchString) || item.Lastname.Contains(searchString))
                     {
@@ -65,8 +65,7 @@ namespace DoorinWebApp.Controllers
             }
 
             filterList.Clear();
-            //Annars skickas en ofiltrerad lista tillbaka
-            
+            //Annars skickas en ofiltrerad lista tillbaka        
             return View(allFreelancersList);
         }
 
