@@ -33,7 +33,7 @@
                 <h4 style="font-weight:bold;">Kompetenser</h4>
                 @foreach (var item in ViewBag.Competence)
                 {
-                    <input id ="@item.competence_id" class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
+                    <input id ="@item.competence_id" class="filters" type="submit" value="@item.name" />
                 }
 
             <br />
@@ -118,7 +118,6 @@
         });
     }
 </script>
-
 
 <script>
     //Om man skriver något i sökrutan (testar)
