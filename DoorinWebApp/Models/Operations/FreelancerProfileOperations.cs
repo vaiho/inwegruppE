@@ -116,7 +116,7 @@ namespace DoorinWebApp.Models.Operations
             }
         }
 
-        private void GetEducation(FreelancerProfileVM fp) //Metod för att hämta utbildningar på inskickad freelancerVM och lagra dessa i dennes utbildnings-lista
+        public void GetEducation(FreelancerProfileVM fp) //Metod för att hämta utbildningar på inskickad freelancerVM och lagra dessa i dennes utbildnings-lista
         {
             try
             {
