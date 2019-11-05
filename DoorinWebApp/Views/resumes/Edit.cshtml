@@ -50,7 +50,7 @@
 
         <div class="form-group">
             @*Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            @Html.Label("Profil", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Profil (En kort beskrivning av dig)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
@@ -108,6 +108,7 @@
     <br />
     <br />
     <p><b>Länkar</b></p>
+    <p><b>(Här kan du länka till din professionella profil såsom LinkedIn och GitHub)</b></p>
 
 
     //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
@@ -289,7 +290,7 @@
 
 
         });
-                // Script rörande Competens-DropDownListan slutar här
+                    // Script rörande Competens-DropDownListan slutar här
 
     </script>
 }
