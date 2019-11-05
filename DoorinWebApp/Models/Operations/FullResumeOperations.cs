@@ -39,7 +39,7 @@ namespace DoorinWebApp.Models.Operations
                             fullResume.Nationality = reader.GetString(6);
                             fullResume.City = reader.GetString(7);
                             fullResume.Birthdate = reader.GetDateTime(8);
-                            fullResume.Driving_license = reader.GetString(9);
+                            fullResume.Driving_license = reader.GetString(9).Trim();
                             fullResume.Address = reader.GetString(10);
                             fullResume.Zipcode = reader.GetString(11);
                             
