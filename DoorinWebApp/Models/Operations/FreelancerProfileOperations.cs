@@ -51,6 +51,7 @@ namespace DoorinWebApp.Models.Operations
             return fp;
         }
 
+
         private void GetCompetences(FreelancerProfileVM fp)//Metod för att hämta kompetenser på inskickad freelancerVM och lagra dessa i dennes kompetens-lista
         {
             //Kan inte göra Linq här då tabellen competence_resume inte finns i doorinDBEntities..

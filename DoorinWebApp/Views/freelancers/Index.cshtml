@@ -17,7 +17,8 @@
         <h4 style="display:inline-block;">Sök frilansare efter kompetens/teknologi:</h4>
 
         <input id="SearchString" name="SearchString" type="text" placeholder="Sök här" value="">
-        <input type="submit" id="searchButton" value="Sök" />
+        @*<input type="submit" id="searchButton" value="Sök" />*@
+        <p class="btn" id="searchButton">Sök</p>
         <input type="submit" value="Nollställ" onclick="setValue('')" />
 
         <div id="filterbtn" class="filterbtn" onclick="myFunction()">
@@ -106,13 +107,13 @@
                     <td>
                         @foreach (var x in item.CompetencesList)
                         {
-                            <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
+                            <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
                         }
                     </td>
                     <td>
                         @foreach (var x in item.TechnologysList)
                         {
-                            <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
+                            <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
                         }
                     </td>
                     <td>
@@ -147,16 +148,21 @@
     //        });
     //    });
     //});
+
+
     //TODO: Flytta script till .js-filen
     $(function () {
-        $('#SearchString').keyup(filter);
+        //Fritextsök
+        $('#SearchString').keyup(filter); 
 
+        //När man klickar på en knapp, = toggleClass -> active
         $('.filters').click(function () {
             $(this).toggleClass('active');
 
             filter();
         });
 
+        //Funktion för att filtrera tabellen
         function filter() {
             var rex = new RegExp($('#SearchString').val(), 'i');
             var rows = $('#freelancerTable tr');
@@ -169,19 +175,20 @@
 
                 tester = rex.test($(this).text());
 
-                tester = tester && filterCompAndTech(this);
+                tester = tester && filterCompAndTech(this); //Anropar funktionen för att kolla vilka filtreringsknappar som används
 
                 return tester;
             }).show();
         }
 
+        //Kollar vilka items som har värdet för vilka filter som är aktiva
         function filterCompAndTech(selector) {
             var tester = true;
-            var all = $('#filterbuttons .filters.active');
+            var all = $('#filterbuttons .filters.active'); //Sparar alla filterknappar som har klassen active
 
             for (var i = 0; i < all.length; i++) {
-                var item = $(selector).find('[data="' + all[i].id + '"]');
-
+                var item = $(selector).find('[data="' + all[i].id + '"]'); //(if item.name == filterbutton.name)
+                
                 if (!item.hasClass('filterItem')) {
                     tester = false;
                 }
