@@ -8,4 +8,7 @@
         x.style.display = "none";
         document.getElementById("filterbtn").classList.remove('filterbtnactive');
     }
-}
+};
+
+
+

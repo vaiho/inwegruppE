@@ -8,7 +8,8 @@ namespace DoorinWebApp.Models.Operations
 {
     public class FreelancerOperations
     {
-        public freelancer GetFreelancerById(int? id)
+        doorinDBEntities db = new doorinDBEntities();
+        public freelancer GetFreelancerById(int? id)              // Denna används inte längre. Ta bort?
         {
             freelancer freelanc = new freelancer();
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
@@ -58,5 +59,54 @@ namespace DoorinWebApp.Models.Operations
 
             return builder;
         }
+        public List<competence> GetAllCompetences()
+        {
+            List<competence> CList = new List<competence>();
+            var competencelist = (from c in db.competence
+                                  select new { c.name, c.competence_id }).ToList();
+
+            foreach (var c in competencelist)
+            {
+                competence item = new competence();
+                item.name = c.name;
+                item.competence_id = c.competence_id;
+                CList.Add(item);
+            }
+            return (CList);
+        }
+
+        public List<technology> GetAllTechnologies()
+        {
+            List<technology> TList = new List<technology>();
+            var technologylist = (from t in db.technology
+                                  select new { t.name }).ToList();
+
+            foreach (var t in technologylist)
+            {
+                technology item = new technology();
+                item.name = t.name;
+                TList.Add(item);
+            }
+            return (TList);
+        }
+
+        public List<technology> GetTechnologiesByCompetenceId(int? id)
+        {
+
+            List<technology> techList = new List<technology>();
+            var tList = (from t in db.technology
+                         where t.competence_id == id
+                         select new { t.name, t.competence_id }).ToList();
+
+            foreach (var technology in tList)
+            {
+                technology item = new technology();
+                item.name = technology.name;
+                techList.Add(item);
+            }
+
+            return techList;
+        }
+
     }
 }

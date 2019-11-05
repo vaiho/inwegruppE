@@ -40,15 +40,17 @@
 
         @*Bytt ut ovanstående så att det visas i en dropdown.*@
         <div class="form-group">
-            @Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @Html.Label("Körkort", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Do you have a driving licence? -", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Har du körkort? -", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Driving_license, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @Html.Label("Profil (En kort beskrivning av dig)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
@@ -99,7 +101,10 @@
         </div>
     </div>
 
-    <h2>Links</h2>
+    <br />
+    <br />
+    <p><b>Länkar</b></p>
+    <p><b>(Här kan du länka till din professionella profil såsom LinkedIn och GitHub)</b></p>
 
 
     //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
@@ -110,7 +115,8 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Linkname)
+                    @*Html.DisplayNameFor(model => model.Linkname)*@
+                    @Html.DisplayName("Namn på länken (exempelvis LinkedIn, GitHub)")
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Url)
@@ -124,7 +130,7 @@
                 <tr>
                     <td>@link.name</td>
                     <td>@link.link</td>
-                    <td><input class="btnRemoveLink btn btn-default" type="button" value="Remove" onclick="Remove(this)" /></td>
+                    <td><input class="btnRemoveLink btn btn-default" type="button" value="Ta bort" onclick="Remove(this)" /></td>
                 </tr>
             }
         </tbody>
@@ -136,7 +142,7 @@
                 <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
 
                 <td>
-                    <input class="btnAddLink btn btn-default" type="button" name="name" value="Add" />
+                    <input class="btnAddLink btn btn-default" type="button" name="name" value="Lägg till" />
                 </td>
 
                 <td></td>
@@ -155,7 +161,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save CV" id="btnSave" class="btn btn-default" />
+            <input type="submit" value="Spara CV" id="btnSave" class="btn btn-default" />
         </div>
     </div>
 
@@ -231,7 +237,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {
-                    alert("link(s) updated.");
+                    //alert("link(s) updated.");
                 }
             });
         });
@@ -277,7 +283,7 @@
 
 
         });
-            // Script rörande Competens-DropDownListan slutar här
+                    // Script rörande Competens-DropDownListan slutar här
 
 
         

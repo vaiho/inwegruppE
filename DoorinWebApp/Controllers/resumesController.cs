@@ -223,8 +223,8 @@ namespace DoorinWebApp.Controllers
         {
             return new List<string>
             {
-                "Yes",
-                "No",
+                "Ja",
+                "Nej",
             };
         }
 
