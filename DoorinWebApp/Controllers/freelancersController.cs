@@ -18,13 +18,13 @@ namespace DoorinWebApp.Controllers
         private doorinDBEntities db = new doorinDBEntities();
         public static List<FreelancerProfileVM> filterList = new List<FreelancerProfileVM>();
         // GET: freelancers
-        public ActionResult Index(string searchString) 
+        public ActionResult Index(string searchString, int? id) 
         {
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
             var allFreelancersList = fpop.GetFreelancersList(); //Hämtar alla frilansare
 
             //Viewbags här
-            ViewBag.Competence = GetCompetences();
+            ViewBag.Competence = GetCompetences();            
             ViewBag.Technology = GetTechnologies();
 
             if (!String.IsNullOrEmpty(searchString)) //Om söksträngen inte är NULL
@@ -85,6 +85,25 @@ namespace DoorinWebApp.Controllers
 
             return (TList);
         }
+
+        private List<technology> GetTechnologiesByCompetenceId(int? id)
+        {
+                      
+            List<technology> techList = new List<technology>();
+            var tList = (from t in db.technology                         
+                         where t.competence_id == id
+                         select new { t.name, t.competence_id }).ToList();
+
+            foreach (var technology in tList)
+            {
+                technology item = new technology();
+                item.name = technology.name;
+                techList.Add(item);
+            }
+
+            return techList;
+        }
+
 
         // GET: freelancers/Details/5
         public ActionResult Details(int? id)
