@@ -40,8 +40,8 @@
 
         @*Bytt ut ovanstående så att det visas i en dropdown.*@
         <div class="form-group">
-            @Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })
-            @*Html.Label("Körkort"), htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @*Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @Html.Label("Körkort", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Har du körkort? -", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Driving_license, "", new { @class = "text-danger" })
@@ -49,7 +49,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @Html.Label("Profil", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
@@ -117,7 +118,8 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Linkname)
+                    @*Html.DisplayNameFor(model => model.Linkname)*@
+                    @Html.DisplayName("Namn på länken (exempelvis LinkedIn, GitHub)")
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Url)
