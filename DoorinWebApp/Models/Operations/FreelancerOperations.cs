@@ -90,7 +90,7 @@ namespace DoorinWebApp.Models.Operations
             return (TList);
         }
 
-        private List<technology> GetTechnologiesByCompetenceId(int? id)
+        public List<technology> GetTechnologiesByCompetenceId(int? id)
         {
 
             List<technology> techList = new List<technology>();
