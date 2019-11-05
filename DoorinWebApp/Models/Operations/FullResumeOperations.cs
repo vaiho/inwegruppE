@@ -46,7 +46,7 @@ namespace DoorinWebApp.Models.Operations
                 }
             }
             GetMyCompetences(fullResume);
-            GetMyTechnology(fullResume);
+            GetMyTechnologies(fullResume);
             GetCompetenceList(fullResume);
             GetTechnologyList(fullResume);
 
@@ -54,6 +54,7 @@ namespace DoorinWebApp.Models.Operations
         }
         private void GetMyCompetences(FullResume fullResume)//Metod för att hämta kompetenser på inskickad freelancerVM och lagra dessa i en lista
         {
+            fullResume.MyCompetences.Clear();
             competence c;
             string sql = "SELECT competence.competence_id, resume_id, name from competence_resume " +
                 "INNER JOIN competence on competence_resume.competence_id = competence.competence_id " +
@@ -81,8 +82,9 @@ namespace DoorinWebApp.Models.Operations
                 }
             }
         }
-        private void GetMyTechnology(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
+        public void GetMyTechnologies(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
         {
+            fullResume.MyTechnologies.Clear();
             string sql = "SELECT technology.technology_id, technology.name, technology_resume.rank, " +
                 "technology_resume.core_technology, technology.competence_id from technology_resume " +
                 "INNER JOIN technology on technology_resume.technology_id = technology.technology_id " +
@@ -142,31 +144,37 @@ namespace DoorinWebApp.Models.Operations
 
         }
 
-        private void GetTechnologyList(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
+        public void GetTechnologyList(FullResume fullResume) //Metod för att hämta teknologier med inskickad ResumeVM och lagra dessa i en lista
         {
-            string sql = "SELECT name FROM technology";
-            technology t;
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            fullResume.Technologies.Clear();
+            foreach (competence competence in fullResume.MyCompetences)
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
+                string sql = "SELECT name, technology_id FROM technology WHERE competence_id = @competenceID";
+                technology t;
+
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
                 {
-                    command.Parameters.AddWithValue("resume_id", fullResume.Resume_id);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
                     {
-                        while (reader.Read())
+                        command.Parameters.AddWithValue("competenceID", competence.competence_id);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            t = new technology()
+                            while (reader.Read())
                             {
-                                name = (reader.GetString(0)),
-                            };
-                            fullResume.Technologies.Add(t);
+                                t = new technology()
+                                {
+                                    name = (reader.GetString(0)),
+                                    technology_id = (reader.GetInt32(1))
+                                };
+                                fullResume.Technologies.Add(t);
+                            }
                         }
                     }
                 }
-            }
+            }   
         }
+
         public void AddMyCompetences(int competence_id, int resume_id) //Sparar en kombination mellan freelancer och customer
         {
             string sql = "INSERT INTO competence_resume(competence_id, resume_id) VALUES (@competenceID, @reumeID)";
@@ -181,6 +189,34 @@ namespace DoorinWebApp.Models.Operations
                         command.CommandText = sql;
                         command.Parameters.AddWithValue("competenceID", competence_id);
                         command.Parameters.AddWithValue("reumeID", resume_id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                //TODO: gör något med felmeddelandet
+                throw;
+            }
+        }
+
+        public void AddMyTechnologies(int technology_id, int resume_id, bool? core_technology, int? rank) //Sparar en kombination mellan freelancer och customer
+        {
+            string sql = "INSERT INTO technology_resume(technology_id, resume_id, core_technology, rank) " +
+                "VALUES (@technologyID, @reumeID, @core, @rank)";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
+                    {
+                        command.Connection = conn;
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("technologyID", technology_id);
+                        command.Parameters.AddWithValue("reumeID", resume_id);
+                        command.Parameters.AddWithValue("core", core_technology);
+                        command.Parameters.AddWithValue("rank", rank);
                         command.ExecuteNonQuery();
                     }
                 }
