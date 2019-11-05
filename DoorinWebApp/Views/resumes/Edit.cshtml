@@ -70,7 +70,6 @@
 
         <div id="AddMyCompetences">
             <p><b>Mina kompetenser</b></p>
-
             <select class="form-control" id="Competences" name="Competences">
                 @foreach (var item in Model.MyCompetences)
                 {
@@ -82,11 +81,10 @@
 
         <div>
             <p><b>Lägg till teknologier</b></p>
-
-            <select class="form-control">
+            <select class="form-control" id="Technologies" name="Technologies">
                 @foreach (var item in Model.Technologies)
                 {
-                    <option> @item.name </option>
+                    <option value="@item.technology_id"> @item.name </option>
                 }
             </select>
         </div>
@@ -101,8 +99,6 @@
                 }
             </select>
         </div>
-
-
     </div>
 
     <br />
@@ -248,13 +244,10 @@
 
         // Script rörande Competens-DropDownListan
         $(document).ready(function () {
-            $("#Competences").change(function () {
+            $("#Competences").change(function () {  
 
                 var selectedCompetence = document.getElementById("Competences");
                 var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
-
-                // ska testa om det gick att hämta värdet på resume så jag sedan kan hämta detta i databasen ifrån
-                // controllern
                 var resume_id = $("#resume_id").val();
                 var freelancer_id = $("#freelancer_id").val();
 
@@ -264,7 +257,7 @@
                     "MyCompetences": "null", "Technologies": "null", "Technologies": "null", "Link": "facebook.com",
                     "Linkname": "facebook", "Url": ".com", "Firstname": "hej", "Lastname": "hejson",
                     "Address": "hrj", "City": "sundsvall", "Zipcode": "hej", "Phonenumber": "082",
-                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "svrige",
+                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "sverige",
                     "SelectedCompetenceId": competenceId
                 };
 
@@ -291,6 +284,46 @@
 
         });
                     // Script rörande Competens-DropDownListan slutar här
+
+
+        
+        // Script rörande Technologies-DropDownListan
+        $(document).ready(function () {
+            $("#Technologies").change(function () {
+
+                var selectedTechnology = document.getElementById("Technologies");
+                var technologyId = selectedTechnology.options[selectedTechnology.selectedIndex].value;
+                var resume_id = $("#resume_id").val();
+
+                @*alert(technologyId);*@
+                var techObj = {
+                    technology_id: technologyId, resume_id: resume_id, core_technology: true,
+                    rank: 5, resume: null, technology: null
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Resumes/AddMyTecgnologies",
+                    data: JSON.stringify(techObj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        alert("Teknologin är tillagd.");
+                        document.location.reload(true)
+                    },
+
+                    error: function (xhr) {
+
+                        alert("Nånting blev fel.");
+
+                    }
+                });
+
+            });
+
+
+        });
+            // Script rörande Technologies-DropDownListan slutar här
 
     </script>
 }
