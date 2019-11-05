@@ -8,6 +8,7 @@ namespace DoorinWebApp.Models.Operations
 {
     public class FreelancerOperations
     {
+        doorinDBEntities db = new doorinDBEntities();
         public freelancer GetFreelancerById(int? id)
         {
             freelancer freelanc = new freelancer();
@@ -57,6 +58,36 @@ namespace DoorinWebApp.Models.Operations
             builder.InitialCatalog = "doorinDB";
 
             return builder;
+        }
+        public List<competence> GetAllCompetences()
+        {
+            List<competence> CList = new List<competence>();
+            var competencelist = (from c in db.competence
+                                  select new { c.name, c.competence_id }).ToList();
+
+            foreach (var c in competencelist)
+            {
+                competence item = new competence();
+                item.name = c.name;
+                item.competence_id = c.competence_id;
+                CList.Add(item);
+            }
+            return (CList);
+        }
+
+        public List<technology> GetAllTechnologies()
+        {
+            List<technology> TList = new List<technology>();
+            var technologylist = (from t in db.technology
+                                  select new { t.name }).ToList();
+
+            foreach (var t in technologylist)
+            {
+                technology item = new technology();
+                item.name = t.name;
+                TList.Add(item);
+            }
+            return (TList);
         }
     }
 }
