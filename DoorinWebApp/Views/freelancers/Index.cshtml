@@ -16,9 +16,9 @@
         <p style="display:inline-block; float:right; margin-top:10px;">@Html.ActionLink("Visa sparade frilansare", "SavedFreelancers", "customers")</p>
         <h4 style="display:inline-block;">Sök frilansare efter kompetens/teknologi:</h4>
 
-        @*<p id="search">@Html.TextBox("SearchString")</p>*@
         <input id="SearchString" name="SearchString" type="text" placeholder="Sök här" value="">
-        <input type="submit" id="searchButton" value="Sök" /> 
+        @*<input type="submit" id="searchButton" value="Sök" />*@
+        <p class="btn" id="searchButton">Sök</p>
         <input type="submit" value="Nollställ" onclick="setValue('')" />
 
         <div id="filterbtn" class="filterbtn" onclick="myFunction()">
@@ -27,27 +27,57 @@
         </div>
 
         <br />
+        <br />
 
         <div id="filters" style="display:none;">
+            <div id="filterbuttons">
+                <h4 style="font-weight:bold;">Kompetenser</h4>
+                @foreach (var item in ViewBag.Competence)
+                {
+                    <p class="filters" id="@item.name">@item.name</p>
+                }
+
+                <br />
+
+                <hr />
+                <h4 style="font-weight:bold;">Teknologier</h4>
+                @foreach (var item in ViewBag.Technology)
+                {
+                    <p class="filters" id="@item.name">@item.name</p>
+                }
+
+                <br />
+            </div>
+            @*
+                OLD:
             <hr />
             <h4 style="font-weight:bold;">Kompetenser</h4>
             @foreach (var item in ViewBag.Competence)
             {
+                <button class="filters" id="@item.name">@item.name</button>
+            }*@
+            @*@foreach (var item in ViewBag.Competence)
+            {
                 <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-            }
+            }*@
 
-            <br />
+            @*<br />
 
             <h4 style="font-weight:bold;">Teknologier</h4>
             @foreach (var item in ViewBag.Technology)
             {
+                <button class="filters" id="@item.name">@item.name</button>
+            }*@
+            @*@foreach (var item in ViewBag.Technology)
+            {
                 <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-            }
-            <br />
+            }*@
+
         </div>
     </div>
     }
 </div>
+
 
 <br />
 
@@ -67,7 +97,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody id="myTable">
+        <tbody id="freelancerTable">
             @foreach (var item in Model)
             {
                 <tr>
@@ -77,13 +107,13 @@
                     <td>
                         @foreach (var x in item.CompetencesList)
                         {
-                            <span>@Html.DisplayFor(modelItem => x.name),</span>
+                            <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
                         }
                     </td>
                     <td>
                         @foreach (var x in item.TechnologysList)
                         {
-                            <span>@Html.DisplayFor(modelItem => x.name), </span>
+                            <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
                         }
                     </td>
                     <td>
@@ -97,6 +127,8 @@
 </div>
 <hr />
 <br />
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
 <script>
@@ -104,31 +136,65 @@
         document.getElementById("SearchString").value = txt;
     }
 </script>
-<script>
-    //test
-    var header = document.getElementById("filters");
-    var btns = header.getElementsByClassName("filters");
-    for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function () {
-            var current = document.getElementsByClassName("tempactive");
-            if (current.length > 0) {
-                //current[0].className = current[0].className.replace(" tempactive", "");
-            }
-            this.className += " tempactive";
-        });
-    }
-</script>
 
 
 <script>
     //Om man skriver något i sökrutan (testar)
-    $(document).ready(function () {
-        $("#SearchString").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
+    //$(document).ready(function () {
+    //    $("#SearchString").on("keyup", function () {
+    //        var value = $(this).val().toLowerCase();
+    //        $("#myTable tr").filter(function () {
+    //            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //        });
+    //    });
+    //});
+
+
+    //TODO: Flytta script till .js-filen
+    $(function () {
+        //Fritextsök
+        $('#SearchString').keyup(filter); 
+
+        //När man klickar på en knapp, = toggleClass -> active
+        $('.filters').click(function () {
+            $(this).toggleClass('active');
+
+            filter();
         });
+
+        //Funktion för att filtrera tabellen
+        function filter() {
+            var rex = new RegExp($('#SearchString').val(), 'i');
+            var rows = $('#freelancerTable tr');
+
+            rows.hide();
+
+            rows.filter(function () {
+
+                var tester = true;
+
+                tester = rex.test($(this).text());
+
+                tester = tester && filterCompAndTech(this); //Anropar funktionen för att kolla vilka filtreringsknappar som används
+
+                return tester;
+            }).show();
+        }
+
+        //Kollar vilka items som har värdet för vilka filter som är aktiva
+        function filterCompAndTech(selector) {
+            var tester = true;
+            var all = $('#filterbuttons .filters.active'); //Sparar alla filterknappar som har klassen active
+
+            for (var i = 0; i < all.length; i++) {
+                var item = $(selector).find('[data="' + all[i].id + '"]'); //(if item.name == filterbutton.name)
+                
+                if (!item.hasClass('filterItem')) {
+                    tester = false;
+                }
+            }
+            return tester;
+        }
     });
 </script>
 

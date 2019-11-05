@@ -34,7 +34,5 @@ namespace DoorinWebApp.Models
         public virtual DbSet<workhistory> workhistory { get; set; }
         public virtual DbSet<links> links { get; set; }
         public virtual DbSet<technology_resume> technology_resume { get; set; }
-
-        public System.Data.Entity.DbSet<DoorinWebApp.Viewmodel.FreelancerProfileVM> FreelancerProfileVMs { get; set; }
     }
 }

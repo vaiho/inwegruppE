@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoorinWebApp.Models;
+using DoorinWebApp.Models.Operations;
+using DoorinWebApp.Viewmodel;
 
 namespace DoorinWebApp.Controllers
 {
@@ -74,7 +76,73 @@ namespace DoorinWebApp.Controllers
                 return HttpNotFound();
             }
             ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
-            return View(resume);
+            
+            //freelancer freelancer = db.freelancer.Find(id);
+
+            FullResumeOperations resumeOperations = new FullResumeOperations();
+
+            var driving_licence = GetYesOrNo();
+            var fullResume = resumeOperations.GetFullResumeById(id);
+            fullResume.DrivingLicenceChoice = GetSelectListItems(driving_licence);
+            fullResume.Link = db.links.Where(l => l.resume_id == id).ToList();
+
+            return View(fullResume);
+        }
+
+        [HttpPost]
+        public ActionResult AddMyCompetences(FullResume objectResume)
+        {
+            FullResumeOperations resumeOperations = new FullResumeOperations();
+            var fullResume = resumeOperations.GetFullResumeById(objectResume.Resume_id);
+            fullResume.SelectedCompetenceId = objectResume.SelectedCompetenceId;
+
+            if (fullResume.MyCompetences.Count == 0)
+            {
+                for (int i = 0; i < fullResume.MyCompetences.Count; i++)
+                {
+                    if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
+                    {
+                        fullResume.MyCompetences.Add(fullResume.Competences[i]);
+                        int lastComp = fullResume.MyCompetences.Count;
+                        lastComp--;
+                        resumeOperations.AddMyCompetences(fullResume.MyCompetences[lastComp].competence_id, fullResume.Resume_id);
+
+                        //vet inte vad jag ska lägga i "num" nu när jag gör en SQL-fråga?
+                        int num = db.SaveChanges();
+                        return Json(num);
+                    }
+                }
+            }
+            else
+            {
+
+                foreach (var competence in fullResume.MyCompetences)
+                {
+                    if (competence.competence_id == fullResume.SelectedCompetenceId)
+                    {
+                        // Visa meddelande "Du har redan lagt till den här kompetensen."
+                    }
+                    else
+                    {
+                        for (int i = 0; i < fullResume.Competences.Count; i++)
+                        {
+                            if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
+                            {
+                                fullResume.MyCompetences.Add(fullResume.Competences[i]);
+                                int lastComp = fullResume.MyCompetences.Count;
+                                lastComp--;
+                                resumeOperations.AddMyCompetences(fullResume.MyCompetences[lastComp].competence_id, fullResume.Resume_id);
+                         
+                                //vet inte vad jag ska lägga i "num" nu när jag gör en SQL-fråga?
+                                int num = db.SaveChanges();
+                                return Json(num);
+                            }
+                        }
+                    }
+                }
+            }
+                              
+            return View(fullResume);
         }
 
         // POST: resumes/Edit/5
@@ -82,16 +150,23 @@ namespace DoorinWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "resume_id,freelancer_id,driving_license,profile")] resume resume)
+        public ActionResult Edit([Bind(Include = "resume_id,freelancer_id,driving_license,profile")] FullResume fullResume)
         {
+            resume resume = new resume();
+            resume.resume_id = fullResume.Resume_id;
+            resume.freelancer_id = fullResume.Freelancer_id;
+            resume.driving_license = fullResume.Driving_license;
+            resume.profile = fullResume.Profile.Trim();
+
+            
             if (ModelState.IsValid)
             {
                 db.Entry(resume).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details", "freelancers", new { id = resume.freelancer_id });
-                //return RedirectToAction("Index");
+                //return RedirectToAction("Details", "freelancers", new { id = resume.freelancer_id });
+                return RedirectToAction("Index");
             }
-            ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
+            //ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
             return View(resume);
         }
 
@@ -129,5 +204,31 @@ namespace DoorinWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+        
+
+        private IEnumerable<string> GetYesOrNo()
+        {
+            return new List<string>
+            {
+                "Ja",
+                "Nej",
+            };
+        }
+
+        
+        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
+        {
+            var selectList = new List<SelectListItem>();
+            foreach (var element in elements)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = element,
+                    Text = element
+                });
+            }
+            return selectList;
+        }
+      
     }
 }
