@@ -158,6 +158,7 @@ namespace DoorinWebApp.Controllers
                 db.freelancer.Add(freelancer);
                 resume r = new resume();
                 r.profile = "";
+                r.driving_license = "";
                 r.freelancer_id = freelancer.freelancer_id;
                 db.resume.Add(r);
                 db.SaveChanges();

@@ -137,6 +137,11 @@ namespace DoorinWebApp.Controllers
 
         public JsonResult InsertLinks(List<links> links)
         {
+            if(links.Count == 0)
+            {
+                return Json(0);
+            }
+
 
             var resume_id = links[0].resume_id;
             var existingLinks = db.links.Where(l => l.resume_id == resume_id).ToList();            

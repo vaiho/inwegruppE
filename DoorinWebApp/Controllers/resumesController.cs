@@ -103,17 +103,11 @@ namespace DoorinWebApp.Controllers
                     if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
                     {
                         fullResume.MyCompetences.Add(fullResume.Competences[i]);
-
-                        /*var resume_id = fullResume.Resume_id;
-                          Linkuttrycket funkar inte:
-                        var existingCompetences = db.competence.Where(l => l.resume_id == resume_id).ToList();
-                        db.competence.RemoveRange(existingCompetences);*/
-
                         int lastComp = fullResume.MyCompetences.Count;
                         lastComp--;
-                        // går inte att skriva för den hittar inte tabellen competence_resume
-                        // db.competence_resume.Add(fullResume.MyCompetences[lastComp]);
+                        resumeOperations.AddMyCompetences(fullResume.MyCompetences[lastComp].competence_id, fullResume.Resume_id);
 
+                        //vet inte vad jag ska lägga i "num" nu när jag gör en SQL-fråga?
                         int num = db.SaveChanges();
                         return Json(num);
                     }
@@ -134,21 +128,14 @@ namespace DoorinWebApp.Controllers
                         {
                             if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
                             {
-                                 fullResume.MyCompetences.Add(fullResume.Competences[i]);
-
-                                /*var resume_id = fullResume.Resume_id;
-                                  Linkuttrycket funkar inte:
-                                var existingCompetences = db.competence.Where(l => l.resume_id == resume_id).ToList();
-                                db.competence.RemoveRange(existingCompetences);*/
-
+                                fullResume.MyCompetences.Add(fullResume.Competences[i]);
                                 int lastComp = fullResume.MyCompetences.Count;
                                 lastComp--;
-                                // går inte att skriva för den hittar inte tabellen competence_resume
-                               // db.competence_resume.Add(fullResume.MyCompetences[lastComp]);
-
+                                resumeOperations.AddMyCompetences(fullResume.MyCompetences[lastComp].competence_id, fullResume.Resume_id);
+                         
+                                //vet inte vad jag ska lägga i "num" nu när jag gör en SQL-fråga?
                                 int num = db.SaveChanges();
                                 return Json(num);
-                                
                             }
                         }
                     }
@@ -163,16 +150,23 @@ namespace DoorinWebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "resume_id,freelancer_id,driving_license,profile")] resume resume)
+        public ActionResult Edit([Bind(Include = "resume_id,freelancer_id,driving_license,profile")] FullResume fullResume)
         {
+            resume resume = new resume();
+            resume.resume_id = fullResume.Resume_id;
+            resume.freelancer_id = fullResume.Freelancer_id;
+            resume.driving_license = fullResume.Driving_license;
+            resume.profile = fullResume.Profile.Trim();
+
+            
             if (ModelState.IsValid)
             {
                 db.Entry(resume).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details", "freelancers", new { id = resume.freelancer_id });
-                //return RedirectToAction("Index");
+                //return RedirectToAction("Details", "freelancers", new { id = resume.freelancer_id });
+                return RedirectToAction("Index");
             }
-            ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
+            //ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
             return View(resume);
         }
 
