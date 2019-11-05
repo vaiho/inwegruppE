@@ -12,6 +12,8 @@ namespace DoorinWebApp.Models.Operations
     public class FullResumeOperations
     {
         doorinDBEntities db = new doorinDBEntities();
+        //FreelancerProfileOperations fp = new FreelancerProfileOperations();
+
         public FullResume GetFullResumeById(int? id) //Metod för att hämta information om en freelancer
         {
            FullResume fullResume = new FullResume();
@@ -49,9 +51,42 @@ namespace DoorinWebApp.Models.Operations
             GetMyTechnologies(fullResume);
             GetCompetenceList(fullResume);
             GetTechnologyList(fullResume);
+            GetEducationsListByResume(fullResume);
+            
 
             return fullResume;
         }
+
+        private void GetEducationsListByResume (FullResume fullResume) {
+
+            try {
+                var list = (from ed in db.education
+                            join re in db.resume on ed.resume_id equals re.resume_id
+                            where ed.resume_id == fullResume.Resume_id
+                            select new { ed.resume_id, ed.title, ed.description, ed.date, ed.education_id, ed.resume }).ToList();
+
+                foreach (var item in list)
+                {
+                    education edu = new education();
+                    edu.date = item.date;
+                    edu.description = item.description;
+                    edu.education_id = item.education_id;
+                    edu.resume = item.resume;
+                    edu.resume_id = item.resume_id;
+                    edu.title = item.title;
+
+                    fullResume.MyEducations = new List<education>();
+                    fullResume.MyEducations.Add(edu);
+                }
+            }
+            catch (SqlException ex)
+            {
+                //TODO: gör något med felmeddelandet
+                throw;
+            }
+
+        }
+
         private void GetMyCompetences(FullResume fullResume)//Metod för att hämta kompetenser på inskickad freelancerVM och lagra dessa i en lista
         {
             fullResume.MyCompetences.Clear();
