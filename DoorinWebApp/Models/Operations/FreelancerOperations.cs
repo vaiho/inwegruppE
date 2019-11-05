@@ -9,7 +9,7 @@ namespace DoorinWebApp.Models.Operations
     public class FreelancerOperations
     {
         doorinDBEntities db = new doorinDBEntities();
-        public freelancer GetFreelancerById(int? id)
+        public freelancer GetFreelancerById(int? id)              // Denna används inte längre. Ta bort?
         {
             freelancer freelanc = new freelancer();
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
