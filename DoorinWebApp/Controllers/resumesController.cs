@@ -172,14 +172,14 @@ namespace DoorinWebApp.Controllers
 
 
         [HttpPost]
-        public ActionResult RemoveMyCompetences(competence competence)
+        public ActionResult RemoveMyCompetences(FullResume objectCompetence)
         {
             FullResumeOperations resumeOperations = new FullResumeOperations();
-            resumeOperations.RemoveMyTechnologies(competence.competence_id, competence.resume_id);
+            resumeOperations.RemoveMyCompetences(objectCompetence.SelectedCompetenceId, objectCompetence.Resume_id);
             // CV:t hämtas för att listan med kompetenser ska uppdateras
-            FullResume fullResume = resumeOperations.GetFullResumeById(competence.resume_id);
+            FullResume fullResume = resumeOperations.GetFullResumeById(objectCompetence.Resume_id);
 
-            return RedirectToAction("Edit", "resumes", new { id = competence.resume_id });
+            return RedirectToAction("Edit", "resumes", new { id = objectCompetence.Resume_id });
         }
 
         // POST: resumes/Edit/5

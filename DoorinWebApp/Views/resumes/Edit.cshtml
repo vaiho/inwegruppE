@@ -81,7 +81,7 @@
             <select class="form-control" id="MyCompetences" name="MyCompetences">
                 @foreach (var item in Model.MyCompetences)
                 {
-                    <option> @item.name </option>
+                    <option value="@item.competence_id"> @item.name </option>
 
                 }
             </select>
@@ -471,6 +471,8 @@
                 var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
                 var resume_id = $("#resume_id").val();
 
+                alert(competenceId);
+
                 selectedCompetenceId = competenceId ;
                 selectedResumeId = resume_id;
 
@@ -479,11 +481,24 @@
 
           });
 
-         function RemoveCompetence() {
+        function RemoveCompetence() {
 
-             var compObj = {
+            var compObj = {
+                    Resume_id: selectedResumeId, Freelancer_id: null,
+                    "Driving_license": $('#Driving_license').text(), "Profile": "Hej jag heter", "Competences": "null",
+                    "MyCompetences": "null", "Technologies": "null", "Technologies": "null", "Link": "facebook.com",
+                    "Linkname": "facebook", "Url": ".com", "Firstname": "hej", "Lastname": "hejson",
+                    "Address": "hrj", "City": "sundsvall", "Zipcode": "hej", "Phonenumber": "082",
+                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "svrige",
+                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "sverige",
+                    "SelectedCompetenceId": SelectedCompetenceId
+                };
+
+
+             /*var compObj = {
                  competence_id: SelectedCompetenceId, resume_id: selectedResumeId, name: null
-             };
+             };*/
+             alert("HejEba");
 
                 $.ajax({
                     type: "POST",
