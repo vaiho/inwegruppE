@@ -83,7 +83,7 @@ a:hover {
 
 .competence {
     display: inline-block;
-    border: 2px solid #ddd;
+    background-color: #ddd;
     padding: 8px 12px;
     font-size: 16px;
     margin-right: 10px;

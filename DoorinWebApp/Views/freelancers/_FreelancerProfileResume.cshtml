@@ -45,20 +45,24 @@
             <hr />
         }
         <br />
-        <h2>Länkar</h2>
-        @foreach (var item in Model.LinkList)
-        {
-            <p><strong>Namn:</strong> @Html.DisplayFor(modelItem => item.name)</p>
-            <p><strong>Länk:</strong> @Html.DisplayFor(modelItem => item.link)</p>
-            <hr />
-        }
+        
 
     </div>
     <div class="col-sm-6">
         <h2>Teknologier</h2>
         @foreach (var item in Model.TechnologysList)
         {
-            <p style="margin-top:10px; display:inline-block;">@Html.DisplayFor(modelItem => item.name) &nbsp;</p>
+            //Om teknologin är kärnteknologi
+            if (item.core_technology == true)
+            {
+                <p class="competence" style="background-color:#09964f; color:#FFF;"> @Html.DisplayFor(modelItem => item.name)</p>
+            }
+            //Ej kärnteknologi
+            else
+            {
+                <p class="competence" style="">@Html.DisplayFor(modelItem => item.name)</p>
+            }
+
             var stars = item.rank;
 
             while (stars > 0)
@@ -68,6 +72,7 @@
 
             }
             <br />
+
         }
 
         <br />
@@ -79,108 +84,33 @@
             <p><strong>Datum: </strong>@Html.DisplayFor(modelItem => item.date)</p>
             <hr />
         }
-        
+
     </div>
 </div>
 
 <div style="background-color:#ddd; padding:15px; " class="row center">
     <b>Kontaktuppgifter</b>
     <br />
-    Email: @Html.DisplayFor(modelItem => Model.Email) &nbsp;&nbsp;&nbsp;&nbsp;
-    Telefonnummer: @Html.DisplayFor(modelItem => Model.phonenumber)
+    <p>
+        Email: <a href="mailto:@Html.DisplayFor(modelItem => Model.Email)">@Html.DisplayFor(modelItem => Model.Email)</a> &nbsp;&nbsp;&nbsp;&nbsp;
+        Telefonnummer: @Html.DisplayFor(modelItem => Model.phonenumber)
+    </p>
     @if (Model.phonenumber == null)
     {
         <p style="display:inline-block;">---</p>
     }
 
-</div>
 
+    <b>Länkar</b>
+    <br />
+    @foreach (var item in Model.LinkList)
+    {
+        //var x = @Html.DisplayFor(modelItem => item.link);
+        <p style="display:inline-block;">@Html.DisplayFor(modelItem => item.name): <a href="#">@Html.DisplayFor(modelItem => item.link)</a> &nbsp;&nbsp;&nbsp;&nbsp;</p>
+    }
+
+</div>
 
 
 <br />
 <br />
-
-<div class="row">
-    <div class="col-md-4">
-        @*<h2>Om mig</h2>*@
-        @*<h4>@Html.DisplayNameFor(model => model.Firstname)</h4>
-            <p>@Html.DisplayFor(modelItem => Model.Firstname)</p>*@
-        @*<h4> @Html.DisplayNameFor(model => model.Lastname)</h4>
-            <p>@Html.DisplayFor(modelItem => Model.Lastname)</p>*@
-        @*<h4>@Html.DisplayNameFor(model => model.Email)</h4>
-            <p>@Html.DisplayFor(modelItem => Model.Email)</p>*@
-
-        @*<h4>@Html.DisplayNameFor(model => model.Nationality)</h4>
-            <p> @Html.DisplayFor(modelItem => Model.Nationality)</p>
-            <h4>@Html.DisplayNameFor(model => model.City)</h4>
-            <p> @Html.DisplayFor(modelItem => Model.City)</p>*@
-        @*<h4>
-                @Html.DisplayNameFor(model => model.Age)
-            </h4>
-            <p> @Html.DisplayFor(modelItem => Model.Age) år</p>*@
-    </div>
-    <div class="col-md-4">
-        @*<h2>CV</h2>*@
-
-        @*<h4>@Html.DisplayNameFor(model => model.Resume_id)</h4>
-            <p>@Model.Resume_id</p>*@
-        @*<h4>@Html.DisplayNameFor(model => model.ProfileText)</h4>
-            <p>@Model.ProfileText</p>*@
-        @*<h4>@Html.DisplayNameFor(model => model.DrivingLicence)</h4>
-            <p>@Model.DrivingLicence</p>*@
-    </div>
-
-    @*<div class="col-md-4">
-            <h2>Profilbild</h2>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV0I6VDKQ3vmT9y2QFvx7UZ4aTK_HZUbbHyIvmr_sgoa3sIBB6cg&s">
-        </div>*@
-</div>
-<div class="row">
-    @*<div class="col-sm-6">
-            <h2>Kompetenser</h2>
-            @foreach (var item in Model.CompetencesList)
-            {
-                <p>
-                    @Html.DisplayFor(modelItem => item.name)
-                </p>
-            }
-        </div>*@
-    @*<div class="col-sm-6">
-            <h2>Teknologier</h2>
-            @foreach (var item in Model.TechnologysList)
-            {
-                <p>@Html.DisplayFor(modelItem => item.name) Ranking: @Html.DisplayFor(modelItem => item.rank)</p>
-            }
-        </div>*@
-    @*</div>
-        <div class="row">
-            <div class="col-sm-6">
-                <h2>Utbildning</h2>
-                @foreach (var item in Model.EducationsList)
-                {
-                    <p><strong>Titel:</strong> @Html.DisplayFor(modelItem => item.title)</p>
-                    <p><strong>Beskrivning:</strong> @Html.DisplayFor(modelItem => item.description)</p>
-                    <p><strong>Datum: </strong>@Html.DisplayFor(modelItem => item.date)</p>
-                    <hr />
-                }
-            </div>
-            <div class="col-sm-6">
-                <h2>Erfarenheter</h2>
-                @foreach (var item in Model.WorkHistoryList)
-                {
-                    <p><strong>Arbetsgivare:</strong> @Html.DisplayFor(modelItem => item.employer)</p>
-                    <p><strong>Position:</strong> @Html.DisplayFor(modelItem => item.position)</p>
-                    <p><strong>Beskrivning:</strong> @Html.DisplayFor(modelItem => item.description)</p>
-                    <p><strong>Datum:</strong> @Html.DisplayFor(modelItem => item.date)</p>
-                    <hr />
-                }
-            </div>
-        </div>*@
-    @*<div class="col-lg-12">
-            <br />
-            <br />
-            <br />
-            <br />
-
-        </div>*@
-
