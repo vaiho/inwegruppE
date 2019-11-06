@@ -87,7 +87,7 @@
 
                     }
                 </select>
-                <input type="submit" value="Ta bort kompetensen" onclick="RemoveCompetence()" />
+                <input type="submit" value="Ta bort kompetens" onclick="RemoveCompetence()" />
             </div>
         </div>
 
@@ -117,7 +117,7 @@
                     <option value="5"> 5 </option>
                 </select>
 
-                <p><b>Kärnförmågor</b></p>
+                <p><b>Kärnförmåga</b></p>
                 <select class="form-control" id="core_technology" name="core_technology">
                     <option value="Yes"> Ja </option>
                     <option value="No"> Nej </option>
@@ -164,7 +164,7 @@
                 }
             </div>
             <div class="container"></div>
-            @Html.ActionLink("Lägg till utbildning", "Create", "educations", new { idfromview = Model.Resume_id }, null)
+            @Html.ActionLink("Lägg till utbildning", "Create", "educations", new { idfromview = Model.Resume_id }, new { @class = "btn" })
         </div>
 
 
@@ -173,26 +173,21 @@
     <br />
     <hr />
 
+    <h2>Erfarenheter:</h2>
 
-    //<input type="button" class="btn btn-default" id="btnSave" value="Save All links" />
-
-
-   
-    <h2>Arbetshistoria:</h2>
-    <p>Fyll i information om tidigare anställningar</p>
     <table class="table" id="tblWorkhistory">
         <thead>
             <tr>
-                <th>
+                <th style="border-bottom:none;">
                     @Html.DisplayName("Namn på arbetsgivaren")
                 </th>
-                <th>
+                <th style="border-bottom:none;">
                     @Html.DisplayName("Position")
                 </th>
-                <th>
+                <th style="border-bottom:none;">
                     @Html.DisplayName("Beskrivning av arbetet")
                 </th>
-                <th>
+                <th style="border-bottom:none;">
                     @Html.DisplayName("Datum")
                 </th>
             </tr>
@@ -216,7 +211,7 @@
                 <td><input type="text" id="txtPosition" /></td>
                 <td><input type="text" id="txtDescription" /></td>
                 <td><input type="text" id="txtDate" /></td>
-                <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
+                @*<td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>*@
 
                 <td>
                     <input class="btnAddWorkhistory btn btn-default" type="button" name="name" value="Lägg till" />
@@ -226,18 +221,13 @@
                 <td></td>
             </tr>
         </tfoot>
-
-
-
-
     </table>
-    <br />
-    <br />
 
 
-    <h2><b>Länkar:</b></h2>
-    <p>Här lägger du till länkar till dina professionella sidor såsom LinkedIn och GitHub</p>
+    <hr />
 
+
+    <h2>Länkar:</h2>
 
     //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
     //https://forums.asp.net/t/2126284.aspx?MVC+Input+in+form+of+Table+With+Add+Delete+Row
@@ -246,11 +236,11 @@
     <table class="table" id="tblLinks">
         <thead>
             <tr>
-                <th>
+                <th style="border-bottom:none;">
                     @*Html.DisplayNameFor(model => model.Linkname)*@
-                    @Html.DisplayName("Namn på länken (exempelvis LinkedIn, GitHub)")
+                    @Html.DisplayName("Namn på sidan (tex LinkedIn, GitHub)")
                 </th>
-                <th>
+                <th style="border-bottom:none;">
                     @Html.DisplayNameFor(model => model.Url)
                 </th>
             </tr>
@@ -271,7 +261,7 @@
             <tr>
                 <td><input type="text" id="txtLinkname" /></td>
                 <td><input type="text" id="txtLink" /></td>
-                <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
+                @*<td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>*@
 
                 <td>
                     <input class="btnAddLink btn btn-default" type="button" name="name" value="Lägg till" />
@@ -283,17 +273,21 @@
         </tfoot>
     </table>
 
-
+    <br />
+    <hr />
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div>
             <input type="submit" value="Spara CV" id="btnSave" class="btn btn-default" />
         </div>
     </div>
 
     <br />
-    <br />
-    <br />
+
+
+
+
+
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
@@ -647,113 +641,3 @@
 
 }
 
-@*<div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>*@
-
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-
-
-@*Bortkommenterat vid conflict/sync*@
-
-@*
-
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.resume_id)
-
-            <div class="form-group" style="display:none;">
-                @Html.LabelFor(model => model.freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.freelancer_id, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="control-label col-md-2"><b>Kort om mig</b></div>
-                @Html.LabelFor(model => model.profile, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.profile, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.profile, "", new { @class = "text-danger" })
-                </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="control-label col-md-2"><b>B-körkort</b></div>
-                    @Html.LabelFor(model => model.driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.driving_license, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.driving_license, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Spara" class="btn btn-default" />
-                    </div>
-                </div>
-                </div>
-                }
-
-
-
-                <hr />
-                <div class="row container">
-                    <div class="col-md-6">
-                        <h2>Kompetenser</h2>
-                        <p>fejk Projktledare <a style="margin-left:60px;" href="#">Ta bort</a></p>
-                        <p>fejk Designer <a style="padding-left:80px;" href="#">Ta bort</a></p>
-                        <p>fejk Programmerare <a style="padding-left:34px;" href="#">Ta bort</a></p>
-                        <p style="margin-top:30px;"><a href="#">Lägg till kompetens</a></p>
-                        <br />
-                        <p>
-                            (Eller lägg till kompetens med dropown listan.
-                            Eller ska det ske automatiskt när man lägger till en teknologi i den kompetensgruppen?)
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <h2>Teknologier</h2>
-                        <p>fejk CSS <a style="margin-left:60px;" href="#">Ta bort</a></p>
-                        <p>fejk HTML <a style="padding-left:50px;" href="#">Ta bort</a></p>
-                        <p>fejk Javascript <a style="padding-left:20px;" href="#">Ta bort</a></p>
-                        <p style="margin-top:30px;"><a href="#">Lägg till teknologi</a></p>
-                        <br />
-                        <p>Eller lägg till teknologi här med dropown listan.</p>
-                    </div>
-                </div>
-
-
-
-                <hr />
-                <div class="row container">
-                    <div class="col-md-6">
-                        <h2>Erfarenheter</h2>
-                        <p>fejk Erfarenhet 1 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-                        <p>fejk Erfarenhet 2 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-                        <p>fejk Erfarenhet 3 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-                        <p style="margin-top:30px;"><a href="#">Lägg till erfarenhet</a></p>
-                        <br />
-                        <p>Eventuellt att man kan göra en partial view av workhistories/edit och skicka in resume_id???? Hinner inte kolla nu</p>
-                    </div>
-                    <div class="col-md-6">
-                        <h2>Utbildning</h2>
-                        <p>fejk Utbildning 1 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-                        <p>fejk Utbildning 2 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-                        <p>fejk Utbildning 3 <a style="padding-left:20px;" href="#">Redigera | Ta bort</a></p>
-                        <p style="margin-top:30px;"><a href="#">Lägg till utbildning</a></p>
-                        <br />
-                        <p>Eventuellt att man kan göra en partial view av educations/edit och skicka in resume_id???? Hinner inte kolla nu</p>
-                    </div>
-                </div>*@

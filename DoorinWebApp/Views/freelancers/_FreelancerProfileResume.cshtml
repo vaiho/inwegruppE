@@ -58,7 +58,17 @@
         <h2>Teknologier</h2>
         @foreach (var item in Model.TechnologysList)
         {
-            <p style="margin-top:10px; display:inline-block;">@Html.DisplayFor(modelItem => item.name) &nbsp;</p>
+            //Om teknologin är kärnteknologi
+            if (item.core_technology == true)
+            {
+                <p class="competence" style="background-color:#09964f; color:#FFF;"> @Html.DisplayFor(modelItem => item.name)</p>
+            }
+            //Ej kärnteknologi
+            else
+            {
+                <p class="competence" style="">@Html.DisplayFor(modelItem => item.name)</p>
+            }
+
             var stars = item.rank;
 
             while (stars > 0)
@@ -68,6 +78,7 @@
 
             }
             <br />
+
         }
 
         <br />
@@ -79,7 +90,7 @@
             <p><strong>Datum: </strong>@Html.DisplayFor(modelItem => item.date)</p>
             <hr />
         }
-        
+
     </div>
 </div>
 
