@@ -140,13 +140,13 @@ a:hover {
     font-size: 12px;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
-    margin-right: 10px;
+    margin: 0 0 10px 10px;
 }
 
-    .btnless:hover {
+.btnless:hover {
         color: #fff;
         background-color: #09964f;
-    }
+}
 
 #searchbtn {
     max-width:49px;
@@ -240,7 +240,7 @@ a:hover {
 /*#region Styles för freelancers på söksidan*/
 
 .freelancerbox {
-border: 1px solid #ddd;
+border-top: 1px solid #ddd;
 padding:5px;
 }
 
