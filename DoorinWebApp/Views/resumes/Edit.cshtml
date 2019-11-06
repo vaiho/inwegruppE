@@ -4,18 +4,19 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-<head>
-    @Styles.Render("~/Content/style.css")
-</head>
+<div>
+    @Html.ActionLink("Tillbaka", "Details", "freelancers", new { id = Model.Freelancer_id }, null)
+</div>
 
+<h2>Redigera ditt CV @Html.DisplayFor(model => model.Firstname) @Html.DisplayFor(model => model.Lastname) </h2>
+
+<br />
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>resume</h4>
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(@Model => @Model.Resume_id)
@@ -52,7 +53,7 @@
 
         <div class="form-group">
             @*Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            @Html.Label("Profil (En kort beskrivning av dig)", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Profil (kort beskrivning av dig)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
@@ -101,14 +102,40 @@
                 }
             </select>
         </div>
+
+        <br />
+        <hr />
+
+        <div>
+            <h2>Utbildningar: </h2>
+            <br />
+            <div>
+                @foreach (var edu in Model.MyEducations)
+                {
+                    <div class="col-md-6">
+                        <p><strong>Titel:</strong> @edu.title</p>
+                        <p><strong>Beskrivning:</strong> @edu.description</p>
+                        <p><strong>Datum: </strong>@edu.date</p>
+                        <p>
+                            @Html.ActionLink("Redigera", "Edit", "educations", new { id = edu.education_id }, null) |
+                            @Html.ActionLink("Radera", "Delete", "educations", new { id = edu.education_id }, null)
+                        </p>
+                        <hr />
+                    </div>
+                }
+            </div>
+            <div class="container"></div>
+            @Html.ActionLink("Lägg till utbildning", "Create", "educations", new { id = Model.Resume_id }, null)
+        </div>
+
+
     </div>
 
-
-
     <br />
-    <br />
-    <p><b>Länkar</b></p>
-    <p><b>(Här kan du länka till din professionella profil såsom LinkedIn och GitHub)</b></p>
+    <hr />
+
+    <h2>Länkar:</h2>
+    <p>Här lägger du till länkar till dina professionella sidor såsom LinkedIn och GitHub)</p>
 
 
     //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
@@ -161,21 +188,26 @@
     <br />
 
 
-    <h2><b>Utbildningar:</b></h2>
-    <tbody>
-        @foreach (var edu in Model.MyEducations)
-        {
-        <tr>
-            <td>@edu.title - </td>
-            <td>@edu.resume_id - </td>
-            <td>@edu.description - </td>
-            <td>@edu.date</td>
-            
+    @*<h2><b>Utbildningar:</b></h2>
+        <tbody>
 
-        </tr>
-        }
-    </tbody>
+            @foreach (var edu in Model.MyEducations)
+            {
+                <tr>
 
+                    <p><strong>Titel:</strong> @edu.title</p>
+                    <p><strong>Beskrivning:</strong> @edu.description</p>
+                    <p><strong>Datum: </strong>@edu.date</p>
+
+                    @Html.ActionLink("Redigera", "Edit", "educations", new { id = edu.education_id }, null) |
+                    @Html.ActionLink("Radera", "Delete", "educations", new { id = edu.education_id }, null)
+
+                    <hr />
+
+                </tr>
+            }
+        </tbody>
+        @Html.ActionLink("Lägg till utbildning", "Create", "educations", new { id = Model.Resume_id }, null)*@
 
     <br />
     <br />
@@ -187,6 +219,9 @@
         </div>
     </div>
 
+    <br />
+    <br />
+    <br />
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
@@ -365,10 +400,6 @@
 @*Bortkommenterat vid conflict/sync*@
 
 @*
-        <div>
-        @Html.ActionLink("Tillbaka", "Details", "freelancers", new { id = Model.freelancer_id }, null)
-    </div>
-        <h2>Redigera ditt CV @Html.DisplayFor(model => model.freelancer.firstname) @Html.DisplayFor(model => model.freelancer.lastname) </h2>
 
 
     @using (Html.BeginForm())

@@ -59,6 +59,8 @@ namespace DoorinWebApp.Models.Operations
 
         private void GetEducationsListByResume (FullResume fullResume) {
 
+            //fullResume.MyEducations = new List<education>();
+
             try {
                 var list = (from ed in db.education
                             join re in db.resume on ed.resume_id equals re.resume_id
@@ -74,8 +76,6 @@ namespace DoorinWebApp.Models.Operations
                     edu.resume = item.resume;
                     edu.resume_id = item.resume_id;
                     edu.title = item.title;
-
-                    fullResume.MyEducations = new List<education>();
                     fullResume.MyEducations.Add(edu);
                 }
             }
