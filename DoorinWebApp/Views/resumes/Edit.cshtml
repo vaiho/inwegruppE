@@ -20,7 +20,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(@Model => @Model.Resume_id)
 
-        <div class="form-group">
+        <div class="form-group" style="display:none;">
 
             @Html.LabelFor(@Model => @Model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -29,6 +29,8 @@
                 <input type="hidden" id="freelancer_id" value="@Model.Freelancer_id" />
             </div>
         </div>
+
+
 
         @*<div class="form-group">
                 @Html.LabelFor(@Model => @Model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -41,7 +43,7 @@
         @*Bytt ut ovanstående så att det visas i en dropdown.*@
         <div class="form-group">
             @*Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            @Html.Label("Körkort", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("B-körkort", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Har du körkort? -", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Driving_license, "", new { @class = "text-danger" })
@@ -118,6 +120,8 @@
         </div>
     </div>
 
+
+
     <br />
     <br />
     <p><b>Länkar</b></p>
@@ -172,6 +176,24 @@
 
     <br />
     <br />
+
+
+    <h2><b>Utbildningar:</b></h2>
+    <tbody>
+        @foreach (var edu in Model.MyEducations)
+        {
+        <tr>
+            <td>@edu.title - </td>
+            <td>@edu.resume_id - </td>
+            <td>@edu.description - </td>
+            <td>@edu.date</td>
+            
+
+        </tr>
+        }
+    </tbody>
+
+
     <br />
     <br />
     <br />
@@ -261,7 +283,7 @@
 
         // Script rörande Competens-DropDownListan
         $(document).ready(function () {
-            $("#Competences").change(function () {  
+            $("#Competences").change(function () {
 
                 var selectedCompetence = document.getElementById("Competences");
                 var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
@@ -303,7 +325,7 @@
         // Script rörande Competens-DropDownListan slutar här
 
 
-        
+
         // Script rörande Technologies-DropDownListan
         $(document).ready(function () {
             $("#Technologies").change(function () {
@@ -350,9 +372,9 @@
     </script>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
 
 
 

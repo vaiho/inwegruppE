@@ -23,15 +23,25 @@ namespace DoorinWebApp.Models
         }
     
         public int customer_id { get; set; }
+        [DisplayName("Förnamn")]
+        [Required(ErrorMessage = "Vänligen fyll i ditt förnamn")]
         public string firstname { get; set; }
+        [DisplayName("Efternamn")]
+        [Required(ErrorMessage = "Vänligen fyll i ditt efternamn")]
         public string lastname { get; set; }
         [DisplayName("Telefonnummer")]
         [Required(ErrorMessage = "Vänligen fyll i ett telefonnummer")]
         public string phonenumber { get; set; }
+        [DisplayName("Email")]
+        [Required(ErrorMessage = "Vänligen fyll i din emailadress")]
         public string email { get; set; }
         public string username { get; set; }
         public string password { get; set; }
+        [DisplayName("Befattning")]
+        [Required(ErrorMessage = "Vänligen fyll i din befattning")]
         public string position { get; set; }
+        [DisplayName("Företag")]
+        [Required(ErrorMessage = "Vänligen fyll i vilket företag du arbetar på")]
         public string company { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
