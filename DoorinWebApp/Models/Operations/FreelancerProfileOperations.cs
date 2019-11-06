@@ -95,7 +95,8 @@ namespace DoorinWebApp.Models.Operations
                 var list = (from tr in db.technology_resume
                             join te in db.technology on tr.technology_id equals te.technology_id
                             where tr.resume_id == fp.Resume_id
-                            select new { te.technology_id, te.name, tr.rank, tr.core_technology, te.competence_id }).ToList();
+                            select new { te.technology_id, te.name, tr.rank, tr.core_technology, te.competence_id }).OrderByDescending(o => o.rank).OrderByDescending(o => o.core_technology).ToList();
+                
 
                 foreach (var item in list)
                 {
