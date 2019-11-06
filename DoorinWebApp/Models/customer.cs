@@ -35,7 +35,11 @@ namespace DoorinWebApp.Models
         [DisplayName("Email")]
         [Required(ErrorMessage = "Vänligen fyll i din emailadress")]
         public string email { get; set; }
+        [DisplayName("Användarnamn")]
+        [Required(ErrorMessage = "Vänligen fyll i ditt användarnamn")]
         public string username { get; set; }
+        [DisplayName("Lösenord")]
+        [Required(ErrorMessage = "Vänligen fyll i ditt lösenord")]
         public string password { get; set; }
         [DisplayName("Befattning")]
         [Required(ErrorMessage = "Vänligen fyll i din befattning")]
