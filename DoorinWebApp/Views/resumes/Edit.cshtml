@@ -76,7 +76,7 @@
             </select>
         </div>
 
-        <div class="col-md-6" ">
+        <div class="col-md-6">
             <p><b>Mina kompetenser</b></p>
             <select class="form-control" id="MyCompetences" name="MyCompetences">
                 @foreach (var item in Model.MyCompetences)
@@ -484,8 +484,6 @@
              var compObj = {
                  competence_id: SelectedCompetenceId, resume_id: selectedResumeId, name: null
              };
-
-
 
                 $.ajax({
                     type: "POST",
