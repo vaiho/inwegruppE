@@ -37,13 +37,13 @@ namespace DoorinWebApp.Controllers
         }
 
         // GET: educations/Create
-        public ActionResult Create(int? idfromview)
+        public ActionResult Create(int idfromview)
         {
-            //ViewData["Ids"] = new SelectList(db.resume,"resume_id", 15);
-
-            ViewBag.resume_id = new SelectList(db.resume, "resume_id", "driving_license");
+            ViewBag.resume_id = new SelectList(db.resume, "resume_id", "driving_license", idfromview);
             return View();
         }
+
+        
 
         // POST: educations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -52,6 +52,8 @@ namespace DoorinWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "education_id,resume_id,title,description,date")] education education)
         {
+            //education.resume_id = idfromview;
+
             if (ModelState.IsValid)
             {
                 db.education.Add(education);
