@@ -5,57 +5,65 @@
 }
 
 <h2>Lägg till utbildning</h2>
-@Html.DisplayNameFor(model => model.title)
-<p>@Html.DisplayFor(model => model.resume_id)</p>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.resume_id, "resume_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("resume_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.resume_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.resume_id, "resume_id", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.DropDownList("Ids", ViewData["Ids"] as SelectList)
+                Detta funkade inte, vet inte hur jag sätter "default värdet till resume_id som skickas in"
+                *@
 
-        <div class="form-group">
-            <p class="control-label col-md-2"><b>Titel:</b></p>
-            @*@Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <p class="control-label col-md-2"><b>Beskrivning:</b></p>
-            @*@Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class="control-label col-md-2"><b>Datum:</b></p>
-            @*@Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lägg till utbildning" class="btn btn-default" />
-            </div>
+            @Html.DropDownList("resume_id", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.resume_id, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    @*<div class="col-md-10">
+        @Html.DropDownList("resume_id", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.resume_id, "", new { @class = "text-danger" })
+    </div>*@
+
+    <div class="form-group">
+        <p class="control-label col-md-2"><b>Titel:</b></p>
+        @*@Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label col-md-2"><b>Beskrivning:</b></p>
+        @*@Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label col-md-2"><b>Datum:</b></p>
+        @*@Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Lägg till utbildning" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 @*<div>

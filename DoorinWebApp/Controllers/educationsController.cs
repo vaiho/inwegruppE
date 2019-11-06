@@ -37,8 +37,9 @@ namespace DoorinWebApp.Controllers
         }
 
         // GET: educations/Create
-        public ActionResult Create()
+        public ActionResult Create(int? idfromview)
         {
+            //ViewData["Ids"] = new SelectList(db.resume,"resume_id", 15);
 
             ViewBag.resume_id = new SelectList(db.resume, "resume_id", "driving_license");
             return View();
