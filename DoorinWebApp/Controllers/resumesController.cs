@@ -90,11 +90,11 @@ namespace DoorinWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMyCompetences(FullResume objectResume)
+        public ActionResult AddMyCompetences(competence competence)
         {
             FullResumeOperations resumeOperations = new FullResumeOperations();
-            var fullResume = resumeOperations.GetFullResumeById(objectResume.Resume_id);
-            fullResume.SelectedCompetenceId = objectResume.SelectedCompetenceId;
+            var fullResume = resumeOperations.GetFullResumeById(competence.resume_id);
+            fullResume.SelectedCompetenceId = competence.competence_id;
 
             if (fullResume.MyCompetences.Count == 0)
             {
@@ -116,9 +116,9 @@ namespace DoorinWebApp.Controllers
             else
             {
 
-                foreach (var competence in fullResume.MyCompetences)
+                foreach (var comp in fullResume.MyCompetences)
                 {
-                    if (competence.competence_id == fullResume.SelectedCompetenceId)
+                    if (comp.competence_id == fullResume.SelectedCompetenceId)
                     {
                         // Visa meddelande "Du har redan lagt till den här kompetensen."
                     }
@@ -150,7 +150,7 @@ namespace DoorinWebApp.Controllers
             FullResumeOperations resumeOperations = new FullResumeOperations();
             resumeOperations.AddMyTechnologies(objectTechnology.technology_id, objectTechnology.resume_id, 
                 objectTechnology.core_technology, objectTechnology.rank);
-
+            // CV:t hämtas för att listan med kompetenser ska uppdateras
             FullResume fullResume = resumeOperations.GetFullResumeById(objectTechnology.resume_id);
             resumeOperations.GetMyTechnologies(fullResume);
 
@@ -163,12 +163,23 @@ namespace DoorinWebApp.Controllers
         {
             FullResumeOperations resumeOperations = new FullResumeOperations();
             resumeOperations.RemoveMyTechnologies(objectTechnology.technology_id, objectTechnology.resume_id);
+            // CV:t hämtas för att listan med kompetenser ska uppdateras
             FullResume fullResume = resumeOperations.GetFullResumeById(objectTechnology.resume_id);
 
-            //return RedirectToAction("Edit");
-            return RedirectToAction("Edit", fullResume); // remember to pass the model here
-            //int num = db.SaveChanges();
-            //return Json(num);
+            return RedirectToAction("Edit", "resumes", new { id = objectTechnology.resume_id });
+        }
+
+
+
+        [HttpPost]
+        public ActionResult RemoveMyCompetences(competence competence)
+        {
+            FullResumeOperations resumeOperations = new FullResumeOperations();
+            resumeOperations.RemoveMyTechnologies(competence.competence_id, competence.resume_id);
+            // CV:t hämtas för att listan med kompetenser ska uppdateras
+            FullResume fullResume = resumeOperations.GetFullResumeById(competence.resume_id);
+
+            return RedirectToAction("Edit", "resumes", new { id = competence.resume_id });
         }
 
         // POST: resumes/Edit/5

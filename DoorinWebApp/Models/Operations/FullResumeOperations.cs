@@ -288,7 +288,28 @@ namespace DoorinWebApp.Models.Operations
                 }
             }
         }
-        
+
+        public void RemoveMyCompetences(int competence_id, int resume_id)
+        {
+
+            string sql = "DELETE FROM competence_resume WHERE competence_id = @competenceID AND resume_id = resumeID";
+
+
+            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(sql, conn))
+                {
+                    command.Connection = conn;
+                    command.CommandText = sql;
+                    command.Parameters.AddWithValue("technologyID", competence_id);
+                    command.Parameters.AddWithValue("resumeID", resume_id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+
 
         private SqlConnectionStringBuilder GetBuilder() //Anropa vid användning för connection mot databasen
         {
