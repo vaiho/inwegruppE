@@ -59,13 +59,13 @@
             <hr />
         }
         <br />
-        <h2>Länkar</h2>
+        @*<h2>Länkar</h2>
         @foreach (var item in Model.LinkList)
         {
             <p><strong>Namn:</strong> @Html.DisplayFor(modelItem => item.name)</p>
             <p><strong>Länk:</strong> @Html.DisplayFor(modelItem => item.link)</p>
             <hr />
-        }
+        }*@
     </div>
     <div class="col-sm-6">
         <h2>Teknologier</h2>
@@ -109,20 +109,20 @@
 <div style="background-color:#ddd; padding:15px; " class="row center">
     <b>Kontaktuppgifter</b>
     <br />
-    <p>Email: @Html.DisplayFor(modelItem => Model.Email) &nbsp;&nbsp;&nbsp;&nbsp;
+    <p>Email: <a href="mailto:@Html.DisplayFor(modelItem => Model.Email)">@Html.DisplayFor(modelItem => Model.Email)</a> &nbsp;&nbsp;&nbsp;&nbsp;
     Telefonnummer: @Html.DisplayFor(modelItem => Model.phonenumber)</p>
     @if (Model.phonenumber == null)
     {
         <p style="display:inline-block;">---</p>
     }
-    <br />
+ 
 
     <b>Länkar</b>
     <br />
     @foreach (var item in Model.LinkList)
     {
-        var x = @Html.DisplayFor(modelItem => item.link);
-        <p style="display:inline-block;">@Html.DisplayFor(modelItem => item.name): <a href="x">Test</a>@Html.DisplayFor(modelItem => item.link) &nbsp;&nbsp;&nbsp;&nbsp;</p>
+        //var x = @Html.DisplayFor(modelItem => item.link);
+        <p style="display:inline-block;">@Html.DisplayFor(modelItem => item.name): <a href="#">@Html.DisplayFor(modelItem => item.link)</a> &nbsp;&nbsp;&nbsp;&nbsp;</p>
     }
 
 </div>
