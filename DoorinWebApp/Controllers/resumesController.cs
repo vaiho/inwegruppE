@@ -85,6 +85,7 @@ namespace DoorinWebApp.Controllers
             var fullResume = resumeOperations.GetFullResumeById(id);
             fullResume.DrivingLicenceChoice = GetSelectListItems(driving_licence);
             fullResume.Link = db.links.Where(l => l.resume_id == id).ToList();
+            fullResume.MyWorkhistory = db.workhistory.Where(w => w.resume_id == id).ToList();
 
             return View(fullResume);
         }
@@ -194,6 +195,7 @@ namespace DoorinWebApp.Controllers
             resume.freelancer_id = fullResume.Freelancer_id;
             resume.driving_license = fullResume.Driving_license;
             resume.profile = fullResume.Profile.Trim();
+
 
             
             if (ModelState.IsValid)

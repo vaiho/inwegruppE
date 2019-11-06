@@ -1,6 +1,8 @@
 ﻿@model DoorinWebApp.Viewmodel.FullResume
 
 @{
+    /**/
+
     ViewBag.Title = "Edit";
 }
 
@@ -16,163 +18,245 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+    <div class="form-horizontal">
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(@Model => @Model.Resume_id)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(@Model => @Model.Resume_id)
 
-    <div class="form-group" style="display:none;">
+        <div class="form-group" style="display:none;">
 
-        @Html.LabelFor(@Model => @Model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(@Model => @Model.Freelancer_id, "", new { @class = "text-danger" })
-            <input type="hidden" id="freelancer_id" value="@Model.Freelancer_id" />
-        </div>
-    </div>
-
-
-
-    @*<div class="form-group">
-            @Html.LabelFor(@Model => @Model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(@Model => @Model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(@Model => @Model.Driving_license, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(@Model => @Model.Driving_license, "", new { @class = "text-danger" })
+                @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(@Model => @Model.Freelancer_id, "", new { @class = "text-danger" })
+                <input type="hidden" id="freelancer_id" value="@Model.Freelancer_id" />
             </div>
-        </div>*@
-
-    @*Bytt ut ovanstående så att det visas i en dropdown.*@
-    <div class="form-group">
-        @*Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        @Html.Label("B-körkort", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Har du körkort? -", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Driving_license, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @*Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        @Html.Label("Profil (kort beskrivning av dig)", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div>
-        <hr />
-        <h2>Kompetenser:</h2>
-        <br />
-
-        <div class="col-md-6">
-            <p><b>Lägg till kompetenser</b></p>
-            <select class="form-control" id="Competences" name="Competences">
-                <option> Välj en kompetens att lägga till</option>
-                @foreach (var item in Model.Competences)
-                {
-                    <option value="@item.competence_id"> @item.name </option>
-                }
-            </select>
         </div>
 
-        <div class="col-md-6">
-            <p><b>Mina kompetenser</b></p>
-            <select class="form-control" id="MyCompetences" name="MyCompetences">
-                @foreach (var item in Model.MyCompetences)
-                {
-                    <option value="@item.competence_id"> @item.name </option>
-
-                }
-            </select>
-            <input type="submit" value="Ta bort kompetensen" onclick="RemoveCompetence()" />
-        </div>
-    </div>
-
-    <div class="container"></div>
-    <br />
-    <hr />
-
-    <div>
-        <h2>Teknologier:</h2>
-        <br />
-        <div class="col-md-6">
-            <p><b>Lägg till teknologier</b></p>
-            <select class="form-control" id="Technologies" name="Technologies">
-                <option> Välj en teknologi att lägga till</option>
-                @foreach (var item in Model.Technologies)
-                {
-                    <option value="@item.technology_id"> @item.name </option>
-                }
-            </select>
-
-            <p><b>Rankning</b></p>
-            <select class="form-control" id="rank" name="rank">
-                <option value="1"> 1 </option>
-                <option value="2"> 2 </option>
-                <option value="3"> 3 </option>
-                <option value="4"> 4 </option>
-                <option value="5"> 5 </option>
-            </select>
-
-            <p><b>Kärnförmågor</b></p>
-            <select class="form-control" id="core_technology" name="core_technology">
-                <option value="Yes"> Ja </option>
-                <option value="No"> Nej </option>
-            </select>
-            <input type="submit" id="addTechnology" name="addTechnology" value="Lägg till teknologi" onclick="" />
-
-        </div>
-
-        <div class="col-md-6">
-            <p><b>Mina teknologier</b></p>
-            <select class="form-control" id="MyTechnologies" name="MyTechnologies">
-                @foreach (var item in Model.MyTechnologies)
-                {
-                    <option value="@item.technology_id"> @item.name </option>
-                }
-            </select>
-            <input type="submit" value="Ta bort tekonologi" onclick="RemoveTechnology()" />
-        </div>
-    </div>
 
 
-    <hr />
-
-    <div class="container"></div>
-    <br />
-    <hr />
-
-    <div>
-        <h2>Utbildningar: </h2>
-        <br />
-        <div>
-            @foreach (var edu in Model.MyEducations)
-            {
-                <div class="col-md-6">
-                    <p><strong>Titel:</strong> @edu.title</p>
-                    <p><strong>Beskrivning:</strong> @edu.description</p>
-                    <p><strong>Datum: </strong>@edu.date</p>
-                    <p>
-                        @Html.ActionLink("Redigera", "Edit", "educations", new { id = edu.education_id }, null) |
-                        @Html.ActionLink("Radera", "Delete", "educations", new { id = edu.education_id }, null)
-                    </p>
-                    <hr />
+        @*<div class="form-group">
+                @Html.LabelFor(@Model => @Model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(@Model => @Model.Driving_license, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(@Model => @Model.Driving_license, "", new { @class = "text-danger" })
                 </div>
-            }
+            </div>*@
+
+        @*Bytt ut ovanstående så att det visas i en dropdown.*@
+        <div class="form-group">
+            @*Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @Html.Label("B-körkort", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Har du körkort? -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Driving_license, "", new { @class = "text-danger" })
+            </div>
         </div>
+
+        <div class="form-group">
+            @*Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @Html.Label("Profil (kort beskrivning av dig)", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div>
+            <hr />
+            <h2>Kompetenser:</h2>
+            <br />
+
+            <div class="col-md-6">
+                <p><b>Lägg till kompetenser</b></p>
+                <select class="form-control" id="Competences" name="Competences">
+                    <option> Välj en kompetens att lägga till</option>
+                    @foreach (var item in Model.Competences)
+                    {
+                        <option value="@item.competence_id"> @item.name </option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <p><b>Mina kompetenser</b></p>
+                <select class="form-control" id="MyCompetences" name="MyCompetences">
+                    @foreach (var item in Model.MyCompetences)
+                    {
+                        <option value="@item.competence_id"> @item.name </option>
+
+                    }
+                </select>
+                <input type="submit" value="Ta bort kompetensen" onclick="RemoveCompetence()" />
+            </div>
+        </div>
+
         <div class="container"></div>
-        <p>@Model.Resume_id</p>
-        @Html.ActionLink("Lägg till utbildning", "Create", "educations", new { id = Model.Resume_id }, null)
+        <br />
+        <hr />
+
+        <div>
+            <h2>Teknologier:</h2>
+            <br />
+            <div class="col-md-6">
+                <p><b>Lägg till teknologier</b></p>
+                <select class="form-control" id="Technologies" name="Technologies">
+                    <option> Välj en teknologi att lägga till</option>
+                    @foreach (var item in Model.Technologies)
+                    {
+                        <option value="@item.technology_id"> @item.name </option>
+                    }
+                </select>
+
+                <p><b>Rankning</b></p>
+                <select class="form-control" id="rank" name="rank">
+                    <option value="1"> 1 </option>
+                    <option value="2"> 2 </option>
+                    <option value="3"> 3 </option>
+                    <option value="4"> 4 </option>
+                    <option value="5"> 5 </option>
+                </select>
+
+                <p><b>Kärnförmågor</b></p>
+                <select class="form-control" id="core_technology" name="core_technology">
+                    <option value="Yes"> Ja </option>
+                    <option value="No"> Nej </option>
+                </select>
+                <input type="submit" id="addTechnology" name="addTechnology" value="Lägg till teknologi" onclick="" />
+
+            </div>
+
+            <div class="col-md-6">
+                <p><b>Mina teknologier</b></p>
+                <select class="form-control" id="MyTechnologies" name="MyTechnologies">
+                    @foreach (var item in Model.MyTechnologies)
+                    {
+                        <option value="@item.technology_id"> @item.name </option>
+                    }
+                </select>
+                <input type="submit" value="Ta bort tekonologi" onclick="RemoveTechnology()" />
+            </div>
+        </div>
+
+
+        <hr />
+
+        <div class="container"></div>
+        <br />
+        <hr />
+
+        <div>
+            <h2>Utbildningar: </h2>
+            <br />
+            <div>
+                @foreach (var edu in Model.MyEducations)
+                {
+                    <div class="col-md-6">
+                        <p><strong>Titel:</strong> @edu.title</p>
+                        <p><strong>Beskrivning:</strong> @edu.description</p>
+                        <p><strong>Datum: </strong>@edu.date</p>
+                        <p>
+                            @Html.ActionLink("Redigera", "Edit", "educations", new { id = edu.education_id }, null) |
+                            @Html.ActionLink("Radera", "Delete", "educations", new { id = edu.education_id }, null)
+                        </p>
+                        <hr />
+                    </div>
+                }
+            </div>
+            <div class="container"></div>
+            @Html.ActionLink("Lägg till utbildning", "Create", "educations", new { id = Model.Resume_id }, null)
+        </div>
+
+
     </div>
-
-
-</div>
 
     <br />
     <hr />
 
-    <h2>Länkar:</h2>
+
+    //<input type="button" class="btn btn-default" id="btnSave" value="Save All links" />
+
+
+    <br />
+    <br />
+
+
+    @*<h2><b>Utbildningar:</b></h2>
+            <tbody>
+
+                @foreach (var edu in Model.MyEducations)
+                {
+                    <tr>
+
+                        <p><strong>Titel:</strong> @edu.title</p>
+                        <p><strong>Beskrivning:</strong> @edu.description</p>
+                        <p><strong>Datum: </strong>@edu.date</p>
+
+                </tr>
+            }
+        </tbody>*@
+
+
+
+   
+    <h2><b>Arbetshistoria:</b></h2>
+    <p><b>(Här kan du fylla i information om tidigare anställningar)</b></p>
+    <table class="table" id="tblWorkhistory">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Namn på arbetsgivaren")
+                </th>
+                <th>
+                    @Html.DisplayName("Position")
+                </th>
+                <th>
+                    @Html.DisplayName("Beskrivning av arbetet")
+                </th>
+                <th>
+                    @Html.DisplayName("Datum")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var work in Model.MyWorkhistory)
+            {
+                <tr>
+                    <td>@work.employer</td>
+                    <td>@work.position</td>
+                    <td>@work.description</td>
+                    <td>@work.date</td>
+                    <td><input class="btnRemoveWorkhistory btn btn-default" type="button" value="Ta bort" onclick="RemoveWorkhistory(this)" /></td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtEmployer" /></td>
+                <td><input type="text" id="txtPosition" /></td>
+                <td><input type="text" id="txtDescription" /></td>
+                <td><input type="text" id="txtDate" /></td>
+                <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
+
+                <td>
+                    <input class="btnAddWorkhistory btn btn-default" type="button" name="name" value="Lägg till" />
+                </td>
+
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+
+
+
+
+    </table>
+    <br />
+    <br />
+
+
+    <h2><b>Länkar:</b></h2>
     <p>Här lägger du till länkar till dina professionella sidor såsom LinkedIn och GitHub)</p>
 
 
@@ -199,7 +283,7 @@
                 <tr>
                     <td>@link.name</td>
                     <td>@link.link</td>
-                    <td><input class="btnRemoveLink btn btn-default" type="button" value="Ta bort" onclick="Remove(this)" /></td>
+                    <td><input class="btnRemoveLink btn btn-default" type="button" value="Ta bort" onclick="RemoveLink(this)" /></td>
                 </tr>
             }
         </tbody>
@@ -219,37 +303,8 @@
             </tr>
         </tfoot>
     </table>
-    //<input type="button" class="btn btn-default" id="btnSave" value="Save All links" />
 
 
-    <br />
-    <br />
-
-
-    @*<h2><b>Utbildningar:</b></h2>
-        <tbody>
-
-            @foreach (var edu in Model.MyEducations)
-            {
-                <tr>
-
-                    <p><strong>Titel:</strong> @edu.title</p>
-                    <p><strong>Beskrivning:</strong> @edu.description</p>
-                    <p><strong>Datum: </strong>@edu.date</p>
-
-                    @Html.ActionLink("Redigera", "Edit", "educations", new { id = edu.education_id }, null) |
-                    @Html.ActionLink("Radera", "Delete", "educations", new { id = edu.education_id }, null)
-
-                    <hr />
-
-                </tr>
-            }
-        </tbody>
-        @Html.ActionLink("Lägg till utbildning", "Create", "educations", new { id = Model.Resume_id }, null)*@
-
-    <br />
-    <br />
-    <br />
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -288,8 +343,8 @@
             cell = $(row.insertCell(-1));
             var btnRemove = $("<input class=btn btn-default/>");
             btnRemove.attr("type", "button");
-            btnRemove.attr("onclick", "Remove(this);");
-            btnRemove.val("Remove");
+            btnRemove.attr("onclick", "RemoveLink(this);");
+            btnRemove.val("Ta bort");
             cell.append(btnRemove);
 
             //Clear the TextBoxes.
@@ -297,18 +352,76 @@
             txtLink.val("");
         });
 
-        function Remove(button) {
+        function RemoveLink(button) {
             //Determine the reference of the Row using the Button.
             var row = $(button).closest("TR");
             var name = $("TD", row).eq(0).html();
             if (confirm("Do you want to delete: " + name)) {
                 //Get the reference of the Table.
                 var table = $("#tblLinks")[0];
-
                 //Delete the Table row using it's Index.
                 table.deleteRow(row[0].rowIndex);
             }
         };
+
+        $(".btnAddWorkhistory").click(function () {
+            //Reference the Name and Link TextBoxes.
+            var txtEmployer = $("#txtEmployer");
+            var txtPosition = $("#txtPosition");
+            var txtDescription = $("#txtDescription");
+            var txtDate = $("#txtDate");
+
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tblWorkhistory > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add employer cell.
+            var cell = $(row.insertCell(-1));
+            cell.html(txtEmployer.val());
+
+            //Add position cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtPosition.val());
+
+            //Add description cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtDescription.val());
+
+            //Add date cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtDate.val());
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<input class=btn btn-default/>");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "RemoveWorkhistory(this);");
+            btnRemove.val("Ta bort");
+            cell.append(btnRemove);
+
+            //Clear the TextBoxes.
+            txtEmployer.val("");
+            txtPosition.val("");
+            txtDescription.val("");
+            txtDate.val("");
+        });
+
+
+
+        function RemoveWorkhistory(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblWorkhistory")[0]; //TODO:Test för workhistory
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
 
 
         $("body").on("click", "#btnSave", function () {
@@ -322,6 +435,22 @@
                 link.Link = row.find("TD").eq(1).html();
                 link.resume_id = resume_id;
                 links.push(link);
+
+            });
+
+            var wh = new Array();
+            var resume_id = $("#resume_id").val();
+            $("#tblWorkhistory TBODY TR").each(function () {
+                var row = $(this);
+                var workhistory = {};
+                workhistory.employer = row.find("TD").eq(0).html().trim();
+                workhistory.position = row.find("TD").eq(1).html().trim();
+                workhistory.description = row.find("TD").eq(0).html().trim();
+                workhistory.date = row.find("TD").eq(1).html().trim();
+
+                workhistory.resume_id = resume_id;
+                wh.push(workhistory);
+
             });
 
             //Send the JSON array to Controller using AJAX.
@@ -334,7 +463,21 @@
                 success: function (r) {
                     //alert("link(s) updated.");
                 }
-            });
+                });
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Workhistories/InsertWorkhistory",
+                    data: JSON.stringify(wh),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        //alert("link(s) updated.");
+                    }
+                });
+
+
         });
 
         // Script rörande Competens-DropDownListan
@@ -522,7 +665,7 @@
 
     </script>
 
-    
+
 }
 
 @*<div>

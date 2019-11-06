@@ -128,5 +128,37 @@ namespace DoorinWebApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public JsonResult InsertWorkhistory(List<workhistory> workhistory)
+        {
+            if (workhistory == null)
+            {
+                return Json(0);
+            }
+
+            if (workhistory.Count == 0)
+            {
+                return Json(0);
+            }
+
+
+            var resume_id = workhistory[0].resume_id;
+            var existingWorkhistory = db.workhistory.Where(l => l.resume_id == resume_id).ToList();
+            db.workhistory.RemoveRange(existingWorkhistory);
+
+            foreach (var w in workhistory)
+            {
+                if (!(string.IsNullOrEmpty(w.employer) && string.IsNullOrEmpty(w.position) && string.IsNullOrEmpty(w.description) && string.IsNullOrEmpty(w.date)))
+                {
+                    db.workhistory.Add(w);
+                }
+
+
+            }
+            int num = db.SaveChanges();
+            return Json(num);
+        }
+
+
     }
 }
