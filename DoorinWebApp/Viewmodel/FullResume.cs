@@ -48,6 +48,8 @@ namespace DoorinWebApp.Viewmodel
             MyCompetences = new List<competence>();
             Technologies = new List<technology>();
             MyTechnologies = new List<FullTechnology>();
+           
+            MyEducations = new List<education>();
             Link = new List<links>();
             MyWorkhistory = new List<workhistory>();
 
