@@ -417,7 +417,7 @@
         $("body").on("click", "#btnSave", function () {
             //Loop through the Table rows and build a JSON array.
             var links = new Array();
-            var resume_id = $("#resume_id").val();
+            var resume_id = $("#Resume_id").val();
             $("#tblLinks TBODY TR").each(function () {
                 var row = $(this);
                 var link = {};
@@ -429,14 +429,14 @@
             });
 
             var wh = new Array();
-            var resume_id = $("#resume_id").val();
+            var resume_id = $("#Resume_id").val();
             $("#tblWorkhistory TBODY TR").each(function () {
                 var row = $(this);
                 var workhistory = {};
                 workhistory.employer = row.find("TD").eq(0).html().trim();
                 workhistory.position = row.find("TD").eq(1).html().trim();
-                workhistory.description = row.find("TD").eq(0).html().trim();
-                workhistory.date = row.find("TD").eq(1).html().trim();
+                workhistory.description = row.find("TD").eq(2).html().trim();
+                workhistory.date = row.find("TD").eq(3).html().trim();
 
                 workhistory.resume_id = resume_id;
                 wh.push(workhistory);
