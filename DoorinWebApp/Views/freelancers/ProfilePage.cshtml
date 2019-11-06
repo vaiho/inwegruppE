@@ -58,6 +58,14 @@
             <p><strong>Datum:</strong> @Html.DisplayFor(modelItem => item.date)</p>
             <hr />
         }
+        <br />
+        <h2>Länkar</h2>
+        @foreach (var item in Model.LinkList)
+        {
+            <p><strong>Namn:</strong> @Html.DisplayFor(modelItem => item.name)</p>
+            <p><strong>Länk:</strong> @Html.DisplayFor(modelItem => item.link)</p>
+            <hr />
+        }
     </div>
     <div class="col-sm-6">
         <h2>Teknologier</h2>
@@ -84,14 +92,7 @@
             <p><strong>Datum: </strong>@Html.DisplayFor(modelItem => item.date)</p>
             <hr />
         }
-        <br/>
-        <h2>Länkar</h2>
-        @foreach (var item in Model.LinkList)
-        {
-            <p><strong>Namn:</strong> @Html.DisplayFor(modelItem => item.name)</p>
-            <p><strong>Länk:</strong> <a href="@item.link">@Html.DisplayFor(modelItem => item.link)</a></p>
-            <hr/>
-        }
+        
     </div>
 </div>
 
