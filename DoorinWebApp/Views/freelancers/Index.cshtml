@@ -26,11 +26,12 @@
             Filter
         </div>
 
-        <br />
+        
         <br />
 
         <div id="filters" style="display:none;">
             <div id="filterbuttons">
+                <br />
                 <h4 style="font-weight:bold;">Kompetenser</h4>
                 @foreach (var item in ViewBag.Competence)
                 {
@@ -39,7 +40,7 @@
                     @*<input type="button" class="filters" id="Competence" value="@item.name" name="Competence" onclick="getTechnologiesByCompetence(@item.competence_id)"/>*@
                 }
 
-                <br />
+               
 
                 <hr />
                 <h4 style="font-weight:bold;">Teknologier</h4>
@@ -47,7 +48,7 @@
                 {
                     <p class="filters" id="@item.name">@item.name</p>
                 }
-                <br />
+                
                 @*<select id="rankvalue">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -64,20 +65,20 @@
 
 <br />
 
-<div class="freelancerbox">
+<div>
     <table class="table">
         <thead>
             <tr>
-                <th>
+                <th style="border-top:none;">
                     Namn
                 </th>
-                <th>
+                <th style="border-top:none;">
                     Kompetenser
                 </th>
-                <th>
+                <th style="border-top:none;">
                     Teknologier
                 </th>
-                <th></th>
+                <th style="border-top:none;"></th>
             </tr>
         </thead>
         <tbody id="freelancerTable">

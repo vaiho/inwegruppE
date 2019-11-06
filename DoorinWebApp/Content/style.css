@@ -118,6 +118,10 @@ a:hover {
 
 /*#region Sök och filtrera styles*/
 
+#SearchString {
+    
+}
+
 #searchbtn {
     max-width:49px;
     background-color: #09964f;
@@ -341,7 +345,10 @@ text-decoration: none;
 /*#region Saker som ska ändras om skärmen är större än 768px*/
 
 @media screen and (min-width: 768px) {
-    
+    #SearchString {
+        width: 60%;
+    }
+
     #logo {
         padding: 5px 10px 10px 10px;
         float: left;
@@ -366,121 +373,129 @@ text-decoration: none;
 
     #filterbtn {
         float: right;
+        margin-top: -53px;
     }
 
 }
 
-/*#endregion*/
-
-
-
-/*#region Style för input från inloggningen*/
-
-input[type=text], input[type=email], input[type=number], select, textarea {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    margin-top: 6px;
-    margin-bottom: 6px;
-    resize: vertical;
-}
-
-input[type=submit].filters, .filters {
-    display: inline-block;
-    background-color: white;
-    border-radius: 1px;
-    color: black;
-    border: 2px solid #ddd;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 16px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
-input[type=submit].filters:hover, .filters:hover {
-    background-color: #09964f;
-    color: white;
-    border: 2px solid #09964f;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.active {
-    background-color: rgba(34,34,34,0.8);
-}
-
-.filters.active {
-    background-color: #09964f;
-    color: #FFF;
-    border: 2px solid #09964f;
-}
-
-input[type=submit], .btn {
-    border-radius: 5px;
-    background-color: #09964f;
-    color: #FFFFFF;
-    padding: 12px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-}
-
-input[type=submit]:hover, .btn:hover {
-    background-color: #2c473d;
-    color: #FFFFFF;
-}
-
-button a:visited, button a:link {
-    text-decoration:none;
-    color: #FFFFFF;
-}
-
-/*#endregion*/
-
-
-
-/*#region Overwrites boostrap theme*/
-
-.navbar-fixed-top {
-position: relative;
-}
-
-@media (min-width: 768px) {
-    .navbar-nav {
-        float: left;
+@media screen and (min-width: 992px) {
+    #SearchString {
+        width:70%;
     }
+
 }
 
-@media (min-width: 1200px) {
-    .container {
-        width:1024px;
+    /*#endregion*/
+
+
+
+    /*#region Style för input från inloggningen*/
+
+    input[type=text], input[type=email], input[type=number], select, textarea {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        margin-top: 6px;
+        margin-bottom: 6px;
+        resize: vertical;
     }
-}
 
-.navbar-inverse {
-    background-color: #2c473d;
-    border-color: #FFF;
-}
+    input[type=submit].filters, .filters {
+        display: inline-block;
+        background-color: white;
+        border-radius: 1px;
+        color: black;
+        border: 2px solid #ddd;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
 
-.navbar-inverse .navbar-nav > li > a {
-    color: #FFFFFF;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-}
+        input[type=submit].filters:hover, .filters:hover {
+            background-color: #09964f;
+            color: white;
+            border: 2px solid #09964f;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-.navbar-inverse .navbar-nav > li > a:hover {
-    text-decoration: underline;
-    color: #eee; 
-}
+    .active {
+        background-color: rgba(34,34,34,0.8);
+    }
+
+    .filters.active {
+        background-color: #09964f;
+        color: #FFF;
+        border: 2px solid #09964f;
+    }
+
+    input[type=submit], .btn {
+        border-radius: 5px;
+        background-color: #09964f;
+        color: #FFFFFF;
+        padding: 12px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+    }
+
+        input[type=submit]:hover, .btn:hover {
+            background-color: #2c473d;
+            color: #FFFFFF;
+        }
+
+    button a:visited, button a:link {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+
+    /*#endregion*/
+
+
+
+    /*#region Overwrites boostrap theme*/
+
+    .navbar-fixed-top {
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .navbar-nav {
+            float: left;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .container {
+            width: 1024px;
+        }
+    }
+
+    .navbar-inverse {
+        background-color: #2c473d;
+        border-color: #FFF;
+    }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #FFFFFF;
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+        }
+
+            .navbar-inverse .navbar-nav > li > a:hover {
+                text-decoration: underline;
+                color: #eee;
+            }
 
 
 
 
 
-/*#endregion*/
+    /*#endregion*/
