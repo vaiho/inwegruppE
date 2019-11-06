@@ -85,22 +85,40 @@
         <div>
             <p><b>Lägg till teknologier</b></p>
             <select class="form-control" id="Technologies" name="Technologies">
+                <option> Välj en teknologi att lägga till</option>
                 @foreach (var item in Model.Technologies)
                 {
                     <option value="@item.technology_id"> @item.name </option>
                 }
             </select>
+
+            <p><b>Rankning</b></p>
+            <select class="form-control" id="rank" name="rank">
+                <option value="1"> 1 </option>
+                <option value="2"> 2 </option>
+                <option value="3"> 3 </option>
+                <option value="4"> 4 </option>
+                <option value="5"> 5 </option>
+            </select>
+
+            <p><b>Kärnförmågor</b></p>
+            <select class="form-control" id="core_technology" name="core_technology">
+                <option value="Yes"> Ja </option>
+                <option value="No"> Nej </option>
+            </select>
+            <input type="submit" id="addTechnology" name="addTechnology" value="Lägg till teknologi" onclick="" />
+            
         </div>
 
-        <div id="AddMyTechnologies">
+        <div>
             <p><b>Mina teknologier</b></p>
-
-            <select class="form-control">
+            <select class="form-control" id="MyTechnologies" name="MyTechnologies">
                 @foreach (var item in Model.MyTechnologies)
                 {
-                    <option> @item.name </option>
+                    <option value="@item.technology_id"> @item.name </option>
                 }
-            </select>
+            </select>      
+            <input type="submit" value="Ta bort tekonologi" onclick="RemoveTechnology()"/>
         </div>
 
         <br />
@@ -340,10 +358,11 @@
 
 
         });
-                    // Script rörande Competens-DropDownListan slutar här
+        // Script rörande Competens-DropDownListan slutar här
 
 
-
+        // Måste fixa så att detta anropas när man klickar på knappen lägg till "kompetenser". Nu hinner man inte välja
+        //Kärnförmåga eller rankning innan metoden anropas
         // Script rörande Technologies-DropDownListan
         $(document).ready(function () {
             $("#Technologies").change(function () {
@@ -351,11 +370,15 @@
                 var selectedTechnology = document.getElementById("Technologies");
                 var technologyId = selectedTechnology.options[selectedTechnology.selectedIndex].value;
                 var resume_id = $("#resume_id").val();
+                var selectedRank = document.getElementById("rank");
+                var rankValue = selectedRank.options[selectedRank.selectedIndex].value;
+                var selectedCore = document.getElementById("rank");
+                var coreValue = selectedCore.options[selectedCore.selectedIndex].value;
 
                 @*alert(technologyId);*@
                 var techObj = {
-                    technology_id: technologyId, resume_id: resume_id, core_technology: true,
-                    rank: 5, resume: null, technology: null
+                    technology_id: technologyId, resume_id: resume_id, core_technology: rankValue,
+                    rank: coreValue, resume: null, technology: null
                 };
 
                 $.ajax({
@@ -381,8 +404,53 @@
 
         });
             // Script rörande Technologies-DropDownListan slutar här
+        var selectedTechnologyId;
+        var selectedResumeId;
+        // Script ta bort teknology
+          $(document).ready(function () {
+            $("#MyTechnologies").change(function () {
+
+                var selectedTechnology = document.getElementById("MyTechnologies");
+                var technologyId = selectedTechnology.options[selectedTechnology.selectedIndex].value;
+                var resume_id = $("#resume_id").val();
+
+                selectedTechnologyId = technologyId;
+                selectedResumeId = resume_id;
+
+            });
+
+
+          });
+
+        function RemoveTechnology() {
+
+             var techObj = {
+                    technology_id: selectedTechnologyId, resume_id: selectedResumeId, core_technology: null,
+                    rank: 0, resume: null, technology: null
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Resumes/RemoveMyTecgnologies",
+                    data: JSON.stringify(techObj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        alert("Teknologin är borttagen.");
+                        document.location.reload(true)
+                    },
+
+                    error: function (xhr) {
+
+                        alert("Nånting blev fel.");
+
+                    }
+                });
+        }
 
     </script>
+
+    
 }
 
 @*<div>

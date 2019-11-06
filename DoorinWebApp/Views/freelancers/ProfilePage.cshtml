@@ -32,10 +32,10 @@
         </p>
         <br />
     </div>
-    <div class="col-sm-6">
+        <div class="col-sm-6">
 
+        </div>
     </div>
-</div>
 
 <div class="row">
     <div class="col-sm-6">
@@ -58,12 +58,30 @@
             <p><strong>Datum:</strong> @Html.DisplayFor(modelItem => item.date)</p>
             <hr />
         }
+        <br />
+        <h2>Länkar</h2>
+        @foreach (var item in Model.LinkList)
+        {
+            <p><strong>Namn:</strong> @Html.DisplayFor(modelItem => item.name)</p>
+            <p><strong>Länk:</strong> @Html.DisplayFor(modelItem => item.link)</p>
+            <hr />
+        }
     </div>
     <div class="col-sm-6">
         <h2>Teknologier</h2>
         @foreach (var item in Model.TechnologysList)
         {
-            <p style="margin-top:10px; display:inline-block;">@Html.DisplayFor(modelItem => item.name) &nbsp;</p>
+            //Om teknologin är kärnteknologi
+            if (item.core_technology == true) 
+            {
+                <p style= "margin-top:0px; display:inline-block; border: 2px solid #09964f; padding: 8px 12px;" > @Html.DisplayFor(modelItem => item.name)&nbsp;</p>
+            }
+            //Ej kärnteknologi
+            else
+            {
+                <p style= "margin-top:0px; display:inline-block; border: 2px solid #ddd; padding: 8px 12px;">@Html.DisplayFor(modelItem => item.name) &nbsp;</p>
+            }
+
             var stars = item.rank;
 
             while (stars > 0)
@@ -84,6 +102,7 @@
             <p><strong>Datum: </strong>@Html.DisplayFor(modelItem => item.date)</p>
             <hr />
         }
+        
     </div>
 </div>
 

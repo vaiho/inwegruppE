@@ -158,6 +158,19 @@ namespace DoorinWebApp.Controllers
             return Json(num);
         }
 
+        [HttpPost]
+        public ActionResult RemoveMyTecgnologies(technology_resume objectTechnology)
+        {
+            FullResumeOperations resumeOperations = new FullResumeOperations();
+            resumeOperations.RemoveMyTechnologies(objectTechnology.technology_id, objectTechnology.resume_id);
+            FullResume fullResume = resumeOperations.GetFullResumeById(objectTechnology.resume_id);
+
+            //return RedirectToAction("Edit");
+            return RedirectToAction("Edit", fullResume); // remember to pass the model here
+            //int num = db.SaveChanges();
+            //return Json(num);
+        }
+
         // POST: resumes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -182,6 +195,8 @@ namespace DoorinWebApp.Controllers
             //ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
             return View(resume);
         }
+
+    
 
         // GET: resumes/Delete/5
         public ActionResult Delete(int? id)

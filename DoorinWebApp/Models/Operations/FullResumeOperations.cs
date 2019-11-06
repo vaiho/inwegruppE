@@ -136,6 +136,7 @@ namespace DoorinWebApp.Models.Operations
                     {
                         while (reader.Read())
                         {
+
                             t = new FullTechnology()
                             {
                                 technology_id = (reader.GetInt32(0)),
@@ -146,10 +147,16 @@ namespace DoorinWebApp.Models.Operations
                             };
                             fullResume.MyTechnologies.Add(t);
                         }
+
+
                     }
                 }
             }
+
         }
+        
+    
+            
 
         private void GetCompetenceList(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
         {
@@ -262,6 +269,26 @@ namespace DoorinWebApp.Models.Operations
                 throw;
             }
         }
+
+        public void RemoveMyTechnologies(int technology_id, int resume_id) {
+
+         string sql = "DELETE FROM technology_resume WHERE technology_id = @technologyID AND resume_id = @resumeID";
+
+
+            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(sql, conn))
+                {
+                    command.Connection = conn;
+                    command.CommandText = sql;
+                    command.Parameters.AddWithValue("technologyID", technology_id);
+                    command.Parameters.AddWithValue("resumeID", resume_id);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        
 
         private SqlConnectionStringBuilder GetBuilder() //Anropa vid användning för connection mot databasen
         {
