@@ -80,14 +80,21 @@
 
             <div class="col-md-6">
                 <p><b>Mina kompetenser</b></p>
-                <select class="form-control" id="MyCompetences" name="MyCompetences">
-                    @foreach (var item in Model.MyCompetences)
-                    {
-                        <option value="@item.competence_id"> @item.name </option>
+                @foreach (var item in Model.MyCompetences)
+                {
+                    <p>@item.name <input type="submit" value="Ta bort" onclick="RemoveCompetence()" /></p>
+                    <br />
+                    <hr />
+                }
 
-                    }
-                </select>
-                <input type="submit" value="Ta bort kompetensen" onclick="RemoveCompetence()" />
+                @*<select class="form-control" id="MyCompetences" name="MyCompetences">
+            @foreach (var item in Model.MyCompetences)
+            {
+                <option value="@item.competence_id"> @item.name </option>
+
+            }
+        </select>
+        <input type="submit" value="Ta bort kompetensen" onclick="RemoveCompetence()" />*@
             </div>
         </div>
 
@@ -128,13 +135,20 @@
 
             <div class="col-md-6">
                 <p><b>Mina teknologier</b></p>
-                <select class="form-control" id="MyTechnologies" name="MyTechnologies">
-                    @foreach (var item in Model.MyTechnologies)
-                    {
-                        <option value="@item.technology_id"> @item.name </option>
-                    }
-                </select>
-                <input type="submit" value="Ta bort tekonologi" onclick="RemoveTechnology()" />
+                @foreach (var item in Model.MyTechnologies)
+                {
+                    <p>@item.name <input type="submit" value="Ta bort" onclick="RemoveTechnology()" /></p>
+                    <br />
+                    <hr />
+                }
+
+                @*<select class="form-control" id="MyTechnologies" name="MyTechnologies">
+            @foreach (var item in Model.MyTechnologies)
+            {
+                <option value="@item.technology_id"> @item.name </option>
+            }
+        </select>
+        <input type="submit" value="Ta bort tekonologi" onclick="RemoveTechnology()" />*@
             </div>
         </div>
 
