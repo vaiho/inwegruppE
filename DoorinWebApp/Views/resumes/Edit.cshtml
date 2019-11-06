@@ -83,8 +83,12 @@
                 <table class="table">
                     @foreach (var item in Model.MyCompetences)
                     {
-                        <tr>
-                        <td>@item.name </td><td> @Html.ActionLink("Ta bort", "Edit", "resumes", new { id = item.competence_id }, null) @*<input type="submit" value="Ta bort" onclick="RemoveCompetence()" />*@ </td> </tr>
+                    <tr>
+
+                        <td>@item.name </td>
+                                @*TODO: Fixa så länken funkar så man kan ta bort vald competens*@
+                        <td> @Html.ActionLink("Ta bort", "Delete", "resumes", new { id = item.competence_id }, null) @*<input type="submit" value="Ta bort" onclick="RemoveCompetence()" />*@ </td>
+                    </tr>
 
                     }
                 </table>
@@ -140,7 +144,9 @@
                 @foreach (var item in Model.MyTechnologies)
                 {
                     <tr>
-                    <td>@item.name </td> <td> @Html.ActionLink("Ta bort", "Edit", "resumes", new { id = item.technology_id }, null) @*<input type="submit" value="Ta bort" onclick="RemoveTechnology()" />*@ </td>
+                        <td>@item.name </td>
+                                 @*TODO: Fixa så länken funkar så man kan ta bort teknologi*@
+                        <td> @Html.ActionLink("Ta bort", "Delete", "resumes", new { id = item.technology_id }, null) @*<input type="submit" value="Ta bort" onclick="RemoveTechnology()" />*@ </td>
                     </tr>                    
                 }
                     </table>
