@@ -20,8 +20,13 @@ namespace DoorinWebApp.Viewmodel
         public List<FullTechnology> MyTechnologies { get; set; }
         public List<links> Link { get; set; }
         public List<education> MyEducations { get; set; }
+        public List<workhistory> MyWorkhistory { get; set; }
         public string Linkname { get; set; }
         public string Url { get; set; }
+        public string Employer { get; set; }
+        public string Position { get; set; }
+        public string Description { get; set; }
+        public string Date { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Address { get; set; }
@@ -43,7 +48,8 @@ namespace DoorinWebApp.Viewmodel
             MyCompetences = new List<competence>();
             Technologies = new List<technology>();
             MyTechnologies = new List<FullTechnology>();
-            Link = new List<links>();            
+            Link = new List<links>();
+            MyWorkhistory = new List<workhistory>();
 
     }
 

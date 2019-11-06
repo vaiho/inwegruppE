@@ -1,6 +1,8 @@
 ﻿@model DoorinWebApp.Viewmodel.FullResume
 
 @{
+    /**/
+
     ViewBag.Title = "Edit";
 }
 
@@ -105,7 +107,7 @@
                 <option value="Yes"> Ja </option>
                 <option value="No"> Nej </option>
             </select>
-            <input type="submit" id="addTechnology" name="addTechnology" value="Lägg till teknologi" onclick=""/>
+            <input type="submit" id="addTechnology" name="addTechnology" value="Lägg till teknologi" onclick="" />
         </div>
 
         <div id="AddMyTechnologies">
@@ -124,7 +126,7 @@
 
     <br />
     <br />
-    <p><b>Länkar</b></p>
+    <h2><b>Länkar:</b></h2>
     <p><b>(Här kan du länka till din professionella profil såsom LinkedIn och GitHub)</b></p>
 
 
@@ -151,7 +153,7 @@
                 <tr>
                     <td>@link.name</td>
                     <td>@link.link</td>
-                    <td><input class="btnRemoveLink btn btn-default" type="button" value="Ta bort" onclick="Remove(this)" /></td>
+                    <td><input class="btnRemoveLink btn btn-default" type="button" value="Ta bort" onclick="RemoveLink(this)" /></td>
                 </tr>
             }
         </tbody>
@@ -182,19 +184,74 @@
     <tbody>
         @foreach (var edu in Model.MyEducations)
         {
-        <tr>
-            <td>@edu.title - </td>
-            <td>@edu.resume_id - </td>
-            <td>@edu.description - </td>
-            <td>@edu.date</td>
-            
+            <tr>
+                <td>@edu.title - </td>
+                <td>@edu.resume_id - </td>
+                <td>@edu.description - </td>
+                <td>@edu.date</td>
 
-        </tr>
+
+            </tr>
         }
     </tbody>
 
-
     <br />
+    <br />
+    <br />
+    <br />
+    <h2><b>Arbetshistoria:</b></h2>
+    <p><b>(Här kan du fylla i information om tidigare anställningar)</b></p>
+    <table class="table" id="tblWorkhistory">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Namn på arbetsgivaren")
+                </th>
+                <th>
+                    @Html.DisplayName("Position")
+                </th>
+                <th>
+                    @Html.DisplayName("Beskrivning av arbetet")
+                </th>
+                <th>
+                    @Html.DisplayName("Datum")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var work in Model.MyWorkhistory)
+            {
+                <tr>
+                    <td>@work.employer</td>
+                    <td>@work.position</td>
+                    <td>@work.description</td>
+                    <td>@work.date</td>
+                    <td><input class="btnRemoveWorkhistory btn btn-default" type="button" value="Ta bort" onclick="RemoveWorkhistory(this)" /></td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td><input type="text" id="txtEmployer" /></td>
+                <td><input type="text" id="txtPosition" /></td>
+                <td><input type="text" id="txtDescription" /></td>
+                <td><input type="text" id="txtDate" /></td>
+                <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
+
+                <td>
+                    <input class="btnAddWorkhistory btn btn-default" type="button" name="name" value="Lägg till" />
+                </td>
+
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+
+
+
+
+    </table>
     <br />
     <br />
 
@@ -232,8 +289,8 @@
             cell = $(row.insertCell(-1));
             var btnRemove = $("<input class=btn btn-default/>");
             btnRemove.attr("type", "button");
-            btnRemove.attr("onclick", "Remove(this);");
-            btnRemove.val("Remove");
+            btnRemove.attr("onclick", "RemoveLink(this);");
+            btnRemove.val("Ta bort");
             cell.append(btnRemove);
 
             //Clear the TextBoxes.
@@ -241,18 +298,76 @@
             txtLink.val("");
         });
 
-        function Remove(button) {
+        function RemoveLink(button) {
             //Determine the reference of the Row using the Button.
             var row = $(button).closest("TR");
             var name = $("TD", row).eq(0).html();
             if (confirm("Do you want to delete: " + name)) {
                 //Get the reference of the Table.
                 var table = $("#tblLinks")[0];
-
                 //Delete the Table row using it's Index.
                 table.deleteRow(row[0].rowIndex);
             }
         };
+
+        $(".btnAddWorkhistory").click(function () {
+            //Reference the Name and Link TextBoxes.
+            var txtEmployer = $("#txtEmployer");
+            var txtPosition = $("#txtPosition");
+            var txtDescription = $("#txtDescription");
+            var txtDate = $("#txtDate");
+
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tblWorkhistory > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add employer cell.
+            var cell = $(row.insertCell(-1));
+            cell.html(txtEmployer.val());
+
+            //Add position cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtPosition.val());
+
+            //Add description cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtDescription.val());
+
+            //Add date cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtDate.val());
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<input class=btn btn-default/>");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "RemoveWorkhistory(this);");
+            btnRemove.val("Ta bort");
+            cell.append(btnRemove);
+
+            //Clear the TextBoxes.
+            txtEmployer.val("");
+            txtPosition.val("");
+            txtDescription.val("");
+            txtDate.val("");
+        });
+
+
+
+        function RemoveWorkhistory(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblWorkhistory")[0]; //TODO:Test för workhistory
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
 
 
         $("body").on("click", "#btnSave", function () {
@@ -266,6 +381,22 @@
                 link.Link = row.find("TD").eq(1).html();
                 link.resume_id = resume_id;
                 links.push(link);
+
+            });
+
+            var wh = new Array();
+            var resume_id = $("#resume_id").val();
+            $("#tblWorkhistory TBODY TR").each(function () {
+                var row = $(this);
+                var workhistory = {};
+                workhistory.employer = row.find("TD").eq(0).html().trim();
+                workhistory.position = row.find("TD").eq(1).html().trim();
+                workhistory.description = row.find("TD").eq(0).html().trim();
+                workhistory.date = row.find("TD").eq(1).html().trim();
+
+                workhistory.resume_id = resume_id;
+                wh.push(workhistory);
+
             });
 
             //Send the JSON array to Controller using AJAX.
@@ -278,7 +409,21 @@
                 success: function (r) {
                     //alert("link(s) updated.");
                 }
-            });
+                });
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Workhistories/InsertWorkhistory",
+                    data: JSON.stringify(wh),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        //alert("link(s) updated.");
+                    }
+                });
+
+
         });
 
         // Script rörande Competens-DropDownListan
