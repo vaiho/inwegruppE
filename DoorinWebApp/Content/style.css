@@ -81,12 +81,16 @@ a:hover {
 
 /*#endregion*/
 
+.coretech {
+    background-color: #09964f;
+}
+
 .competence {
     display: inline-block;
     background-color: #ddd;
-    padding: 8px 12px;
+    padding: 6px 8px;
     font-size: 16px;
-    margin-right: 10px;
+    margin: 0 5px 5px 0;
 }
 
 .around {

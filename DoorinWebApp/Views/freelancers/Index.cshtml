@@ -91,7 +91,7 @@
                     <td>
                         @foreach (var x in item.CompetencesList)
                         {
-                            <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
+                            <span class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
                         }
                     </td>
                     <td>
@@ -99,12 +99,12 @@
                         {
                             if (x.core_technology == true) //Kärnteknologi
                             {
-                                <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
+                                <span style="background-color:#2c473d; color:#FFF;" class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
                                 //<span style= "margin:2px; border: 2px solid #09964f; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
                             }
                             else //Ej kärnteknologi
                             {
-                                <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
+                                <span class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
                                 //<span style="margin:2px; border: 2px solid #ddd; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
                             }
                         }
