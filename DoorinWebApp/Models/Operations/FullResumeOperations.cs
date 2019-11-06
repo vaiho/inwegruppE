@@ -35,13 +35,13 @@ namespace DoorinWebApp.Models.Operations
                             fullResume.Lastname = reader.GetString(2);
                             fullResume.Resume_id = reader.GetInt32(3);
                             fullResume.Profile = reader.GetString(4);
-                            fullResume.Email = reader.GetString(5);
-                            fullResume.Nationality = reader.GetString(6);
-                            fullResume.City = reader.GetString(7);
-                            fullResume.Birthdate = reader.GetDateTime(8);
+                            //fullResume.Email = reader.GetString(5);
+                            //fullResume.Nationality = reader.GetString(6);
+                            //fullResume.City = reader.GetString(7);
+                            //fullResume.Birthdate = reader.GetDateTime(8);
                             fullResume.Driving_license = reader.GetString(9).Trim();
-                            fullResume.Address = reader.GetString(10);
-                            fullResume.Zipcode = reader.GetString(11);
+                            //fullResume.Address = reader.GetString(10);
+                            //fullResume.Zipcode = reader.GetString(11);
                             
                         }
                     }
