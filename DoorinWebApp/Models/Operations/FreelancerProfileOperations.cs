@@ -41,6 +41,7 @@ namespace DoorinWebApp.Models.Operations
                 GetTechnology(fp); //Hämtar och sparar teknologier
                 GetEducation(fp); //Hämtar och sparar utbildningar
                 GetWorkHistory(fp); //Hämtar och sparar workhistory
+                GetLinks(fp); // Hämtar och sparar länkar
             }
             catch (SqlException ex)
             {
@@ -283,6 +284,31 @@ namespace DoorinWebApp.Models.Operations
             catch (SqlException ex)
             {
                 //TODO: gör något med felmeddelandet
+                throw;
+            }
+        }
+
+        public void GetLinks(FreelancerProfileVM fp)
+        {
+            try
+            {
+                var list = (from l in db.links
+                            join r in db.resume on l.resume_id equals r.resume_id
+                            where l.resume_id == fp.Resume_id
+                            select new { l.link_id, l.name, l.link }).ToList();
+
+                foreach (var item in list)
+                {
+                    links li = new links();
+                    li.link_id = item.link_id;
+                    li.name = item.name;
+                    li.link = item.link;
+                    fp.LinkList.Add(li);
+                }
+            }
+            catch (SqlException ex)
+            {
+                //TODO: Felmeddelande
                 throw;
             }
         }
