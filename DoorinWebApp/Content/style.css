@@ -126,6 +126,28 @@ a:hover {
     
 }
 
+
+
+
+.btnless {
+    border-radius: 3px;
+    display: inline-block;
+    border: 1px solid #09964f;
+    background-color: #fff;
+    color: #09964f;
+    padding: 3px 5px;
+    cursor: pointer;
+    font-size: 12px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin-right: 10px;
+}
+
+    .btnless:hover {
+        color: #fff;
+        background-color: #09964f;
+    }
+
 #searchbtn {
     max-width:49px;
     background-color: #09964f;
@@ -218,8 +240,8 @@ a:hover {
 /*#region Styles för freelancers på söksidan*/
 
 .freelancerbox {
-border-top: 1px solid #ddd;
-margin:20px 0 20px 0;
+border: 1px solid #ddd;
+padding:5px;
 }
 
 .freelancerlist {
