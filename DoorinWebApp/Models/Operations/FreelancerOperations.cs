@@ -9,7 +9,7 @@ namespace DoorinWebApp.Models.Operations
     public class FreelancerOperations
     {
         doorinDBEntities db = new doorinDBEntities();
-        public freelancer GetFreelancerById(int? id)
+        public freelancer GetFreelancerById(int? id)              // Denna används inte längre. Ta bort?
         {
             freelancer freelanc = new freelancer();
             FreelancerProfileOperations fpop = new FreelancerProfileOperations();
@@ -89,5 +89,24 @@ namespace DoorinWebApp.Models.Operations
             }
             return (TList);
         }
+
+        public List<technology> GetTechnologiesByCompetenceId(int? id)
+        {
+
+            List<technology> techList = new List<technology>();
+            var tList = (from t in db.technology
+                         where t.competence_id == id
+                         select new { t.name, t.competence_id }).ToList();
+
+            foreach (var technology in tList)
+            {
+                technology item = new technology();
+                item.name = technology.name;
+                techList.Add(item);
+            }
+
+            return techList;
+        }
+
     }
 }

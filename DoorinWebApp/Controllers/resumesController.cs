@@ -98,7 +98,7 @@ namespace DoorinWebApp.Controllers
 
             if (fullResume.MyCompetences.Count == 0)
             {
-                for (int i = 0; i < fullResume.MyCompetences.Count; i++)
+                for (int i = 0; i < fullResume.Competences.Count; i++)
                 {
                     if (fullResume.Competences[i].competence_id == fullResume.SelectedCompetenceId)
                     {
@@ -106,8 +106,8 @@ namespace DoorinWebApp.Controllers
                         int lastComp = fullResume.MyCompetences.Count;
                         lastComp--;
                         resumeOperations.AddMyCompetences(fullResume.MyCompetences[lastComp].competence_id, fullResume.Resume_id);
+                        resumeOperations.GetTechnologyList(fullResume);
 
-                        //vet inte vad jag ska lägga i "num" nu när jag gör en SQL-fråga?
                         int num = db.SaveChanges();
                         return Json(num);
                     }
@@ -132,8 +132,7 @@ namespace DoorinWebApp.Controllers
                                 int lastComp = fullResume.MyCompetences.Count;
                                 lastComp--;
                                 resumeOperations.AddMyCompetences(fullResume.MyCompetences[lastComp].competence_id, fullResume.Resume_id);
-                         
-                                //vet inte vad jag ska lägga i "num" nu när jag gör en SQL-fråga?
+                                resumeOperations.GetTechnologyList(fullResume);
                                 int num = db.SaveChanges();
                                 return Json(num);
                             }
@@ -143,6 +142,33 @@ namespace DoorinWebApp.Controllers
             }
                               
             return View(fullResume);
+        }
+
+        [HttpPost]
+        public ActionResult AddMyTecgnologies(technology_resume objectTechnology)
+        {
+            FullResumeOperations resumeOperations = new FullResumeOperations();
+            resumeOperations.AddMyTechnologies(objectTechnology.technology_id, objectTechnology.resume_id, 
+                objectTechnology.core_technology, objectTechnology.rank);
+
+            FullResume fullResume = resumeOperations.GetFullResumeById(objectTechnology.resume_id);
+            resumeOperations.GetMyTechnologies(fullResume);
+
+            int num = db.SaveChanges();
+            return Json(num);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveMyTecgnologies(technology_resume objectTechnology)
+        {
+            FullResumeOperations resumeOperations = new FullResumeOperations();
+            resumeOperations.RemoveMyTechnologies(objectTechnology.technology_id, objectTechnology.resume_id);
+            FullResume fullResume = resumeOperations.GetFullResumeById(objectTechnology.resume_id);
+
+            //return RedirectToAction("Edit");
+            return RedirectToAction("Edit", fullResume); // remember to pass the model here
+            //int num = db.SaveChanges();
+            //return Json(num);
         }
 
         // POST: resumes/Edit/5
@@ -169,6 +195,8 @@ namespace DoorinWebApp.Controllers
             //ViewBag.freelancer_id = new SelectList(db.freelancer, "freelancer_id", "firstname", resume.freelancer_id);
             return View(resume);
         }
+
+    
 
         // GET: resumes/Delete/5
         public ActionResult Delete(int? id)

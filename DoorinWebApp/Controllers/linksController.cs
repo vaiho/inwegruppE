@@ -137,6 +137,11 @@ namespace DoorinWebApp.Controllers
 
         public JsonResult InsertLinks(List<links> links)
         {
+            if(links == null)
+            {
+                return Json(0);
+            }
+
             if(links.Count == 0)
             {
                 return Json(0);

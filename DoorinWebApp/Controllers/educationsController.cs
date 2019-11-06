@@ -54,7 +54,8 @@ namespace DoorinWebApp.Controllers
             {
                 db.education.Add(education);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "resumes", new { id = education.resume_id });
+                //return RedirectToAction("Index");
             }
 
             ViewBag.resume_id = new SelectList(db.resume, "resume_id", "driving_license", education.resume_id);
@@ -88,7 +89,8 @@ namespace DoorinWebApp.Controllers
             {
                 db.Entry(education).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "resumes", new { id = education.resume_id });
+                //return RedirectToAction("Index");
             }
             ViewBag.resume_id = new SelectList(db.resume, "resume_id", "driving_license", education.resume_id);
             return View(education);
@@ -117,7 +119,8 @@ namespace DoorinWebApp.Controllers
             education education = db.education.Find(id);
             db.education.Remove(education);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Edit", "resumes", new { id = education.resume_id });
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

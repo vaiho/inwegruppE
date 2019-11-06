@@ -18,7 +18,7 @@
 
         <input id="SearchString" name="SearchString" type="text" placeholder="Sök här" value="">
         @*<input type="submit" id="searchButton" value="Sök" />*@
-        <p class="btn" id="searchButton">Sök</p>
+        @*<p class="btn" id="searchButton">Sök</p>*@
         <input type="submit" value="Nollställ" onclick="setValue('')" />
 
         <div id="filterbtn" class="filterbtn" onclick="myFunction()">
@@ -35,6 +35,8 @@
                 @foreach (var item in ViewBag.Competence)
                 {
                     <p class="filters" id="@item.name">@item.name</p>
+                    @*<p class="filters" id="Competence" value="@item.competence_id" name="Competence" onclick="myFunction2()">@item.name</p>*@
+                    @*<input type="button" class="filters" id="Competence" value="@item.name" name="Competence" onclick="getTechnologiesByCompetence(@item.competence_id)"/>*@
                 }
 
                 <br />
@@ -45,34 +47,15 @@
                 {
                     <p class="filters" id="@item.name">@item.name</p>
                 }
-
                 <br />
+                @*<select id="rankvalue">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>*@
             </div>
-            @*
-                OLD:
-            <hr />
-            <h4 style="font-weight:bold;">Kompetenser</h4>
-            @foreach (var item in ViewBag.Competence)
-            {
-                <button class="filters" id="@item.name">@item.name</button>
-            }*@
-            @*@foreach (var item in ViewBag.Competence)
-            {
-                <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-            }*@
-
-            @*<br />
-
-            <h4 style="font-weight:bold;">Teknologier</h4>
-            @foreach (var item in ViewBag.Technology)
-            {
-                <button class="filters" id="@item.name">@item.name</button>
-            }*@
-            @*@foreach (var item in ViewBag.Technology)
-            {
-                <input class="filters" type="submit" onclick="setValue('@item.name')" value="@item.name" />
-            }*@
-
         </div>
     </div>
     }
@@ -113,7 +96,16 @@
                     <td>
                         @foreach (var x in item.TechnologysList)
                         {
-                            <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
+                            if (x.core_technology == true) //Kärnteknologi
+                            {
+                                <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
+                                //<span style= "margin:2px; border: 2px solid #09964f; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
+                            }
+                            else //Ej kärnteknologi
+                            {
+                                <span class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name),</span>
+                                //<span style="margin:2px; border: 2px solid #ddd; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
+                            }
                         }
                     </td>
                     <td>
@@ -148,12 +140,14 @@
     //        });
     //    });
     //});
-
+    
 
     //TODO: Flytta script till .js-filen
+    //Källa: https://caveofcode.com/2016/02/jquery-tutorial-how-to-filter-data-using-multiple-parameters/
     $(function () {
         //Fritextsök
         $('#SearchString').keyup(filter); 
+
 
         //När man klickar på en knapp, = toggleClass -> active
         $('.filters').click(function () {
@@ -188,7 +182,7 @@
 
             for (var i = 0; i < all.length; i++) {
                 var item = $(selector).find('[data="' + all[i].id + '"]'); //(if item.name == filterbutton.name)
-                
+
                 if (!item.hasClass('filterItem')) {
                     tester = false;
                 }
@@ -197,4 +191,57 @@
         }
     });
 </script>
+
+@*<script>
+    function myFunction2() {
+
+        var x = document.getElementById("Competence").innerHTML;
+        //var competenceId = $("#Competence").val();
+        //var selectedCompetence = document.getElementById("Competence").innerHTML;
+        //var competenceId = value;
+        //var competenceId = selectedCompetence.options[selectedCompetence].value;
+            //options[selectedCompetence].value;
+
+        alert(x);
+        }
+
+</script>*@
+
+@*<script>    
+        
+    $('#Competence').click(function () {
+
+        var selectedCompetence = document.getElementById('Competence');
+                var competenceId = selectedCompetence.options[selectedCompetence].value;
+
+                // ska testa om det gick att hämta värdet på resume så jag sedan kan hämta detta i databasen ifrån
+                // controllern
+                //var resume_id = $("#resume_id").val();
+                //var freelancer_id = $("#freelancer_id").val();
+                alert(HEJ!);
+                var compObj = {
+                    competence_id: competenceId, resume_id: 0, name: Anna
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/freelancers/Index",
+                    data: JSON.stringify(compObj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        alert("Kompetensen är tillagd.");
+                        document.location.reload(true)
+                    },
+
+                    error: function (xhr) {
+
+                        alert("Nånting blev fel.");
+
+                    }
+                });
+
+            });
+       
+</script>*@
 

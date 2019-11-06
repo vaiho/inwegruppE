@@ -4,59 +4,68 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-<head>
-    @Styles.Render("~/Content/style.css")
-</head>
+<div>
+    @Html.ActionLink("Tillbaka", "Details", "freelancers", new { id = Model.Freelancer_id }, null)
+</div>
 
+<h2>Redigera ditt CV @Html.DisplayFor(model => model.Firstname) @Html.DisplayFor(model => model.Lastname) </h2>
+
+<br />
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>resume</h4>
+<div class="form-horizontal">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(@Model => @Model.Resume_id)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(@Model => @Model.Resume_id)
 
-        <div class="form-group">
+    <div class="form-group" style="display:none;">
 
-            @Html.LabelFor(@Model => @Model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(@Model => @Model.Freelancer_id, "", new { @class = "text-danger" })
-                <input type="hidden" id="freelancer_id" value="@Model.Freelancer_id" />
-            </div>
+        @Html.LabelFor(@Model => @Model.Freelancer_id, "freelancer_id", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("freelancer_id", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(@Model => @Model.Freelancer_id, "", new { @class = "text-danger" })
+            <input type="hidden" id="freelancer_id" value="@Model.Freelancer_id" />
         </div>
+    </div>
 
-        @*<div class="form-group">
-                @Html.LabelFor(@Model => @Model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(@Model => @Model.Driving_license, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(@Model => @Model.Driving_license, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
 
-        @*Bytt ut ovanstående så att det visas i en dropdown.*@
-        <div class="form-group">
-            @Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })
-            @*Html.Label("Körkort"), htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+    @*<div class="form-group">
+            @Html.LabelFor(@Model => @Model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Har du körkort? -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Driving_license, "", new { @class = "text-danger" })
+                @Html.EditorFor(@Model => @Model.Driving_license, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(@Model => @Model.Driving_license, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
-            </div>
+    @*Bytt ut ovanstående så att det visas i en dropdown.*@
+    <div class="form-group">
+        @*Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        @Html.Label("B-körkort", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Har du körkort? -", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Driving_license, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div>
+    <div class="form-group">
+        @*Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        @Html.Label("Profil (kort beskrivning av dig)", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(@Model => @Model.Profile, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div>
+        <hr />
+        <h2>Kompetenser:</h2>
+        <br />
+
+        <div class="col-md-6">
             <p><b>Lägg till kompetenser</b></p>
             <select class="form-control" id="Competences" name="Competences">
                 <option> Välj en kompetens att lägga till</option>
@@ -67,9 +76,8 @@
             </select>
         </div>
 
-        <div id="AddMyCompetences">
+        <div class="col-md-6" id="AddMyCompetences">
             <p><b>Mina kompetenser</b></p>
-
             <select class="form-control" id="Competences" name="Competences">
                 @foreach (var item in Model.MyCompetences)
                 {
@@ -78,35 +86,92 @@
                 }
             </select>
         </div>
-
-        <div>
-            <p><b>Lägg till teknologier</b></p>
-
-            <select class="form-control">
-                @foreach (var item in Model.Technologies)
-                {
-                    <option> @item.name </option>
-                }
-            </select>
-        </div>
-
-        <div id="AddMyTechnologies">
-            <p><b>Mina teknologier</b></p>
-
-            <select class="form-control">
-                @foreach (var item in Model.MyTechnologies)
-                {
-                    <option> @item.name </option>
-                }
-            </select>
-        </div>
-
-
     </div>
 
+    <div class="container"></div>
     <br />
+    <hr />
+
+    <div>
+        <h2>Teknologier:</h2>
+        <br />
+        <div class="col-md-6">
+            <p><b>Lägg till teknologier</b></p>
+            <select class="form-control" id="Technologies" name="Technologies">
+                <option> Välj en teknologi att lägga till</option>
+                @foreach (var item in Model.Technologies)
+                {
+                    <option value="@item.technology_id"> @item.name </option>
+                }
+            </select>
+
+            <p><b>Rankning</b></p>
+            <select class="form-control" id="rank" name="rank">
+                <option value="1"> 1 </option>
+                <option value="2"> 2 </option>
+                <option value="3"> 3 </option>
+                <option value="4"> 4 </option>
+                <option value="5"> 5 </option>
+            </select>
+
+            <p><b>Kärnförmågor</b></p>
+            <select class="form-control" id="core_technology" name="core_technology">
+                <option value="Yes"> Ja </option>
+                <option value="No"> Nej </option>
+            </select>
+            <input type="submit" id="addTechnology" name="addTechnology" value="Lägg till teknologi" onclick="" />
+
+        </div>
+
+        <div class="col-md-6">
+            <p><b>Mina teknologier</b></p>
+            <select class="form-control" id="MyTechnologies" name="MyTechnologies">
+                @foreach (var item in Model.MyTechnologies)
+                {
+                    <option value="@item.technology_id"> @item.name </option>
+                }
+            </select>
+            <input type="submit" value="Ta bort tekonologi" onclick="RemoveTechnology()" />
+        </div>
+    </div>
+
+
+    <hr />
+
+    <div class="container"></div>
     <br />
-    <p><b>Länkar</b></p>
+    <hr />
+
+    <div>
+        <h2>Utbildningar: </h2>
+        <br />
+        <div>
+            @foreach (var edu in Model.MyEducations)
+            {
+                <div class="col-md-6">
+                    <p><strong>Titel:</strong> @edu.title</p>
+                    <p><strong>Beskrivning:</strong> @edu.description</p>
+                    <p><strong>Datum: </strong>@edu.date</p>
+                    <p>
+                        @Html.ActionLink("Redigera", "Edit", "educations", new { id = edu.education_id }, null) |
+                        @Html.ActionLink("Radera", "Delete", "educations", new { id = edu.education_id }, null)
+                    </p>
+                    <hr />
+                </div>
+            }
+        </div>
+        <div class="container"></div>
+        @Html.ActionLink("Lägg till utbildning", "Create", "educations", new { id = Model.Resume_id }, null)
+    </div>
+
+
+</div>
+
+    <br />
+    <hr />
+
+    <h2>Länkar:</h2>
+    <p>Här lägger du till länkar till dina professionella sidor såsom LinkedIn och GitHub)</p>
 
 
     //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
@@ -117,7 +182,8 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Linkname)
+                    @*Html.DisplayNameFor(model => model.Linkname)*@
+                    @Html.DisplayName("Namn på länken (exempelvis LinkedIn, GitHub)")
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Url)
@@ -156,6 +222,29 @@
 
     <br />
     <br />
+
+
+    @*<h2><b>Utbildningar:</b></h2>
+        <tbody>
+
+            @foreach (var edu in Model.MyEducations)
+            {
+                <tr>
+
+                    <p><strong>Titel:</strong> @edu.title</p>
+                    <p><strong>Beskrivning:</strong> @edu.description</p>
+                    <p><strong>Datum: </strong>@edu.date</p>
+
+                    @Html.ActionLink("Redigera", "Edit", "educations", new { id = edu.education_id }, null) |
+                    @Html.ActionLink("Radera", "Delete", "educations", new { id = edu.education_id }, null)
+
+                    <hr />
+
+                </tr>
+            }
+        </tbody>
+        @Html.ActionLink("Lägg till utbildning", "Create", "educations", new { id = Model.Resume_id }, null)*@
+
     <br />
     <br />
     <br />
@@ -166,6 +255,9 @@
         </div>
     </div>
 
+    <br />
+    <br />
+    <br />
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
@@ -249,9 +341,6 @@
 
                 var selectedCompetence = document.getElementById("Competences");
                 var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
-
-                // ska testa om det gick att hämta värdet på resume så jag sedan kan hämta detta i databasen ifrån
-                // controllern
                 var resume_id = $("#resume_id").val();
                 var freelancer_id = $("#freelancer_id").val();
 
@@ -261,7 +350,7 @@
                     "MyCompetences": "null", "Technologies": "null", "Technologies": "null", "Link": "facebook.com",
                     "Linkname": "facebook", "Url": ".com", "Firstname": "hej", "Lastname": "hejson",
                     "Address": "hrj", "City": "sundsvall", "Zipcode": "hej", "Phonenumber": "082",
-                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "svrige",
+                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "sverige",
                     "SelectedCompetenceId": competenceId
                 };
 
@@ -287,14 +376,104 @@
 
 
         });
-                // Script rörande Competens-DropDownListan slutar här
+        // Script rörande Competens-DropDownListan slutar här
+
+
+        // Måste fixa så att detta anropas när man klickar på knappen lägg till "kompetenser". Nu hinner man inte välja
+        //Kärnförmåga eller rankning innan metoden anropas
+        // Script rörande Technologies-DropDownListan
+        $(document).ready(function () {
+            $("#Technologies").change(function () {
+
+                var selectedTechnology = document.getElementById("Technologies");
+                var technologyId = selectedTechnology.options[selectedTechnology.selectedIndex].value;
+                var resume_id = $("#resume_id").val();
+                var selectedRank = document.getElementById("rank");
+                var rankValue = selectedRank.options[selectedRank.selectedIndex].value;
+                var selectedCore = document.getElementById("rank");
+                var coreValue = selectedCore.options[selectedCore.selectedIndex].value;
+
+                @*alert(technologyId);*@
+                var techObj = {
+                    technology_id: technologyId, resume_id: resume_id, core_technology: rankValue,
+                    rank: coreValue, resume: null, technology: null
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Resumes/AddMyTecgnologies",
+                    data: JSON.stringify(techObj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        alert("Teknologin är tillagd.");
+                        document.location.reload(true)
+                    },
+
+                    error: function (xhr) {
+
+                        alert("Nånting blev fel.");
+
+                    }
+                });
+
+            });
+
+
+        });
+            // Script rörande Technologies-DropDownListan slutar här
+        var selectedTechnologyId;
+        var selectedResumeId;
+        // Script ta bort teknology
+          $(document).ready(function () {
+            $("#MyTechnologies").change(function () {
+
+                var selectedTechnology = document.getElementById("MyTechnologies");
+                var technologyId = selectedTechnology.options[selectedTechnology.selectedIndex].value;
+                var resume_id = $("#resume_id").val();
+
+                selectedTechnologyId = technologyId;
+                selectedResumeId = resume_id;
+
+            });
+
+
+          });
+
+        function RemoveTechnology() {
+
+             var techObj = {
+                    technology_id: selectedTechnologyId, resume_id: selectedResumeId, core_technology: null,
+                    rank: 0, resume: null, technology: null
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Resumes/RemoveMyTecgnologies",
+                    data: JSON.stringify(techObj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        alert("Teknologin är borttagen.");
+                        document.location.reload(true)
+                    },
+
+                    error: function (xhr) {
+
+                        alert("Nånting blev fel.");
+
+                    }
+                });
+        }
 
     </script>
+
+    
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
 
 
 
@@ -307,10 +486,6 @@
 @*Bortkommenterat vid conflict/sync*@
 
 @*
-        <div>
-        @Html.ActionLink("Tillbaka", "Details", "freelancers", new { id = Model.freelancer_id }, null)
-    </div>
-        <h2>Redigera ditt CV @Html.DisplayFor(model => model.freelancer.firstname) @Html.DisplayFor(model => model.freelancer.lastname) </h2>
 
 
     @using (Html.BeginForm())
