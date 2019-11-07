@@ -33,19 +33,7 @@
             </div>
         </div>
 
-
-
-        @*<div class="form-group">
-                @Html.LabelFor(@Model => @Model.Driving_license, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(@Model => @Model.Driving_license, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(@Model => @Model.Driving_license, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        @*Bytt ut ovanstående så att det visas i en dropdown.*@
         <div class="form-group">
-            @*Html.LabelFor(model => model.DrivingLicenceChoice, htmlAttributes: new { @class = "control-label col-md-2" })*@
             @Html.Label("B-körkort", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Driving_license, Model.DrivingLicenceChoice, "- Har du körkort? -", new { @class = "form-control" })
@@ -54,7 +42,6 @@
         </div>
 
         <div class="form-group">
-            @*Html.LabelFor(@Model => @Model.Profile, htmlAttributes: new { @class = "control-label col-md-2" })*@
             @Html.Label("Profil (kort beskrivning av dig)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(@Model => @Model.Profile, new { htmlAttributes = new { @class = "form-control" } })
@@ -147,7 +134,6 @@
             </div>
         </div>
 
-
         <hr />
 
         <div class="container"></div>
@@ -237,11 +223,6 @@
 
 
     <h2>Länkar:</h2>
-
-    //Inspiration från https://www.aspsnippets.com/Articles/Dynamically-add-rows-to-HTML-Table-in-ASPNet-MVC.aspx och
-    //https://forums.asp.net/t/2126284.aspx?MVC+Input+in+form+of+Table+With+Add+Delete+Row
-    // Ny inspirations-länk för att skicka över objekt med Json:
-    //https://andrewlock.net/model-binding-json-posts-in-asp-net-core/?fbclid=IwAR3c5Cr4QzojMNkgMZ4Zy14-CRerAxFKbRVGs6tUeyDjS0ySFk342K5EH1Q#how-it-works-in-asp-net-4
     <table class="table" id="tblLinks">
         <thead>
             <tr>
@@ -292,11 +273,6 @@
     </div>
 
     <br />
-
-
-
-
-
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
@@ -488,14 +464,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
-                        alert("Kompetensen är tillagd.");
                         document.location.reload(true)
-                    },
-
-                    error: function (xhr) {
-
-                        alert("Nånting blev fel.");
-
                     }
                 });
         }
@@ -553,14 +522,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
-                        alert("Teknologin är tillagd.");
                         document.location.reload(true)
-                    },
-
-                    error: function (xhr) {
-
-                        alert("Nånting blev fel.");
-
                     }
                 });
         }
@@ -597,14 +559,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
-                        alert("Teknologin är borttagen.");
                         document.location.reload(true)
-                    },
-
-                    error: function (xhr) {
-
-                        alert("Nånting blev fel.");
-
                     }
                 });
 
@@ -640,14 +595,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
-                        alert("Teknologin är borttagen.");
                         document.location.reload(true)
-                    },
-
-                    error: function (xhr) {
-
-                        alert("Nånting blev fel.");
-
                     }
                 });
         }
