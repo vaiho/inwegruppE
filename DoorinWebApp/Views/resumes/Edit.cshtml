@@ -7,7 +7,7 @@
 }
 
 <div>
-    @Html.ActionLink("Tillbaka", "Details", "freelancers", new { id = Model.Freelancer_id }, null)
+    @Html.ActionLink("Tillbaka", "Details", "freelancers", new { id = Model.Freelancer_id }, new { @class = "btnless", @style="margin:0;" })
 </div>
 
 <h2>Redigera ditt CV @Html.DisplayFor(model => model.Firstname) @Html.DisplayFor(model => model.Lastname) </h2>
