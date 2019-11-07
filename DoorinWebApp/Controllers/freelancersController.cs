@@ -29,8 +29,6 @@ namespace DoorinWebApp.Controllers
             return View(fpop.GetFreelancersList());
         }
 
-
-
         // GET: freelancers/Details/5
         public ActionResult Details(int? id)
         {
@@ -76,7 +74,7 @@ namespace DoorinWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "freelancer_id,firstname,lastname,address,city,zipcode,phonenumber,email,birthdate,birthcity,nationality,username,password")] freelancer freelancer)
         {
-            //Johans test
+            //Lista av valbara länder
             var countries = GetCountries();
             freelancer fr = new freelancer();
             freelancer.country = GetSelectListItems(countries); 
