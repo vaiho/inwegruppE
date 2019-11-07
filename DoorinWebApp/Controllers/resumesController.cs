@@ -148,9 +148,24 @@ namespace DoorinWebApp.Controllers
         [HttpPost]
         public ActionResult AddMyTecgnologies(technology_resume objectTechnology)
         {
+            if (objectTechnology.rank == null && objectTechnology.core_technology == null)
+            {
+                objectTechnology.rank = 0;
+                objectTechnology.core_technology =false;
+                
+            }
+            else if (objectTechnology.rank == null)
+            {
+                objectTechnology.rank = 0;
+            }
+            else if (objectTechnology.core_technology == null)
+            {
+                objectTechnology.core_technology = false;
+            }
+
             FullResumeOperations resumeOperations = new FullResumeOperations();
             resumeOperations.AddMyTechnologies(objectTechnology.technology_id, objectTechnology.resume_id, 
-                objectTechnology.core_technology, objectTechnology.rank);
+            objectTechnology.core_technology, objectTechnology.rank);
             // CV:t hämtas för att listan med kompetenser ska uppdateras
             FullResume fullResume = resumeOperations.GetFullResumeById(objectTechnology.resume_id);
             resumeOperations.GetMyTechnologies(fullResume);
@@ -173,14 +188,14 @@ namespace DoorinWebApp.Controllers
 
 
         [HttpPost]
-        public ActionResult RemoveMyCompetences(FullResume objectCompetence)
+        public ActionResult RemoveMyCompetences(competence competence)
         {
             FullResumeOperations resumeOperations = new FullResumeOperations();
-            resumeOperations.RemoveMyCompetences(objectCompetence.SelectedCompetenceId, objectCompetence.Resume_id);
+            resumeOperations.RemoveMyCompetences(competence.competence_id, competence.resume_id);
             // CV:t hämtas för att listan med kompetenser ska uppdateras
-            FullResume fullResume = resumeOperations.GetFullResumeById(objectCompetence.Resume_id);
+            FullResume fullResume = resumeOperations.GetFullResumeById(competence.resume_id);
 
-            return RedirectToAction("Edit", "resumes", new { id = objectCompetence.Resume_id });
+            return RedirectToAction("Edit", "resumes", new { id = competence.resume_id });
         }
 
         // POST: resumes/Edit/5

@@ -122,6 +122,7 @@
 
                 <p><b>Rankning</b></p>
                 <select class="form-control" id="rank" name="rank">
+                    <option>Välj en rankning</option>
                     <option value="1"> 1 </option>
                     <option value="2"> 2 </option>
                     <option value="3"> 3 </option>
@@ -131,10 +132,11 @@
 
                 <p><b>Kärnförmåga</b></p>
                 <select class="form-control" id="core_technology" name="core_technology">
-                    <option value="Yes"> Ja </option>
-                    <option value="No"> Nej </option>
+                    <option>Är denna teknologi en kärnförmåga?</option>
+                    <option value="True"> Ja </option>
+                    <option value="False"> Nej </option>
                 </select>
-                <input type="submit" id="addTechnology" name="addTechnology" value="Lägg till teknologi" onclick="" />
+                <input type="submit" id="addTechnology" name="addTechnology" value="Lägg till teknologi" onclick="AddTechnology()" />
 
             </div>
 
@@ -483,7 +485,6 @@
                 var selectedCompetence = document.getElementById("Competences");
                 var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
                 var resume_id = $("#resume_id").val();
-                var freelancer_id = $("#freelancer_id").val();
 
                  var compObj = {
                  competence_id: competenceId, resume_id: resume_id, name: null
@@ -511,27 +512,51 @@
 
 
         });
-        // Script rörande Competens-DropDownListan slutar här
 
 
-        // Måste fixa så att detta anropas när man klickar på knappen lägg till "kompetenser". Nu hinner man inte välja
-        //Kärnförmåga eller rankning innan metoden anropas
-        // Script rörande Technologies-DropDownListan
+        // Script lägga till teknologi
+        var selectedRemoveTechnologyId; // ligger här så jag når dem då jag ska lägga till en teknologi
+        var selectedRank;
+        var selectedCoreTech;
         $(document).ready(function () {
             $("#Technologies").change(function () {
 
                 var selectedTechnology = document.getElementById("Technologies");
                 var technologyId = selectedTechnology.options[selectedTechnology.selectedIndex].value;
-                var resume_id = $("#resume_id").val();
-                var selectedRank = document.getElementById("rank");
-                var rankValue = selectedRank.options[selectedRank.selectedIndex].value;
-                var selectedCore = document.getElementById("rank");
+
+                selectedRemoveTechnologyId = technologyId;         
+            });
+        });
+
+          $(document).ready(function () {
+            $("#rank").change(function () {
+
+                var selectedRankId = document.getElementById("rank");
+                var rankValue = selectedRankId.options[selectedRankId.selectedIndex].value;
+
+                selectedRank = rankValue;
+                
+            });
+          });
+
+        
+          $(document).ready(function () {
+            $("#core_technology").change(function () {
+
+                var selectedCore = document.getElementById("core_technology");
                 var coreValue = selectedCore.options[selectedCore.selectedIndex].value;
 
-                @*alert(technologyId);*@
+                selectedCoreTech = coreValue;
+                
+            });
+        });
+        function AddTechnology() {
+
+            var resume_id = $("#resume_id").val();
+
                 var techObj = {
-                    technology_id: technologyId, resume_id: resume_id, core_technology: rankValue,
-                    rank: coreValue, resume: null, technology: null
+                    technology_id: selectedRemoveTechnologyId, resume_id: resume_id, core_technology: selectedCoreTech,
+                    rank: selectedRank, resume: null, technology: null
                 };
 
                 $.ajax({
@@ -552,23 +577,18 @@
                     }
                 });
 
-            });
 
+        }
 
-        });
-            // Script rörande Technologies-DropDownListan slutar här
+             // Script ta bort teknology
         var selectedTechnologyId; // ligger här så jag når dem då jag ska ta bort de man valt i dropdwonlistan
-        var selectedResumeId;
-        // Script ta bort teknology
           $(document).ready(function () {
             $("#MyTechnologies").change(function () {
 
                 var selectedTechnology = document.getElementById("MyTechnologies");
                 var technologyId = selectedTechnology.options[selectedTechnology.selectedIndex].value;
-                var resume_id = $("#resume_id").val();
 
                 selectedTechnologyId = technologyId;
-                selectedResumeId = resume_id;
 
             });
 
@@ -576,9 +596,10 @@
           });
 
         function RemoveTechnology() {
+            var resume_id = $("#resume_id").val();
 
              var techObj = {
-                    technology_id: selectedTechnologyId, resume_id: selectedResumeId, core_technology: null,
+                    technology_id: selectedTechnologyId, resume_id: resume_id, core_technology: null,
                     rank: 0, resume: null, technology: null
                 };
 
@@ -601,44 +622,26 @@
                 });
         }
 
-        var selectedCompetenceId; // ligger här så jag når dem då jag ska ta bort de man valt i dropdwonlistan
-        var selectedResumeId;
-        // Script ta bort teknology
+      
+        // Script ta bort kompetens
+          var selectedCompetenceId; // ligger här så jag når dem då jag ska ta bort de man valt i dropdwonlistan
           $(document).ready(function () {
             $("#MyCompetences").change(function () {
 
                 var selectedCompetence = document.getElementById("MyCompetences");
                 var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
-                var resume_id = $("#resume_id").val();
-
-                alert(competenceId);
-
                 selectedCompetenceId = competenceId ;
-                selectedResumeId = resume_id;
 
             });
-
-
           });
 
         function RemoveCompetence() {
-
-            var compObj = {
-                    Resume_id: selectedResumeId, Freelancer_id: null,
-                    "Driving_license": $('#Driving_license').text(), "Profile": "Hej jag heter", "Competences": "null",
-                    "MyCompetences": "null", "Technologies": "null", "Technologies": "null", "Link": "facebook.com",
-                    "Linkname": "facebook", "Url": ".com", "Firstname": "hej", "Lastname": "hejson",
-                    "Address": "hrj", "City": "sundsvall", "Zipcode": "hej", "Phonenumber": "082",
-                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "svrige",
-                    "Email": "0982", "Birthdate": "98", "Birthcity": "sundsvall", "Nationality": "sverige",
-                    "SelectedCompetenceId": SelectedCompetenceId
-                };
+         var resume_id = $("#resume_id").val();
 
 
-             /*var compObj = {
-                 competence_id: SelectedCompetenceId, resume_id: selectedResumeId, name: null
-             };*/
-             alert("HejEba");
+                var compObj = {
+                 competence_id: SelectedCompetenceId, resume_id: resume_id, name: null
+             };
 
                 $.ajax({
                     type: "POST",
