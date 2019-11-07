@@ -142,6 +142,24 @@ a:hover {
     transition-duration: 0.4s;
     margin: 0 0 10px 10px;
 }
+
+
+.btnlessAdd {
+    border-radius: 3px;
+    display: inline-block;
+    border: 1px solid #09964f;
+    background-color: #09964f;
+    color: #fff;
+    padding: 3px 5px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin: 0 0 10px 10px;
+}
+
+
+
 .btnsaved {
     border-radius: 3px;
     display: inline-block;

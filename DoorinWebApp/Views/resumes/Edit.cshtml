@@ -225,7 +225,7 @@
                     <td>@work.position</td>
                     <td>@work.description</td>
                     <td>@work.date</td>
-                    <td><input class="btnRemoveWorkhistory btn btn-default" type="button" value="Ta bort" onclick="RemoveWorkhistory(this)" /></td>
+                    <td><input class="btnless" type="button" value="Ta bort" onclick="RemoveWorkhistory(this)" /></td>
                 </tr>
             }
         </tbody>
@@ -236,10 +236,8 @@
                 <td><input type="text" id="txtPosition" /></td>
                 <td><input type="text" id="txtDescription" /></td>
                 <td><input type="text" id="txtDate" /></td>
-                <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
-
                 <td>
-                    <input class="btnAddWorkhistory btn btn-default" type="button" name="name" value="Lägg till" />
+                    <input class="btnlessAdd btnAddWorkhistory" type="button" name="name" value="Lägg till" />
                 </td>
 
                 <td></td>
@@ -277,7 +275,7 @@
                 <tr>
                     <td>@link.name</td>
                     <td>@link.link</td>
-                    <td><input class="btnRemoveLink btn btn-default" type="button" value="Ta bort" onclick="RemoveLink(this)" /></td>
+                    <td><input  class="btnless" type="button" value="Ta bort" onclick="RemoveLink(this)" /></td>
                 </tr>
             }
         </tbody>
@@ -286,10 +284,8 @@
             <tr>
                 <td><input type="text" id="txtLinkname" /></td>
                 <td><input type="text" id="txtLink" /></td>
-                <td><input type="hidden" id="resume_id" value="@Model.Resume_id" /></td>
-
                 <td>
-                    <input class="btnAddLink btn btn-default" type="button" name="name" value="Lägg till" />
+                    <input class="btnlessAdd btnAddLink" type="button" name="name" value="Lägg till" />
                 </td>
 
                 <td></td>
@@ -339,7 +335,7 @@
 
             //Add Button cell.
             cell = $(row.insertCell(-1));
-            var btnRemove = $("<input class=btn btn-default/>");
+            var btnRemove = $("<input class='btnless'/>");
             btnRemove.attr("type", "button");
             btnRemove.attr("onclick", "RemoveLink(this);");
             btnRemove.val("Ta bort");
@@ -393,7 +389,7 @@
 
             //Add Button cell.
             cell = $(row.insertCell(-1));
-            var btnRemove = $("<input class=btn btn-default/>");
+            var btnRemove = $("<input class='btnless'/>");
             btnRemove.attr("type", "button");
             btnRemove.attr("onclick", "RemoveWorkhistory(this);");
             btnRemove.val("Ta bort");
