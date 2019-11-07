@@ -25,7 +25,9 @@ namespace DoorinWebApp.Controllers
             //Viewbags för filtrering av kompetenser och teknologier 
             ViewBag.Competence = fop.GetAllCompetences();
             ViewBag.Technology = fop.GetAllTechnologies();
-    
+
+            
+
             return View(fpop.GetFreelancersList());
         }
 

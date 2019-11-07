@@ -72,7 +72,16 @@
                     <td>
                         <h2 style="display:inline-block;"><b>@Html.DisplayFor(modelItem => item.Fullname)</b></h2>
                         @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id }, new { @class = "btnless" })
-                        @Html.ActionLink("Spara till min lista", "SaveFreelancer", new { id = item.Freelancer_id }, new { @class = "btnless" })
+                        @if (item.IsSaved == true)
+                        {
+                            //TODO: Ändra metoden så att den tar bort frilansaren istället??
+                            @Html.ActionLink("Ta bort från min lista", "RemoveFreelancer", "freelancers", new { idfromview = item.Freelancer_id }, new { @class = "btnsaved" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Spara till min lista", "SaveFreelancer", new { id = item.Freelancer_id }, new { @class = "btnless" })
+
+                        }
                         <br />
 
                         <h4 style="display:inline-block;">Kompetenser:</h4>

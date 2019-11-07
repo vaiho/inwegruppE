@@ -189,6 +189,10 @@ namespace DoorinWebApp.Models.Operations
 
         public List<FreelancerProfileVM> GetFreelancersList() //Hämtar och returnerar en lista av alla freelancers ink kompetenser och teknologier
         {
+            int id = 5;
+            CustomerOperations co = new CustomerOperations();
+            var list = co.GetSavedFreelancersList(id);
+
             List<FreelancerProfileVM> freelancersList = new List<FreelancerProfileVM>();
             try
             {
@@ -207,6 +211,18 @@ namespace DoorinWebApp.Models.Operations
                     GetCompetences(fp); //Hämtar och sparar kompetenser för freelancer
                     GetTechnology(fp); //Hämtar och sparar teknologier för freelancer
 
+                    //test
+                    foreach (var x in list)
+                    {
+                        if (list.Any(z => z.Freelancer_id == item.freelancer_id))
+                        {
+                            fp.IsSaved = true;
+                        }
+                        else
+                        {
+                            fp.IsSaved = false;
+                        }
+                    }
                     freelancersList.Add(fp);
                 }              
             }

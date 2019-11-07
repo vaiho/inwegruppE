@@ -142,11 +142,29 @@ a:hover {
     transition-duration: 0.4s;
     margin: 0 0 10px 10px;
 }
+.btnsaved {
+    border-radius: 3px;
+    display: inline-block;
+    border: 1px solid #09964f;
+    background-color: #09964f;
+    color: white;
+    padding: 3px 5px;
+    cursor: pointer;
+    font-size: 12px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    margin: 0 0 10px 10px;
+}
 
 .btnless:hover {
         color: #fff;
         background-color: #09964f;
         text-decoration: none;
+}
+.btnsaved:hover {
+    color: #09964f;
+    background-color: #fff;
+    text-decoration: none;
 }
 
 #searchbtn {
