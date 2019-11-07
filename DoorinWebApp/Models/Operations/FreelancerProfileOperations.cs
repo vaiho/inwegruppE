@@ -84,7 +84,7 @@ namespace DoorinWebApp.Models.Operations
             }
             catch (SqlException ex)
             {
-                //TODO: Gör något med felmeddelandet?
+                //TODO: Gör något med felmeddelandet
                 throw;
             }         
         }
@@ -204,8 +204,8 @@ namespace DoorinWebApp.Models.Operations
                     fp.Lastname = item.lastname;
                     fp.Resume_id = item.resume_id;
                     fp.Nationality = item.nationality;
-                    GetCompetences(fp); //Hämtar och sparar kompetenser
-                    GetTechnology(fp); //Hämtar och sparar teknologier
+                    GetCompetences(fp); //Hämtar och sparar kompetenser för freelancer
+                    GetTechnology(fp); //Hämtar och sparar teknologier för freelancer
 
                     freelancersList.Add(fp);
                 }              
@@ -216,27 +216,6 @@ namespace DoorinWebApp.Models.Operations
                 throw;
             }
             return freelancersList;
-        }
-
-        public List<FreelancerProfileVM> FilterByCompetence(int? id)
-        {
-            List<FreelancerProfileVM> allFreelancers = new List<FreelancerProfileVM>();
-            List<FreelancerProfileVM> filteredFreelancers = new List<FreelancerProfileVM>();
-            allFreelancers = GetFreelancersList();
-
-            //filteredFreelancers = allFreelancers.Where(f => f.CompetencesList[].competence_id == 1);
-
-            foreach (var freelancer in allFreelancers)
-            {
-                foreach (var competence in freelancer.CompetencesList)
-                {
-                    if (competence.competence_id == id)
-                        filteredFreelancers.Add(freelancer);
-
-                }
-            }
-            
-            return filteredFreelancers;
         }
 
         public void SaveFreelancerToCustomerList(int? f, int c) //Sparar en kombination mellan freelancer och customer
