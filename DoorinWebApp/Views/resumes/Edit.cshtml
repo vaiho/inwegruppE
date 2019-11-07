@@ -126,7 +126,8 @@
                 @foreach (var item in Model.MyTechnologies)
                 {
                     <tr>
-                        <td>@item.name <input type="button" class="btnless" value="Ta bort" onclick="RemoveTechnology(this)" /></td>
+                        <td>@item.name </td> 
+                        <td><input type="button" class="btnless" value="Ta bort" onclick="RemoveTechnology(this)" /></td>
                         <td hidden> @item.technology_id</td>
                     </tr>                    
                 }
@@ -382,8 +383,8 @@
         function RemoveTechnology(button) {
   
             var row = $(button).closest("TR");
-            var tech = $("TD", row).eq(1).html();
-            var resume_id = $("#resume_id").val();
+            var tech = $("TD", row).eq(2).html();
+            var resume_id = $("#Resume_id").val();
 
              var techObj = {
                     technology_id: tech, resume_id: resume_id, core_technology: null,
@@ -420,7 +421,7 @@
 
             var row = $(button).closest("TR");
             var comp = $("TD", row).eq(2).html();
-            var resume_id = $("#resume_id").val();
+            var resume_id = $("#Resume_id").val();
 
                 var compObj = {
                  competence_id: comp, resume_id: resume_id, name: null
