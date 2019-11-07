@@ -85,9 +85,9 @@
                     {
                     <tr>
 
-                        <td>@item.name </td>
-                                @*TODO: Fixa så länken funkar så man kan ta bort vald competens*@
-                        <td> <input type="button" class="btnless" value="Ta bort" onclick="RemoveCompetence()" /> </td>
+                        <td>@item.name </td>                       
+                        <td> <input type="button" class="btnless" value="Ta bort" onclick="RemoveCompetence(this)" /> </td>
+                        <hidden><td>@item.competence_id</td></hidden>
                     </tr>
 
                     }
@@ -624,20 +624,7 @@
                 });
         }
 
-        //function RemoveTechnologyTest(button) {
-        //    //Determine the reference of the Row using the Button.
-        //    var row = $(button).closest("TR");
-        //    var name = $("TD", row).eq(0).html();
-        //    if (confirm("Do you want to delete: " + name)) {
-        //        //Get the reference of the Table.
-        //        var table = $("#myTechTable")[0];
-
-        //        //Delete the Table row using it's Index.
-        //        table.deleteRow(row[0].rowIndex);
-        //    }
-        //};
-
-      
+             
         // Script ta bort kompetens
           var selectedCompetenceId; // ligger här så jag når dem då jag ska ta bort de man valt i dropdwonlistan
           $(document).ready(function () {
@@ -650,12 +637,17 @@
             });
           });
 
-        function RemoveCompetence() {
-         var resume_id = $("#resume_id").val();
+        function RemoveCompetence(button) {
+
+            var row = $(button).closest("TR");
+            var comp = $("TD", row).eq(2).html();
+            var resume_id = $("#resume_id").val();
+
+            //var resume_id = $("#resume_id").val();
 
 
                 var compObj = {
-                 competence_id: SelectedCompetenceId, resume_id: resume_id, name: null
+                 competence_id: comp, resume_id: resume_id, name: null
              };
 
                 $.ajax({
