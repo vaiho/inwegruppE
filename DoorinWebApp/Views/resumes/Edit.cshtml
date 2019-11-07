@@ -80,14 +80,14 @@
 
             <div class="col-md-6">
                 <p><b>Mina kompetenser</b></p>
-                <table class="table">
+                <table class="table" id="myCompTable">
                     @foreach (var item in Model.MyCompetences)
                     {
                     <tr>
 
                         <td>@item.name </td>
                                 @*TODO: Fixa så länken funkar så man kan ta bort vald competens*@
-                        <td> @Html.ActionLink("Ta bort", "Delete", "resumes", new { id = item.competence_id }, null) @*<input type="submit" value="Ta bort" onclick="RemoveCompetence()" />*@ </td>
+                        <td> <input type="button" class="btnless" value="Ta bort" onclick="RemoveCompetence()" /> </td>
                     </tr>
 
                     }
@@ -623,6 +623,19 @@
                     }
                 });
         }
+
+        //function RemoveTechnologyTest(button) {
+        //    //Determine the reference of the Row using the Button.
+        //    var row = $(button).closest("TR");
+        //    var name = $("TD", row).eq(0).html();
+        //    if (confirm("Do you want to delete: " + name)) {
+        //        //Get the reference of the Table.
+        //        var table = $("#myTechTable")[0];
+
+        //        //Delete the Table row using it's Index.
+        //        table.deleteRow(row[0].rowIndex);
+        //    }
+        //};
 
       
         // Script ta bort kompetens
