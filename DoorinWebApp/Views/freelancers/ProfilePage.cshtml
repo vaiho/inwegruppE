@@ -6,7 +6,7 @@
 
 
 
-<a href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
+<a class="btnless" style="margin:0;" href="javascript:void(0);" onclick="history.go(-1);">Tillbaka</a>
 
 <h2>Profilbesök hos @Html.DisplayFor(modelItem => Model.Firstname) @Html.DisplayFor(modelItem => Model.Lastname) </h2>
 <p>
@@ -21,7 +21,8 @@
 
 
     <div class="row">
-        <div class="col-sm-6 center">
+        <div class="col-sm-6">
+            <br />
             <h1><b>CV</b></h1>
             <h2>@Html.DisplayFor(modelItem => Model.Firstname) @Html.DisplayFor(modelItem => Model.Lastname)</h2>
             <h4> @Html.DisplayFor(modelItem => Model.Age) år från @Html.DisplayFor(modelItem => Model.City), @Html.DisplayFor(modelItem => Model.Nationality)</h4>
