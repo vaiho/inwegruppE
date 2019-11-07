@@ -5,9 +5,6 @@
     ViewBag.Title = "Sök frilansare";
 }
 
-@*<h2>Sök efter frilansare</h2>
-    <br />*@
-
 
 <div>
     @using (Html.BeginForm())
@@ -17,15 +14,12 @@
             <h4 style="display:inline-block;">Sök frilansare efter kompetens/teknologi:</h4>
 
             <input id="SearchString" name="SearchString" type="text" placeholder="Sök här" value="">
-            @*<input type="submit" id="searchButton" value="Sök" />*@
-            @*<p class="btn" id="searchButton">Sök</p>*@
             <input type="submit" value="Nollställ" onclick="setValue('')" />
 
             <div id="filterbtn" class="filterbtn" onclick="myFunction()">
                 <img src="~/Content/images/filter.png" />
                 Filter
             </div>
-
 
             <br />
 
@@ -46,7 +40,6 @@
                     {
                         <p class="filters" id="@item.name">@item.name</p>
                     }
-
                 </div>
             </div>
         </div>
@@ -111,8 +104,6 @@
 <br />
 
 
-
-
 <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
@@ -131,8 +122,7 @@
         //Fritextsök
         $('#SearchString').keyup(filter);
 
-
-        //När man klickar på en knapp, = toggleClass -> active
+        //När man klickar på en knapp, = toggleClass <-> active
         $('.filters').click(function () {
             $(this).toggleClass('active');
 
@@ -186,7 +176,6 @@
 <script>
     //Disablar så att formuläret skickas iväg när man klickar enter
     $("form").keypress(function (e) {
-        //Enter key
         if (e.which == 13) {
             return false;
         }

@@ -17,7 +17,8 @@
 
 
     @Html.ActionLink("Skriv ut CV", "CVPage", new { id = Model.Freelancer_id }, new { target = "_blank", @class = "btn" })
-    
+    @Html.ActionLink("Spara till min lista", "SaveFreelancer", new { id = Model.Freelancer_id }, new { @class = "btn" })
+
 
     <div class="row">
         <div class="col-sm-6 center">

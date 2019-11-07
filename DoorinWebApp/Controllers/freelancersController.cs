@@ -21,9 +21,7 @@ namespace DoorinWebApp.Controllers
 
         // GET: freelancers
         public ActionResult Index(string searchString) 
-        {
-            
-
+        {           
             //Viewbags för filtrering av kompetenser och teknologier 
             ViewBag.Competence = fop.GetAllCompetences();
             ViewBag.Technology = fop.GetAllTechnologies();
