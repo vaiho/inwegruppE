@@ -69,5 +69,6 @@ namespace DoorinWebApp.Viewmodel
 
             return age;
         }
+        public bool IsSaved { get; set; }
     }
 }
