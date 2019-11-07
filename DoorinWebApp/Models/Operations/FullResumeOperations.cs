@@ -18,42 +18,42 @@ namespace DoorinWebApp.Models.Operations
         {
            FullResume fullResume = new FullResume();
 
-            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, email, nationality, city, birthdate, driving_license, address, zipcode from resume INNER JOIN freelancer on resume.freelancer_id = freelancer.freelancer_id WHERE resume.resume_id = @resume_id";
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            string sql = "SELECT freelancer.freelancer_id, firstname, lastname, resume_id, profile, driving_license from resume INNER JOIN freelancer on resume.freelancer_id = freelancer.freelancer_id WHERE resume.resume_id = @resume_id";
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
                 {
-                    command.Parameters.AddWithValue("resume_id", id);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
                     {
-                        while (reader.Read())
+                        command.Parameters.AddWithValue("resume_id", id);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            fullResume.Freelancer_id = reader.GetInt32(0);
-                            fullResume.Firstname = reader.GetString(1);
-                            fullResume.Lastname = reader.GetString(2);
-                            fullResume.Resume_id = reader.GetInt32(3);
-                            fullResume.Profile = reader.GetString(4);
-                            //fullResume.Email = reader.GetString(5);
-                            //fullResume.Nationality = reader.GetString(6);
-                            //fullResume.City = reader.GetString(7);
-                            //fullResume.Birthdate = reader.GetDateTime(8);
-                            fullResume.Driving_license = reader.GetString(9).Trim();
-                            //fullResume.Address = reader.GetString(10);
-                            //fullResume.Zipcode = reader.GetString(11);
-                            
+                            while (reader.Read())
+                            {
+                                fullResume.Freelancer_id = reader.GetInt32(0);
+                                fullResume.Firstname = reader.GetString(1);
+                                fullResume.Lastname = reader.GetString(2);
+                                fullResume.Resume_id = reader.GetInt32(3);
+                                fullResume.Profile = reader.GetString(4);
+                                fullResume.Driving_license = reader.GetString(5).Trim();
+     
+                            }
                         }
                     }
                 }
+                GetMyCompetences(fullResume);
+                GetMyTechnologies(fullResume);
+                GetCompetenceList(fullResume);
+                GetTechnologyList(fullResume);
+                GetEducationsListByResume(fullResume);
             }
-            GetMyCompetences(fullResume);
-            GetMyTechnologies(fullResume);
-            GetCompetenceList(fullResume);
-            GetTechnologyList(fullResume);
-            GetEducationsListByResume(fullResume);
-            
-
+            catch (Exception)
+            {
+                // gör något med felmeddelandet
+                throw;
+            }
+           
             return fullResume;
         }
 
@@ -94,28 +94,35 @@ namespace DoorinWebApp.Models.Operations
             string sql = "SELECT competence.competence_id, resume_id, name from competence_resume " +
                 "INNER JOIN competence on competence_resume.competence_id = competence.competence_id " +
                 "WHERE resume_id = @resume_id";
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
                 {
-                    command.Parameters.AddWithValue("resume_id", fullResume.Resume_id);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
                     {
-                        while (reader.Read())
+                        command.Parameters.AddWithValue("resume_id", fullResume.Resume_id);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            c = new competence()
+                            while (reader.Read())
                             {
-                                competence_id = (reader.GetInt32(0)),
-                                resume_id = (reader.GetInt32(1)),
-                                name = (reader.GetString(2))
-                            };
-                            fullResume.MyCompetences.Add(c);
+                                c = new competence()
+                                {
+                                    competence_id = (reader.GetInt32(0)),
+                                    resume_id = (reader.GetInt32(1)),
+                                    name = (reader.GetString(2))
+                                };
+                                fullResume.MyCompetences.Add(c);
+                            }
                         }
                     }
                 }
             }
+            catch (Exception)
+            {
+                //gör något med felmeddelandet
+                throw;
+            }         
         }
         public void GetMyTechnologies(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
         {
@@ -125,64 +132,76 @@ namespace DoorinWebApp.Models.Operations
                 "INNER JOIN technology on technology_resume.technology_id = technology.technology_id " +
                 "WHERE resume_id = @resume_id";
             FullTechnology t;
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
                 {
-                    command.Parameters.AddWithValue("resume_id", fullResume.Resume_id);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
                     {
-                        while (reader.Read())
+                        command.Parameters.AddWithValue("resume_id", fullResume.Resume_id);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-
-                            t = new FullTechnology()
+                            while (reader.Read())
                             {
-                                technology_id = (reader.GetInt32(0)),
-                                name = (reader.GetString(1)),
-                                rank = (reader.GetInt32(2)),
-                                core_technology = (reader.GetBoolean(3)),
-                                competence_id = (reader.GetInt32(4)),
-                            };
-                            fullResume.MyTechnologies.Add(t);
+
+                                t = new FullTechnology()
+                                {
+                                    technology_id = (reader.GetInt32(0)),
+                                    name = (reader.GetString(1)),
+                                    rank = (reader.GetInt32(2)),
+                                    core_technology = (reader.GetBoolean(3)),
+                                    competence_id = (reader.GetInt32(4)),
+                                };
+                                fullResume.MyTechnologies.Add(t);
+                            }
+
+
                         }
-
-
                     }
                 }
-            }
 
+            }
+            catch (Exception)
+            {
+                // gör något med felmeddelandet
+                throw;
+            }          
         }
-        
-    
-            
+                  
 
         private void GetCompetenceList(FullResume fullResume) //Metod för att hämta teknologier på inskickad freelancerVM och lagra dessa i en lista
         {
             string sql = "SELECT competence_id, name FROM competence";
             competence c;
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
                 {
-                    command.Parameters.AddWithValue("resume_id", fullResume.Resume_id);
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
                     {
-                        while (reader.Read())
+                        command.Parameters.AddWithValue("resume_id", fullResume.Resume_id);
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            c = new competence()
+                            while (reader.Read())
                             {
-                                competence_id = (reader.GetInt32(0)),
-                                name = (reader.GetString(1))
-                            };
-                            fullResume.Competences.Add(c);
+                                c = new competence()
+                                {
+                                    competence_id = (reader.GetInt32(0)),
+                                    name = (reader.GetString(1))
+                                };
+                                fullResume.Competences.Add(c);
+                            }
                         }
                     }
                 }
             }
+            catch (Exception)
+            {
+                // gör något med felmeddelandet
+                throw;
+            }       
 
         }
 
@@ -193,27 +212,35 @@ namespace DoorinWebApp.Models.Operations
             {
                 string sql = "SELECT name, technology_id FROM technology WHERE competence_id = @competenceID";
                 technology t;
-
-                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+                try
                 {
-                    conn.Open();
-                    using (SqlCommand command = new SqlCommand(sql, conn))
+                    using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
                     {
-                        command.Parameters.AddWithValue("competenceID", competence.competence_id);
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        conn.Open();
+                        using (SqlCommand command = new SqlCommand(sql, conn))
                         {
-                            while (reader.Read())
+                            command.Parameters.AddWithValue("competenceID", competence.competence_id);
+                            using (SqlDataReader reader = command.ExecuteReader())
                             {
-                                t = new technology()
+                                while (reader.Read())
                                 {
-                                    name = (reader.GetString(0)),
-                                    technology_id = (reader.GetInt32(1))
-                                };
-                                fullResume.Technologies.Add(t);
+                                    t = new technology()
+                                    {
+                                        name = (reader.GetString(0)),
+                                        technology_id = (reader.GetInt32(1))
+                                    };
+                                    fullResume.Technologies.Add(t);
+                                }
                             }
                         }
                     }
                 }
+                catch (Exception)
+                {
+                    // gör något med felmeddelandet
+                    throw;
+                }
+               
             }   
         }
 
@@ -273,20 +300,28 @@ namespace DoorinWebApp.Models.Operations
         public void RemoveMyTechnologies(int technology_id, int resume_id) {
 
          string sql = "DELETE FROM technology_resume WHERE technology_id = @technologyID AND resume_id = @resumeID";
-
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
                 {
-                    command.Connection = conn;
-                    command.CommandText = sql;
-                    command.Parameters.AddWithValue("technologyID", technology_id);
-                    command.Parameters.AddWithValue("resumeID", resume_id);
-                    command.ExecuteNonQuery();
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
+                    {
+                        command.Connection = conn;
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("technologyID", technology_id);
+                        command.Parameters.AddWithValue("resumeID", resume_id);
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
+            catch (Exception)
+            {
+                // gör något med felmeddelandet
+                throw;
+            }
+
+           
         }
 
         public void RemoveMyCompetences(int competence_id, int resume_id)
@@ -294,19 +329,27 @@ namespace DoorinWebApp.Models.Operations
 
             string sql = "DELETE FROM competence_resume WHERE competence_id = @competenceID AND resume_id = resumeID";
 
-
-            using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlCommand command = new SqlCommand(sql, conn))
+                using (SqlConnection conn = new SqlConnection(GetBuilder().ConnectionString))
                 {
-                    command.Connection = conn;
-                    command.CommandText = sql;
-                    command.Parameters.AddWithValue("technologyID", competence_id);
-                    command.Parameters.AddWithValue("resumeID", resume_id);
-                    command.ExecuteNonQuery();
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand(sql, conn))
+                    {
+                        command.Connection = conn;
+                        command.CommandText = sql;
+                        command.Parameters.AddWithValue("technologyID", competence_id);
+                        command.Parameters.AddWithValue("resumeID", resume_id);
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
+            catch (Exception)
+            {
+                //Gör något med felmeddelandet
+                throw;
+            }
+            
         }
 
 
