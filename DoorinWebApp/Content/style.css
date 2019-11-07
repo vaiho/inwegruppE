@@ -146,6 +146,7 @@ a:hover {
 .btnless:hover {
         color: #fff;
         background-color: #09964f;
+        text-decoration: none;
 }
 
 #searchbtn {

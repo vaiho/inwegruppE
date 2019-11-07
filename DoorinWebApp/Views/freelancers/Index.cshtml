@@ -49,13 +49,6 @@
                         <p class="filters" id="@item.name">@item.name</p>
                     }
 
-                    @*<select id="rankvalue">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>*@
                 </div>
             </div>
         </div>
@@ -98,66 +91,69 @@
             }*@
 
 
-
-
-
 <br />
 
 <div>
     <table class="table">
         <thead>
             <tr>
-                <th style="border-top:none;">
+                @*<th style="border-top:none;">
                     Namn
-                </th>
-                <th style="border-top:none;">
+                </th>*@
+                @*<th style="border-top:none;">
                     Kompetenser
                 </th>
                 <th style="border-top:none;">
                     Teknologier
-                </th>
-                <th style="border-top:none;"></th>
+                </th>*@
+                @*<th style="border-top:none;"></th>*@
             </tr>
         </thead>
         <tbody id="freelancerTable">
             @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fullname)
-                    </td>
-                    <td>
-                        @foreach (var x in item.CompetencesList)
+        {
+            <tr>
+                <td>
+                    <h2 style="display:inline-block;"><b>@Html.DisplayFor(modelItem => item.Fullname)</b></h2>
+                    @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id }, new { @class = "btnless" })
+                    @Html.ActionLink("Spara till min lista", "SaveFreelancer", new { id = item.Freelancer_id }, new { @class = "btnless" })
+                    <br />
+
+                    <h4 style="display:inline-block;">Kompetenser:</h4>
+                    @foreach (var x in item.CompetencesList)
+                    {
+                        <span class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
+                    }
+                    <br />
+
+                    <h4 style="display:inline-block;">Teknologier:</h4>
+                    @foreach (var x in item.TechnologysList)
+                    {
+                        if (x.core_technology == true) //Kärnteknologi
+                        {
+                            <span style="background-color:#2c473d; color:#FFF;" class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
+                            //<span style= "margin:2px; border: 2px solid #09964f; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
+                        }
+                        else //Ej kärnteknologi
                         {
                             <span class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
+                            //<span style="margin:2px; border: 2px solid #ddd; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
                         }
-                    </td>
-                    <td>
-                        @foreach (var x in item.TechnologysList)
-                        {
-                            if (x.core_technology == true) //Kärnteknologi
-                            {
-                                <span style="background-color:#2c473d; color:#FFF;" class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
-                                //<span style= "margin:2px; border: 2px solid #09964f; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
-                            }
-                            else //Ej kärnteknologi
-                            {
-                                <span class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
-                                //<span style="margin:2px; border: 2px solid #ddd; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
-                            }
-                        }
-                    </td>
-                    <td>
-                        @Html.ActionLink("Spara |", "SaveFreelancer", new { id = item.Freelancer_id })
-                        @Html.ActionLink("Besök profil", "ProfilePage", new { id = item.Freelancer_id })
-                    </td>
-                </tr>
-            }
+                    }
+                </td>
+
+            </tr>
+        }
+
         </tbody>
     </table>
 </div>
 <hr />
 <br />
+
+
+
+
 <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
