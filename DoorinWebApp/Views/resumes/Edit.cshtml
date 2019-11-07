@@ -75,7 +75,7 @@
 
                         <td>@item.name </td>                       
                         <td> <input type="button" class="btnless" value="Ta bort" onclick="RemoveCompetence(this)" /> </td>
-                        <hidden><td>@item.competence_id</td></hidden>
+                        <td hidden>@item.competence_id</td>
                     </tr>
 
                     }
@@ -127,7 +127,7 @@
                 {
                     <tr>
                         <td>@item.name <input type="button" class="btnless" value="Ta bort" onclick="RemoveTechnology(this)" /></td>
-                        <hidden><td>@item.technology_id</td></hidden>
+                        <td hidden> @item.technology_id</td>
                     </tr>                    
                 }
                     </table>
