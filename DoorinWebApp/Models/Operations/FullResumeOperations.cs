@@ -327,7 +327,7 @@ namespace DoorinWebApp.Models.Operations
         public void RemoveMyCompetences(int competence_id, int resume_id)
         {
 
-            string sql = "DELETE FROM competence_resume WHERE competence_id = @competenceID AND resume_id = resumeID";
+            string sql = "DELETE FROM competence_resume WHERE competence_id = @competenceID AND resume_id = @resumeID";
 
             try
             {
@@ -338,7 +338,7 @@ namespace DoorinWebApp.Models.Operations
                     {
                         command.Connection = conn;
                         command.CommandText = sql;
-                        command.Parameters.AddWithValue("technologyID", competence_id);
+                        command.Parameters.AddWithValue("competenceID", competence_id);
                         command.Parameters.AddWithValue("resumeID", resume_id);
                         command.ExecuteNonQuery();
                     }
