@@ -76,6 +76,7 @@
                         <option value="@item.competence_id"> @item.name </option>
                     }
                 </select>
+                <input type="submit" id="addCompetence" name="addCompetence" value="Lägg till kompetens" onclick="AddCompetence()" />
             </div>
 
             <div class="col-md-6">
@@ -92,14 +93,6 @@
 
                     }
                 </table>
-                @*<select class="form-control" id="MyCompetences" name="MyCompetences">
-            @foreach (var item in Model.MyCompetences)
-            {
-                <option value="@item.competence_id"> @item.name </option>
-
-                    }
-                </select>
-                <input type="submit" value="Ta bort kompetens" onclick="RemoveCompetence()" />*@
             </div>
         </div>
 
@@ -146,19 +139,11 @@
                 @foreach (var item in Model.MyTechnologies)
                 {
                     <tr>
-                        <td>@item.name <input type="submit" value="Ta bort" onclick="RemoveTechnology(this)" /></td>
+                        <td>@item.name <input type="button" class="btnless" value="Ta bort" onclick="RemoveTechnology(this)" /></td>
                         <hidden><td>@item.technology_id</td></hidden>
                     </tr>                    
                 }
                     </table>
-
-                @*<select class="form-control" id="MyTechnologies" name="MyTechnologies">
-            @foreach (var item in Model.MyTechnologies)
-            {
-                <option value="@item.technology_id"> @item.name </option>
-            }
-        </select>
-        <input type="submit" value="Ta bort tekonologi" onclick="RemoveTechnology()" />*@
             </div>
         </div>
 
@@ -478,16 +463,23 @@
         });
 
         // Script rörande Competens-DropDownListan
+        var selectedCompetence;
         $(document).ready(function () {
             $("#Competences").change(function () {
 
-                var selectedCompetence = document.getElementById("Competences");
-                var competenceId = selectedCompetence.options[selectedCompetence.selectedIndex].value;
-                var resume_id = $("#resume_id").val();
+                var selectedCompetenceId = document.getElementById("Competences");
+                var competenceId = selectedCompetenceId.options[selectedCompetenceId.selectedIndex].value;
+                selectedCompetence = competenceId;
 
-                 var compObj = {
-                 competence_id: competenceId, resume_id: resume_id, name: null
-             };
+            });
+        });
+
+        function AddCompetence() {
+         var resume_id = $("#resume_id").val();
+
+          var compObj = {
+            competence_id: selectedCompetence, resume_id: resume_id, name: null
+          };
 
                 $.ajax({
                     type: "POST",
@@ -506,11 +498,7 @@
 
                     }
                 });
-
-            });
-
-
-        });
+        }
 
 
         // Script lägga till teknologi
@@ -575,11 +563,9 @@
 
                     }
                 });
-
-
         }
 
-             // Script ta bort teknology
+             // Script ta bort teknologier
         var selectedTechnologyId; // ligger här så jag når dem då jag ska ta bort de man valt i dropdwonlistan
           $(document).ready(function () {
             $("#MyTechnologies").change(function () {
@@ -590,7 +576,6 @@
                 selectedTechnologyId = technologyId;
 
             });
-
 
           });
 
@@ -622,6 +607,7 @@
 
                     }
                 });
+
         }
 
              
@@ -642,9 +628,6 @@
             var row = $(button).closest("TR");
             var comp = $("TD", row).eq(2).html();
             var resume_id = $("#resume_id").val();
-
-            //var resume_id = $("#resume_id").val();
-
 
                 var compObj = {
                  competence_id: comp, resume_id: resume_id, name: null

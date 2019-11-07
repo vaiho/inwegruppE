@@ -168,7 +168,6 @@ namespace DoorinWebApp.Controllers
             objectTechnology.core_technology, objectTechnology.rank);
             // CV:t hämtas för att listan med kompetenser ska uppdateras
             FullResume fullResume = resumeOperations.GetFullResumeById(objectTechnology.resume_id);
-            resumeOperations.GetMyTechnologies(fullResume);
 
             int num = db.SaveChanges();
             return Json(num);
@@ -182,7 +181,8 @@ namespace DoorinWebApp.Controllers
             // CV:t hämtas för att listan med kompetenser ska uppdateras
             FullResume fullResume = resumeOperations.GetFullResumeById(objectTechnology.resume_id);
 
-            return RedirectToAction("Edit", "resumes", new { id = objectTechnology.resume_id });
+            int num = db.SaveChanges();
+            return Json(num);
         }
 
 
@@ -195,7 +195,8 @@ namespace DoorinWebApp.Controllers
             // CV:t hämtas för att listan med kompetenser ska uppdateras
             FullResume fullResume = resumeOperations.GetFullResumeById(competence.resume_id);
 
-            return RedirectToAction("Edit", "resumes", new { id = competence.resume_id });
+            int num = db.SaveChanges();
+            return Json(num);
         }
 
         // POST: resumes/Edit/5
