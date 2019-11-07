@@ -142,13 +142,12 @@
 
             <div class="col-md-6">
                 <p><b>Mina teknologier</b></p>
-                <table class="table">
+                <table class="table"id="techId">
                 @foreach (var item in Model.MyTechnologies)
                 {
                     <tr>
-                        <td>@item.name </td>
-                                 @*TODO: Fixa så länken funkar så man kan ta bort teknologi*@
-                        <td> @Html.ActionLink("Ta bort", "Delete", "resumes", new { id = item.technology_id }, null) @*<input type="submit" value="Ta bort" onclick="RemoveTechnology()" />*@ </td>
+                        <td>@item.name <input type="submit" value="Ta bort" onclick="RemoveTechnology(this)" /></td>
+                        <hidden><td>@item.technology_id</td></hidden>
                     </tr>                    
                 }
                     </table>
@@ -595,11 +594,14 @@
 
           });
 
-        function RemoveTechnology() {
+        function RemoveTechnology(button) {
+  
+            var row = $(button).closest("TR");
+            var tech = $("TD", row).eq(1).html();
             var resume_id = $("#resume_id").val();
 
              var techObj = {
-                    technology_id: selectedTechnologyId, resume_id: resume_id, core_technology: null,
+                    technology_id: tech, resume_id: resume_id, core_technology: null,
                     rank: 0, resume: null, technology: null
                 };
 
