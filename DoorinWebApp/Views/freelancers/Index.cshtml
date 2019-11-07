@@ -40,8 +40,6 @@
                         @*<input type="button" class="filters" id="Competence" value="@item.name" name="Competence" onclick="getTechnologiesByCompetence(@item.competence_id)"/>*@
                     }
 
-
-
                     <hr />
                     <h4 style="font-weight:bold;">Teknologier</h4>
                     @foreach (var item in ViewBag.Technology)
@@ -132,12 +130,10 @@
                         if (x.core_technology == true) //Kärnteknologi
                         {
                             <span style="background-color:#2c473d; color:#FFF;" class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
-                            //<span style= "margin:2px; border: 2px solid #09964f; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
                         }
                         else //Ej kärnteknologi
                         {
                             <span class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
-                            //<span style="margin:2px; border: 2px solid #ddd; padding: 5px;" class="filterItem" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
                         }
                     }
                 </td>
@@ -166,17 +162,6 @@
 
 
 <script>
-    //Om man skriver något i sökrutan (testar)
-    //$(document).ready(function () {
-    //    $("#SearchString").on("keyup", function () {
-    //        var value = $(this).val().toLowerCase();
-    //        $("#myTable tr").filter(function () {
-    //            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    //        });
-    //    });
-    //});
-
-
     //TODO: Flytta script till .js-filen
     //Källa: https://caveofcode.com/2016/02/jquery-tutorial-how-to-filter-data-using-multiple-parameters/
     $(function () {
@@ -225,6 +210,15 @@
             return tester;
         }
     });
+        //Om man skriver något i sökrutan (old)
+    //$(document).ready(function () {
+    //    $("#SearchString").on("keyup", function () {
+    //        var value = $(this).val().toLowerCase();
+    //        $("#myTable tr").filter(function () {
+    //            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //        });
+    //    });
+    //});
 </script>
 
 @*<script>

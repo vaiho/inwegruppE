@@ -16,11 +16,13 @@ namespace DoorinWebApp.Controllers
     public class freelancersController : Controller
     {
         private doorinDBEntities db = new doorinDBEntities();
+        FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+        FreelancerOperations fop = new FreelancerOperations();
+
         // GET: freelancers
         public ActionResult Index(string searchString) 
         {
-            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-            FreelancerOperations fop = new FreelancerOperations();
+            
 
             //Viewbags för filtrering av kompetenser och teknologier 
             ViewBag.Competence = fop.GetAllCompetences();
@@ -37,7 +39,7 @@ namespace DoorinWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             freelancer freelancer = db.freelancer.Find(id);
-            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            //FreelancerProfileOperations fpop = new FreelancerProfileOperations();
             freelancer.FreelancerProfileResume = fpop.GetFreelancerProfileById(id);
             
             if (freelancer == null)
@@ -49,7 +51,7 @@ namespace DoorinWebApp.Controllers
 
         public ActionResult ProfilePage(int? id) 
         {
-            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            //FreelancerProfileOperations fpop = new FreelancerProfileOperations();
 
             return View(fpop.GetFreelancerProfileById(id));
         }
@@ -209,7 +211,7 @@ namespace DoorinWebApp.Controllers
             {
                 try
                 {
-                    FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+                    //FreelancerProfileOperations fpop = new FreelancerProfileOperations();
                     fpop.SaveFreelancerToCustomerList(id, c);
                 }
                 catch (SqlException ex)
@@ -233,7 +235,7 @@ namespace DoorinWebApp.Controllers
             int? customer_id = 5; //Hårdkodad customer
             int? id = idfromview; //Markerad freelancer
 
-            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
+            //FreelancerProfileOperations fpop = new FreelancerProfileOperations();
             fpop.RemoveFreelancerFromCustomerList(id, customer_id);
 
             //Refreshar samma sida
@@ -242,8 +244,7 @@ namespace DoorinWebApp.Controllers
 
         public ActionResult CVPage(int? id)
         {
-            FreelancerProfileOperations fpop = new FreelancerProfileOperations();
-
+            //FreelancerProfileOperations fpop = new FreelancerProfileOperations();
             return View(fpop.GetFreelancerProfileById(id));
         }
     }
