@@ -23,7 +23,7 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-sm-6 center">
+            <div class="col-sm-6">
                 <h1><b>CV</b></h1>
                 <h2>@Html.DisplayFor(modelItem => Model.Firstname) @Html.DisplayFor(modelItem => Model.Lastname)</h2>
                 <h4> @Html.DisplayFor(modelItem => Model.Age) år från @Html.DisplayFor(modelItem => Model.City), @Html.DisplayFor(modelItem => Model.Nationality)</h4>
@@ -66,7 +66,17 @@
                 <h2>Teknologier</h2>
                 @foreach (var item in Model.TechnologysList)
                 {
-                    <p style="margin-top:10px; display:inline-block;">@Html.DisplayFor(modelItem => item.name) &nbsp;</p>
+                    //Om teknologin är kärnteknologi
+                    if (item.core_technology == true)
+                    {
+                        <p class="competence" style="background-color:#2c473d; color:#FFF;"> @Html.DisplayFor(modelItem => item.name)</p>
+                    }
+                    //Ej kärnteknologi
+                    else
+                    {
+                        <p class="competence" style="">@Html.DisplayFor(modelItem => item.name)</p>
+                    }
+
                     var stars = item.rank;
 
                     while (stars > 0)
@@ -76,6 +86,7 @@
 
                     }
                     <br />
+
                 }
 
                 <br />
@@ -98,6 +109,14 @@
             @if (Model.phonenumber == null)
             {
                 <p style="display:inline-block;">---</p>
+            }
+            <br />
+            <b>Länkar</b>
+            <br />
+            @foreach (var item in Model.LinkList)
+            {
+                //var x = @Html.DisplayFor(modelItem => item.link);
+                <p style="display:inline-block;">@Html.DisplayFor(modelItem => item.name): <a href="#">@Html.DisplayFor(modelItem => item.link)</a> &nbsp;&nbsp;&nbsp;&nbsp;</p>
             }
 
         </div>
