@@ -171,4 +171,8 @@ $("body").on("click", "#btnSave", function () {
 
 });
 
+function changeText(obj, text) {
+    obj.innerText = text;
+};
+
 

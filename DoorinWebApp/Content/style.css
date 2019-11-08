@@ -181,8 +181,10 @@ a:hover {
         text-decoration: none;
 }
 .btnsaved:hover {
-    color: #09964f;
+    /*color: #09964f;
     background-color: #fff;
+    text-decoration: none;*/
+    color: #fff;
     text-decoration: none;
 }
 

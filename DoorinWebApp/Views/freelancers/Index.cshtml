@@ -75,7 +75,7 @@
                         @if (item.IsSaved == true)
                         {
                             //TODO: Ändra metoden så att den tar bort frilansaren istället??
-                            @Html.ActionLink("Ta bort från min lista", "RemoveFreelancer", "freelancers", new { idfromview = item.Freelancer_id }, new { @class = "btnsaved" })
+                            @Html.ActionLink("Sparad", "RemoveFreelancer", "freelancers", new { idfromview = item.Freelancer_id }, new { @class = "btnsaved", @id = item.Freelancer_id, @onmouseover = "changeText(this,'Ta bort från lista')", @onmouseout = "changeText(this,'Sparad')" })
                         }
                         else
                         {
@@ -103,6 +103,9 @@
                                 <span class="filterItem competence" data="@x.name">@Html.DisplayFor(modelItem => x.name)</span>
                             }
                         }
+                        <br />
+                        <br />
+                        
                     </td>
                 </tr>
             }
