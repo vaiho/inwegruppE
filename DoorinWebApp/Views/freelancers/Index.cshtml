@@ -14,7 +14,7 @@
             <h4 style="display:inline-block;">Sök frilansare efter kompetens/teknologi:</h4>
 
             <input id="SearchString" name="SearchString" type="text" placeholder="Sök här" value="">
-            <input type="submit" value="Nollställ" onclick="setValue('')" />
+            <input type="submit" value="Nollställ" onclick="changeText(this, '')" />
 
             <div id="filterbtn" class="filterbtn" onclick="myFunction()">
                 <img src="~/Content/images/filter.png" />
@@ -121,16 +121,15 @@
 
 
 <script>
-    function setValue(txt) {
-        document.getElementById("SearchString").value = txt;
-    }
+    
 </script>
 
 
 <script>
     //TODO: Flytta script till .js-filen
-    //Källa: https://caveofcode.com/2016/02/jquery-tutorial-how-to-filter-data-using-multiple-parameters/
+    //Filtreringsfunktionen
     $(function () {
+        //Källa: https://caveofcode.com/2016/02/jquery-tutorial-how-to-filter-data-using-multiple-parameters/
         //Fritextsök
         $('#SearchString').keyup(filter);
 
@@ -185,14 +184,7 @@
     //    });
     //});
 </script>
-<script>
-    //Disablar så att formuläret skickas iväg när man klickar enter
-    $("form").keypress(function (e) {
-        if (e.which == 13) {
-            return false;
-        }
-    });
-</script>
+
 @*<script>
         function myFunction2() {
 

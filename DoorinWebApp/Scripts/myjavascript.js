@@ -171,8 +171,17 @@ $("body").on("click", "#btnSave", function () {
 
 });
 
+//Ändra text på inskickat objekt
 function changeText(obj, text) {
     obj.innerText = text;
 };
+
+
+//Disablar så att filtreringsformuläret skickas iväg när man klickar enter
+$("form").keypress(function (e) {
+    if (e.which == 13) {
+        return false;
+    }
+});
 
 
