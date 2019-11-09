@@ -141,7 +141,7 @@ namespace DoorinWebApp.Controllers
                     }
                 }
             }
-                              
+
             return View(fullResume);
         }
 

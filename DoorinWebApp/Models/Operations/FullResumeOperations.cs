@@ -36,7 +36,11 @@ namespace DoorinWebApp.Models.Operations
                                 fullResume.Lastname = reader.GetString(2);
                                 fullResume.Resume_id = reader.GetInt32(3);
                                 fullResume.Profile = reader.GetString(4);
-                                fullResume.Driving_license = reader.GetString(5).Trim();
+
+                                if (!reader.IsDBNull(5))
+                                {
+                                    fullResume.Driving_license = reader.GetString(5).Trim();
+                                }
      
                             }
                         }
